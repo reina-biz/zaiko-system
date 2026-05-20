@@ -114,6 +114,29 @@ const [rows, setRows] =
 
   });
 
+  const [historyRows, setHistoryRows] =
+  useState(() => {
+
+    const saved =
+      localStorage.getItem(
+        "historyRows"
+      );
+
+    return saved
+      ? JSON.parse(saved)
+      : [];
+
+  });
+
+useEffect(() => {
+
+  localStorage.setItem(
+    "historyRows",
+    JSON.stringify(historyRows)
+  );
+
+}, [historyRows]);
+
   useEffect(() => {
 
   localStorage.setItem(
@@ -495,21 +518,23 @@ const [rows, setRows] =
 
         {tab === "入力" && (
 
-          <InputPage
+<InputPage
 
-            rows={rows}
-            setRows={setRows}
+  rows={rows}
+  setRows={setRows}
 
-            companyName={companyName}
-            setCompanyName={setCompanyName}
+  historyRows={historyRows}
+  setHistoryRows={setHistoryRows}
 
-            companyList={companyList}
-            setCompanyList={setCompanyList}
+  companyName={companyName}
+  setCompanyName={setCompanyName}
 
-            orderDate={orderDate}
-            setOrderDate={setOrderDate}
+  companyList={companyList}
+  setCompanyList={setCompanyList}
 
-          />
+  orderDate={orderDate}
+  setOrderDate={setOrderDate}
+/>
 
         )}
 
@@ -519,7 +544,7 @@ const [rows, setRows] =
 
           <HistoryPage
 
-            rows={rows}
+            rows={historyRows}
             setRows={setRows}
 
             companyList={companyList}
@@ -534,7 +559,7 @@ const [rows, setRows] =
 
           <PricePage
 
-            rows={rows}
+            rows={historyRows}
 
             companyName={companyName}
             setCompanyName={setCompanyName}
@@ -551,7 +576,7 @@ const [rows, setRows] =
 
           <StockPage
 
-            rows={rows}
+            rows={historyRows}
 
             companyName={companyName}
             setCompanyName={setCompanyName}
@@ -568,7 +593,7 @@ const [rows, setRows] =
 
           <ClosingStockPage
 
-            rows={rows}
+            rows={historyRows}
 
             companyName={companyName}
             setCompanyName={setCompanyName}

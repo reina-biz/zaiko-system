@@ -3,6 +3,8 @@ import { useState } from "react";
 export default function InputPage({
   rows,
   setRows,
+  historyRows,
+  setHistoryRows,
   companyName,
   setCompanyName,
   companyList,
@@ -49,7 +51,45 @@ export default function InputPage({
     setRows(updatedRows);
 
   };
+const materialSuggestions = [
 
+  ...new Set(
+
+    historyRows
+
+      .filter(
+        (row) =>
+          row.materialName
+      )
+
+      .map(
+        (row) =>
+          row.materialName
+      )
+
+  )
+
+];
+
+const sizeSuggestions = [
+
+  ...new Set(
+
+    historyRows
+
+      .filter(
+        (row) =>
+          row.size
+      )
+
+      .map(
+        (row) =>
+          row.size
+      )
+
+  )
+
+];
   const inputRows = [...rows];
 
   while (inputRows.length < 30) {
@@ -139,10 +179,10 @@ export default function InputPage({
           row.materialName?.trim()
       );
 
-    localStorage.setItem(
-      "zaikoRows",
-      JSON.stringify(savedRows)
-    );
+    setHistoryRows([
+      ...historyRows,
+      ...savedRows
+    ]);
 
     setRows(
       Array.from(
@@ -163,6 +203,7 @@ export default function InputPage({
   className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
 >
   入力完了
+
 </button>
 
 </div>
