@@ -133,22 +133,7 @@ export default function InputPage({
   <button
     onClick={() => {
 
-     const savedRows =
-  rows.filter(
-    (row) =>
-      row.materialName?.trim()
-  );
-
-setRows(
-  Array.from(
-    { length: 30 },
-    () => ({
-      ...EMPTY_ROW
-    })
-  )
-);
-
-setCompanyName("");
+     setCompanyName("");
 
 setOrderDate("");
 
