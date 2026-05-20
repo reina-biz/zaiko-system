@@ -16,6 +16,10 @@ export default function InputPage({
   const [selectedRows, setSelectedRows] =
     useState([]);
 
+    const [activeSuggestionIndex,
+  setActiveSuggestionIndex] =
+    useState(null);
+
   const EMPTY_ROW = {
     companyName: "",
     orderDate: "",
@@ -290,17 +294,24 @@ const sizeSuggestions = [
                 <input
                   type="text"
                   value={row.materialName}
-                  onChange={(e) =>
-                    updateRow(
-                      index,
-                      "materialName",
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => {
+
+  setActiveSuggestionIndex(
+    index
+  );
+
+  updateRow(
+    index,
+    "materialName",
+    e.target.value
+  );
+
+}}
                   className="w-full border rounded-xl px-3 py-3"
                   
                 />
-                {(row.size || "").length >= 2 && (
+                {activeSuggestionIndex === index &&
+                (row.size || "").length >= 2 && (
 
   <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
 
@@ -321,15 +332,19 @@ const sizeSuggestions = [
         <button
           key={size}
           type="button"
-          onClick={() => {
+        onClick={() => {
 
-            updateRow(
-              index,
-              "size",
-              size
-            );
+  updateRow(
+    index,
+    "size",
+    size
+  );
 
-          }}
+  setActiveSuggestionIndex(
+    null
+  );
+
+}}
           className="block w-full text-left px-4 py-2 hover:bg-slate-100"
         >
           {size}
@@ -340,7 +355,8 @@ const sizeSuggestions = [
   </div>
 
 )}
-                {row.materialName?.length >= 2 && (
+               {activeSuggestionIndex === index &&
+                row.materialName?.length >= 2 && (
 
   <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
 
@@ -386,13 +402,19 @@ const sizeSuggestions = [
                 <input
                   type="text"
                   value={row.size || ""}
-                  onChange={(e) =>
-                    updateRow(
-                      index,
-                      "size",
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => {
+
+  setActiveSuggestionIndex(
+    index
+  );
+
+  updateRow(
+    index,
+    "size",
+    e.target.value
+  );
+
+}}
                   className="w-full border rounded-xl px-3 py-3"
                 />
               </div>
