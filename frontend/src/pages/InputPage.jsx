@@ -64,109 +64,96 @@ export default function InputPage({
 
       <div className="flex flex-wrap items-end gap-4 mb-6">
 
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            日付
-          </label>
+  <div>
+    <label className="block text-sm font-medium mb-2">
+      日付
+    </label>
 
-          <input
-            type="date"
-            value={orderDate}
-            onChange={(e) =>
-              setOrderDate(
-                e.target.value
-              )
-            }
-            className="w-[250px] border rounded-2xl px-4 py-3 bg-white"
-          />
-        </div>
+    <input
+      type="date"
+      value={orderDate}
+      onChange={(e) =>
+        setOrderDate(
+          e.target.value
+        )
+      }
+      className="w-[250px] border rounded-2xl px-4 py-3 bg-white"
+    />
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            会社名
-          </label>
+  <div>
+    <label className="block text-sm font-medium mb-2">
+      会社名
+    </label>
 
-          <select
-            value={companyName}
-            onChange={(e) =>
-              setCompanyName(
-                e.target.value
-              )
-            }
-            className="w-[350px] border rounded-2xl px-4 py-3 bg-white"
-          >
+    <select
+      value={companyName}
+      onChange={(e) =>
+        setCompanyName(
+          e.target.value
+        )
+      }
+      className="w-[350px] border rounded-2xl px-4 py-3 bg-white"
+    >
 
-            <option value="">
-              会社選択
-            </option>
+      <option value="">
+        会社選択
+      </option>
 
-            {companyList.map((company) => (
-              <option
-                key={company}
-                value={company}
-              >
-                {company}
-              </option>
-            ))}
-
-          </select>
-        </div>
-
-        <button
-          onClick={() => {
-
-            if (
-              companyName &&
-              !companyList.includes(
-                companyName
-              )
-            ) {
-
-              setCompanyList([
-                ...companyList,
-                companyName,
-              ]);
-
-            }
-
-            setRows([
-              ...rows,
-              {
-                ...EMPTY_ROW,
-                companyName,
-                orderDate,
-              },
-            ]);
-
-          }}
-          className="bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-2xl font-semibold transition"
+      {companyList.map((company) => (
+        <option
+          key={company}
+          value={company}
         >
-          + 行追加
-          <button
-  onClick={() => {
+          {company}
+        </option>
+      ))}
 
-    const savedRows =
-      rows.filter(
-        (row) =>
-          row.materialName?.trim()
-      );
+    </select>
+  </div>
 
-    setRows(savedRows);
+  <button
+    onClick={() => {
 
-    setCompanyName("");
+      setRows([
+        ...rows,
+        {
+          ...EMPTY_ROW,
+          companyName,
+          orderDate,
+        },
+      ]);
 
-    setOrderDate("");
+    }}
+    className="bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-2xl font-semibold transition"
+  >
+    + 行追加
+  </button>
 
-    setSelectedRows([]);
+  <button
+    onClick={() => {
 
-  }}
-  className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
->
-  入力完了
-</button>
-        </button>
+      const savedRows =
+        rows.filter(
+          (row) =>
+            row.materialName?.trim()
+        );
 
-      </div>
+      setRows(savedRows);
+
+      setCompanyName("");
+
+      setOrderDate("");
+
+      setSelectedRows([]);
+
+    }}
+    className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
+  >
+    入力完了
+  </button>
+
+</div>
 
       <div className="rounded-2xl border bg-white overflow-hidden">
 
