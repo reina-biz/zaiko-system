@@ -286,7 +286,7 @@ const sizeSuggestions = [
 
               </div>
 
-              <div className="p-2">
+              <div className="p-2 relative">
                 <input
                   type="text"
                   value={row.materialName}
@@ -299,9 +299,49 @@ const sizeSuggestions = [
                   }
                   className="w-full border rounded-xl px-3 py-3"
                 />
+                {row.materialName && (
+
+  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
+
+    {materialSuggestions
+
+      .filter((name) =>
+
+        name
+          .toLowerCase()
+          .includes(
+            row.materialName.toLowerCase()
+          )
+
+      )
+
+      .map((name) => (
+
+        <button
+          key={name}
+          type="button"
+          onClick={() => {
+
+            updateRow(
+              index,
+              "materialName",
+              name
+            );
+
+          }}
+          className="block w-full text-left px-4 py-2 hover:bg-slate-100"
+        >
+          {name}
+        </button>
+
+      ))}
+
+  </div>
+
+)}
               </div>
 
-              <div className="p-2">
+              <div className="p-2 relative">
                 <input
                   type="text"
                   value={row.size}
