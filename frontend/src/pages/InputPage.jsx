@@ -131,19 +131,39 @@ export default function InputPage({
   </button>
 
   <button
-    onClick={() => {
+  onClick={() => {
 
-     setCompanyName("");
+    const savedRows =
+      rows.filter(
+        (row) =>
+          row.materialName?.trim()
+      );
 
-setOrderDate("");
+    localStorage.setItem(
+      "zaikoRows",
+      JSON.stringify(savedRows)
+    );
 
-setSelectedRows([]);
+    setRows(
+      Array.from(
+        { length: 30 },
+        () => ({
+          ...EMPTY_ROW
+        })
+      )
+    );
 
-    }}
-    className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
-  >
-    入力完了
-  </button>
+    setCompanyName("");
+
+    setOrderDate("");
+
+    setSelectedRows([]);
+
+  }}
+  className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
+>
+  入力完了
+</button>
 
 </div>
 
