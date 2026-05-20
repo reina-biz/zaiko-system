@@ -133,19 +133,26 @@ export default function InputPage({
   <button
     onClick={() => {
 
-      const savedRows =
-        rows.filter(
-          (row) =>
-            row.materialName?.trim()
-        );
+     const savedRows =
+  rows.filter(
+    (row) =>
+      row.materialName?.trim()
+  );
 
-      setRows(savedRows);
+setRows(
+  Array.from(
+    { length: 30 },
+    () => ({
+      ...EMPTY_ROW
+    })
+  )
+);
 
-      setCompanyName("");
+setCompanyName("");
 
-      setOrderDate("");
+setOrderDate("");
 
-      setSelectedRows([]);
+setSelectedRows([]);
 
     }}
     className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
