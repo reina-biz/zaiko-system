@@ -298,7 +298,48 @@ const sizeSuggestions = [
                     )
                   }
                   className="w-full border rounded-xl px-3 py-3"
+                  
                 />
+                {(row.size || "") && (
+
+  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
+
+    {sizeSuggestions
+
+      .filter((size) =>
+
+        size
+          .toLowerCase()
+          .includes(
+            (row.size || "").toLowerCase()
+          )
+
+      )
+
+      .map((size) => (
+
+        <button
+          key={size}
+          type="button"
+          onClick={() => {
+
+            updateRow(
+              index,
+              "size",
+              size
+            );
+
+          }}
+          className="block w-full text-left px-4 py-2 hover:bg-slate-100"
+        >
+          {size}
+        </button>
+
+      ))}
+
+  </div>
+
+)}
                 {row.materialName && (
 
   <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
@@ -344,7 +385,7 @@ const sizeSuggestions = [
               <div className="p-2 relative">
                 <input
                   type="text"
-                  value={row.size}
+                  value={row.size || ""}
                   onChange={(e) =>
                     updateRow(
                       index,
