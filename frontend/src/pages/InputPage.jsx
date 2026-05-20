@@ -300,9 +300,9 @@ const sizeSuggestions = [
                   className="w-full border rounded-xl px-3 py-3"
                   
                 />
-                {(row.size || "") && (
+                {(row.size || "").length >= 2 && (
 
-  <div className="relative z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
+  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
 
     {sizeSuggestions
 
@@ -340,9 +340,9 @@ const sizeSuggestions = [
   </div>
 
 )}
-                {row.materialName && (
+                {row.materialName?.length >= 2 && (
 
-  <div className="relative z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
+  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
 
     {materialSuggestions
 
