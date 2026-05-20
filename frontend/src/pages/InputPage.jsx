@@ -142,6 +142,28 @@ export default function InputPage({
           className="bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-2xl font-semibold transition"
         >
           + 行追加
+          <button
+  onClick={() => {
+
+    const savedRows =
+      rows.filter(
+        (row) =>
+          row.materialName?.trim()
+      );
+
+    setRows(savedRows);
+
+    setCompanyName("");
+
+    setOrderDate("");
+
+    setSelectedRows([]);
+
+  }}
+  className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
+>
+  入力完了
+</button>
         </button>
 
       </div>
