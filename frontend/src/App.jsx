@@ -104,26 +104,13 @@ const [rows, setRows] =
   useState(() => {
 
     const savedRows =
-
       localStorage.getItem(
         "zaikoRows"
       );
 
-   return savedRows
-
-  ? [
-
-      ...JSON.parse(savedRows),
-
-      {},
-
-      {},
-
-      {},
-
-    ]
-
-  : [{}, {}, {}];
+    return savedRows
+      ? JSON.parse(savedRows)
+      : [];
 
   });
 
