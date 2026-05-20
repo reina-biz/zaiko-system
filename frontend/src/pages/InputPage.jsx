@@ -302,7 +302,7 @@ const sizeSuggestions = [
                 />
                 {(row.size || "") && (
 
-  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
+  <div className="relative z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
 
     {sizeSuggestions
 
@@ -342,7 +342,7 @@ const sizeSuggestions = [
 )}
                 {row.materialName && (
 
-  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
+  <div className="relative z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
 
     {materialSuggestions
 
