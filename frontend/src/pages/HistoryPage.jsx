@@ -179,10 +179,18 @@ export default function HistoryPage({
 
       <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
 
-        <div className="grid grid-cols-[120px_2fr_2fr_80px_80px_100px_1.5fr_90px] bg-slate-100 text-xs font-bold border-b">
+        <div className="grid grid-cols-[120px_120px_120px_2fr_2fr_80px_80px_100px_1.5fr_90px] bg-slate-100 text-xs font-bold border-b">
 
           <div className="p-2">
             日付
+          </div>
+
+          <div className="p-2">
+            会社名
+          </div>
+
+          <div className="p-2">
+            現場名
           </div>
 
           <div className="p-2">
@@ -227,7 +235,7 @@ export default function HistoryPage({
 
             <div
               key={index}
-              className="grid grid-cols-[120px_2fr_2fr_80px_80px_100px_1.5fr_90px] border-t"
+              className="grid grid-cols-[120px_120px_120px_2fr_2fr_80px_80px_100px_1.5fr_90px] border-t"
             >
 
               <div className="p-2">
