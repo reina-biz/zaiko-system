@@ -62,9 +62,15 @@ const materialSuggestions = [
     historyRows
 
       .filter(
-        (row) =>
-          row.materialName
-      )
+  (row) =>
+
+    row.companyName ===
+      companyName
+
+    &&
+
+    row.materialName
+)
 
       .map(
         (row) =>
@@ -82,9 +88,15 @@ const sizeSuggestions = [
     historyRows
 
       .filter(
-        (row) =>
-          row.size
-      )
+  (row) =>
+
+    row.companyName ===
+      companyName
+
+    &&
+
+    row.size
+)
 
       .map(
         (row) =>
