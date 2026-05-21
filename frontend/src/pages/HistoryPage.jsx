@@ -79,8 +79,15 @@ export default function HistoryPage({
 
   const saveRow = () => {
 
+  const updatedRows =
+    [...editedRows];
+
+  setEditedRows(
+    updatedRows
+  );
+
   setHistoryRows(
-    editedRows
+    updatedRows
   );
 
   setEditingIndex(null);
@@ -208,10 +215,13 @@ export default function HistoryPage({
 
         </div>
 
-        {filteredRows.map((row, index) => {
+        {filteredRows.map((row) => {
 
-          const isEditing =
-            editingIndex === index;
+  const index =
+    editedRows.indexOf(row);
+
+    const isEditing =
+  editingIndex === index;
 
           return (
 
