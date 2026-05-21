@@ -97,16 +97,18 @@ export default function HistoryPage({
 
   const deleteRow = (index) => {
 
-  setHistoryRows(
-
-    rows.filter(
+  const updatedRows =
+    editedRows.filter(
       (_, i) =>
         i !== index
-    )
+    );
 
-  );
+  setEditedRows(updatedRows);
+
+  setHistoryRows(updatedRows);
 
 };
+
   
 
   return (
