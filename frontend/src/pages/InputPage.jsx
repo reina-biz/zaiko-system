@@ -403,15 +403,12 @@ const materialSuggestions = [
   >
 
     {sizeSuggestions
-
       .filter(
         (size) =>
-
           size.includes(
             row.size || ""
           )
       )
-
       .map((size) => (
 
         <option
@@ -419,7 +416,7 @@ const materialSuggestions = [
           value={size}
         />
 
-            ))}
+      ))}
 
   </datalist>
 
