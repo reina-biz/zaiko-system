@@ -403,43 +403,7 @@ useEffect(() => {
             <p className="text-slate-500 mt-2">
               入力・単価比較・在庫管理・決算在庫
             </p>
-            <div className="flex flex-wrap gap-2 mt-4">
-
-  <button
-    onClick={exportCSV}
-    className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold"
-  >
-    CSV
-  </button>
-
-  <label className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-xl text-sm font-semibold cursor-pointer">
-
-    CSV読込
-
-    <input
-      type="file"
-      accept=".csv"
-      onChange={importCSV}
-      className="hidden"
-    />
-
-  </label>
-
-  <button
-    onClick={exportExcel}
-    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-sm font-semibold"
-  >
-    Excel
-  </button>
-
-  <button
-    onClick={exportPDF}
-    className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-xl text-sm font-semibold"
-  >
-    PDF
-  </button>
-
-</div>
+            
 
           </div>
 
