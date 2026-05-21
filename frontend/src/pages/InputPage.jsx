@@ -290,164 +290,100 @@ const sizeSuggestions = [
 
               </div>
 
-              <div className="p-2 relative">
-                <input
-                  type="text"
-                  value={row.materialName}
-                  onChange={(e) => {
+              <div className="p-2">
 
-  setActiveSuggestionIndex(
-    index
-  );
-
-  updateRow(
-    index,
-    "materialName",
-    e.target.value
-  );
-
-}}
-                  className="w-full border rounded-xl px-3 py-3"
-                  
-                />
-                {activeSuggestionIndex === index &&
-                (row.size || "").length >= 2 && (
-
-  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
-
-    {sizeSuggestions
-
-      .filter((size) =>
-
-        size
-          .toLowerCase()
-          .includes(
-            (row.size || "").toLowerCase()
-          )
-
+  <input
+    list="material-list"
+    type="text"
+    value={row.materialName || ""}
+    onChange={(e) =>
+      updateRow(
+        index,
+        "materialName",
+        e.target.value
       )
+    }
+    className="w-full border rounded-xl px-3 py-3"
+  />
 
-      .map((size) => (
+  <datalist id="material-list">
 
-        <button
-          key={size}
-          type="button"
-        onClick={() => {
+    {materialSuggestions.map(
+      (name) => (
 
-  updateRow(
-    index,
-    "size",
-    size
-  );
-
-  setActiveSuggestionIndex(
-    null
-  );
-
-}}
-          className="block w-full text-left px-4 py-2 hover:bg-slate-100"
-        >
-          {size}
-        </button>
-
-      ))}
-
-  </div>
-
-)}
-               {activeSuggestionIndex === index &&
-                row.materialName?.length >= 2 && (
-
-  <div className="absolute z-50 bg-white border rounded-xl shadow-lg w-full mt-1">
-
-    {materialSuggestions
-
-      .filter((name) =>
-
-        name
-          .toLowerCase()
-          .includes(
-            row.materialName.toLowerCase()
-          )
-
-      )
-
-      .map((name) => (
-
-        <button
+        <option
           key={name}
-          type="button"
-          onClick={() => {
+          value={name}
+        />
 
-            updateRow(
-              index,
-              "materialName",
-              name
-            );
+      )
+    )}
 
-          }}
-          className="block w-full text-left px-4 py-2 hover:bg-slate-100"
-        >
-          {name}
-        </button>
+  </datalist>
 
-      ))}
-
-  </div>
-
-)}
-              </div>
-
-              <div className="p-2 relative">
-                <input
-                  type="text"
-                  value={row.size || ""}
-                  onChange={(e) => {
-
-  setActiveSuggestionIndex(
-    index
-  );
-
-  updateRow(
-    index,
-    "size",
-    e.target.value
-  );
-
-}}
-                  className="w-full border rounded-xl px-3 py-3"
-                />
-              </div>
+</div>
 
               <div className="p-2">
-                <input
-                  type="text"
-                  value={row.price}
-                  onChange={(e) =>
-                    updateRow(
-                      index,
-                      "price",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded-xl px-3 py-3 text-right"
-                />
-              </div>
 
-              <div className="p-2">
-                <input
-                  type="number"
-                  value={row.quantity}
-                  onChange={(e) =>
-                    updateRow(
-                      index,
-                      "quantity",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded-xl px-3 py-3 text-right"
-                />
-              </div>
+  <input
+    list="size-list"
+    type="text"
+    value={row.size || ""}
+    onChange={(e) =>
+      updateRow(
+        index,
+        "size",
+        e.target.value
+      )
+    }
+    className="w-full border rounded-xl px-3 py-3"
+  />
+
+  <datalist id="size-list">
+
+    {sizeSuggestions.map(
+      (size) => (
+
+        <option
+          key={size}
+          value={size}
+        />
+
+      )
+    )}
+
+  </datalist>
+
+</div>
+<div className="p-2">
+  <input
+    type="text"
+    value={row.price || ""}
+    onChange={(e) =>
+      updateRow(
+        index,
+        "price",
+        e.target.value
+      )
+    }
+    className="w-full border rounded-xl px-3 py-3 text-right"
+  />
+</div>
+
+<div className="p-2">
+  <input
+    type="number"
+    value={row.quantity || ""}
+    onChange={(e) =>
+      updateRow(
+        index,
+        "quantity",
+        e.target.value
+      )
+    }
+    className="w-full border rounded-xl px-3 py-3 text-right"
+  />
+</div>
 
               <div className="p-2">
                 <input
