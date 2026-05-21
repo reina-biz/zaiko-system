@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function HistoryPage({
 
   rows,
-  setRows,
+  setHistoryRows,
   companyList,
 
 }) {
@@ -95,15 +95,17 @@ export default function HistoryPage({
 
   const deleteRow = (index) => {
 
-    const updated =
-      rows.filter(
-        (_, i) =>
-          i !== index
-      );
+  setHistoryRows(
 
-    setRows(updated);
+    rows.filter(
+      (_, i) =>
+        i !== index
+    )
 
-  };
+  );
+
+};
+  
 
   return (
 
