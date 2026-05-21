@@ -101,18 +101,16 @@ export default function App() {
   };
 
 const [rows, setRows] =
-  useState(() => {
+  useState(
 
-    const savedRows =
-      localStorage.getItem(
-        "zaikoRows"
-      );
+    Array.from(
+      { length: 30 },
+      () => ({
+        ...EMPTY_ROW
+      })
+    )
 
-    return savedRows
-      ? JSON.parse(savedRows)
-      : [];
-
-  });
+  );
 
   const [historyRows, setHistoryRows] =
   useState(() => {
@@ -137,30 +135,13 @@ useEffect(() => {
 
 }, [historyRows]);
 
-  useEffect(() => {
-
-  localStorage.setItem(
-
-    "zaikoRows",
-
-    JSON.stringify(rows)
-
-  );
-
-}, [rows]);
+ 
 
   // =========================
   // 保存
   // =========================
 
-  useEffect(() => {
-
-    localStorage.setItem(
-      "rows",
-      JSON.stringify(rows)
-    );
-
-  }, [rows]);
+  
 
   useEffect(() => {
 

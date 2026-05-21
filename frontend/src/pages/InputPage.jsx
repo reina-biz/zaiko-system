@@ -177,6 +177,32 @@ const sizeSuggestions = [
   <button
   onClick={() => {
 
+    const updatedRows =
+
+      rows.filter(
+        (_, index) =>
+
+          !selectedRows.includes(
+            index
+          )
+
+      );
+
+    setRows(
+      updatedRows
+    );
+
+    setSelectedRows([]);
+
+  }}
+  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl font-semibold transition"
+>
+  選択削除
+</button>
+
+  <button
+  onClick={() => {
+
     const savedRows =
       rows.filter(
         (row) =>
