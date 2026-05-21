@@ -96,7 +96,7 @@ const [selectedDate,
         全ての会社
       </option>
 
-      {companyList.map((company) => (
+      {(companyList || []).map((company) => (
 
         <option
           key={company}
