@@ -514,6 +514,7 @@ useEffect(() => {
   <SiteMaterialsPage
 
     rows={historyRows}
+    companyList={companyList}
 
   />
 
