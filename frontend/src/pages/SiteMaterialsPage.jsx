@@ -1,10 +1,60 @@
 export default function SiteMaterialsPage({
   rows,
+  companyList,
 }) {
+  
+    const [selectedCompany,
+  setSelectedCompany] =
+    useState("全て");
 
-  const groupedSites =
+const [searchSite,
+  setSearchSite] =
+    useState("");
 
-    rows.reduce(
+const [selectedDate,
+  setSelectedDate] =
+    useState("全て");
+
+    const filteredRows =
+
+  rows.filter((row) => {
+
+    const companyMatch =
+
+      selectedCompany === "全て"
+
+      ||
+
+      row.companyName ===
+        selectedCompany;
+
+    const siteMatch =
+
+      row.siteName
+        ?.includes(searchSite);
+
+    const dateMatch =
+
+      selectedDate === "全て"
+
+      ||
+
+      row.orderDate ===
+        selectedDate;
+
+    return (
+      companyMatch
+      &&
+      siteMatch
+      &&
+      dateMatch
+    );
+
+  });
+  
+    const groupedSites =
+
+    filteredRows.reduce(
       (acc, row) => {
 
         const site =
@@ -26,6 +76,72 @@ export default function SiteMaterialsPage({
   return (
 
     <div className="space-y-6">
+
+        <div className="bg-white rounded-3xl shadow-sm p-6">
+
+  <div className="flex flex-wrap gap-4">
+
+    <select
+      value={selectedCompany}
+      onChange={(e) =>
+        setSelectedCompany(
+          e.target.value
+        )
+      }
+      className="border rounded-2xl px-4 py-3"
+    >
+
+      <option value="全て">
+        全ての会社
+      </option>
+
+      {companyList.map((company) => (
+
+        <option
+          key={company}
+          value={company}
+        >
+          {company}
+        </option>
+
+      ))}
+
+    </select>
+
+    <input
+      type="date"
+      value={
+        selectedDate === "全て"
+          ? ""
+          : selectedDate
+      }
+      onChange={(e) =>
+
+        setSelectedDate(
+
+          e.target.value ||
+          "全て"
+
+        )
+      }
+      className="border rounded-2xl px-4 py-3"
+    />
+
+    <input
+      type="text"
+      placeholder="現場名検索"
+      value={searchSite}
+      onChange={(e) =>
+        setSearchSite(
+          e.target.value
+        )
+      }
+      className="border rounded-2xl px-4 py-3"
+    />
+
+  </div>
+
+</div>
 
       {Object.entries(
         groupedSites
