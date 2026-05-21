@@ -12,9 +12,13 @@ const [searchSite,
   setSearchSite] =
     useState("");
 
-const [selectedDate,
-  setSelectedDate] =
-    useState("全て");
+const [startMonth,
+  setStartMonth] =
+    useState("");
+
+const [endMonth,
+  setEndMonth] =
+    useState("");
 
     const filteredRows =
 
@@ -34,14 +38,24 @@ const [selectedDate,
       row.siteName
         ?.includes(searchSite);
 
-    const dateMatch =
+    const rowMonth =
 
-      selectedDate === "全て"
+  row.orderDate
+    ?.slice(0, 7);
 
-      ||
+const dateMatch =
 
-      row.orderDate ===
-        selectedDate;
+  (!startMonth ||
+
+    rowMonth >=
+      startMonth)
+
+  &&
+
+  (!endMonth ||
+
+    rowMonth <=
+      endMonth);
 
     return (
       companyMatch
@@ -82,7 +96,30 @@ const [selectedDate,
 
   <div className="flex flex-wrap gap-4">
 
-    <select
+    
+
+    <input
+  type="month"
+  value={startMonth}
+  onChange={(e) =>
+    setStartMonth(
+      e.target.value
+    )
+  }
+  className="border rounded-2xl px-4 py-3"
+/>
+
+<input
+  type="month"
+  value={endMonth}
+  onChange={(e) =>
+    setEndMonth(
+      e.target.value
+    )
+  }
+  className="border rounded-2xl px-4 py-3"
+/>
+<select
       value={selectedCompany}
       onChange={(e) =>
         setSelectedCompany(
@@ -93,7 +130,8 @@ const [selectedDate,
     >
 
       <option value="全て">
-        全ての会社
+        全て
+    
       </option>
 
       {(companyList || []).map((company) => (
@@ -108,26 +146,6 @@ const [selectedDate,
       ))}
 
     </select>
-
-    <input
-      type="date"
-      value={
-        selectedDate === "全て"
-          ? ""
-          : selectedDate
-      }
-      onChange={(e) =>
-
-        setSelectedDate(
-
-          e.target.value ||
-          "全て"
-
-        )
-      }
-      className="border rounded-2xl px-4 py-3"
-    />
-
     <input
       type="text"
       placeholder="現場名検索"
