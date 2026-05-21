@@ -16,9 +16,7 @@ export default function InputPage({
   const [selectedRows, setSelectedRows] =
     useState([]);
 
-    const [activeSuggestionIndex,
-  setActiveSuggestionIndex] =
-    useState(null);
+    
 
   const EMPTY_ROW = {
     companyName: "",
@@ -81,31 +79,7 @@ const materialSuggestions = [
 
 ];
 
-const sizeSuggestions = [
 
-  ...new Set(
-
-    historyRows
-
-      .filter(
-  (row) =>
-
-    row.companyName ===
-      companyName
-
-    &&
-
-    row.size
-)
-
-      .map(
-        (row) =>
-          row.size
-      )
-
-  )
-
-];
   const inputRows = [...rows];
 
   while (inputRows.length < 30) {
@@ -290,6 +264,36 @@ const sizeSuggestions = [
 
   const row =
     inputRows[index] || EMPTY_ROW;
+    const sizeSuggestions = [
+
+  ...new Set(
+
+    historyRows
+
+      .filter(
+        (historyRow) =>
+
+          historyRow.companyName ===
+            companyName
+
+          &&
+
+          historyRow.materialName ===
+            row.materialName
+
+          &&
+
+          historyRow.size
+      )
+
+      .map(
+        (historyRow) =>
+          historyRow.size
+      )
+
+  )
+
+];
 
   return (
 
@@ -353,6 +357,7 @@ const sizeSuggestions = [
     {materialSuggestions
 
       .filter(
+      
         (name) =>
 
           name.includes(
@@ -378,7 +383,7 @@ const sizeSuggestions = [
               <div className="p-2">
 
   <input
-    list="size-list"
+    list={`size-list-${index}`}
     type="text"
     value={row.size || ""}
     onChange={(e) =>
@@ -391,20 +396,35 @@ const sizeSuggestions = [
     className="w-full border rounded-xl px-3 py-3"
   />
 
-  <datalist id="size-list">
+  {row.size?.length >= 2 && (
 
-    {sizeSuggestions.map(
-      (size) => (
+  <datalist
+    id={`size-list-${index}`}
+  >
+
+    {sizeSuggestions
+
+      .filter(
+        (size) =>
+
+          size.includes(
+            row.size || ""
+          )
+      )
+
+      .map((size) => (
 
         <option
           key={size}
           value={size}
         />
 
-      )
-    )}
+            ))}
 
   </datalist>
+
+)}
+
 
 </div>
 <div className="p-2">
