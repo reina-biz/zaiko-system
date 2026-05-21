@@ -544,12 +544,12 @@ useEffect(() => {
 
           <HistoryPage
 
-            rows={historyRows}
-            setRows={setRows}
+  rows={historyRows}
+  setHistoryRows={setHistoryRows}
 
-            companyList={companyList}
+  companyList={companyList}
 
-          />
+/>
 
         )}
 
