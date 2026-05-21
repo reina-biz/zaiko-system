@@ -256,6 +256,40 @@ export default function HistoryPage({
 
               </div>
 
+<div className="p-2">
+
+  <input
+    value={row.companyName || ""}
+    readOnly={!isEditing}
+    onChange={(e) =>
+      updateField(
+        index,
+        "companyName",
+        e.target.value
+      )
+    }
+    className="w-full border rounded px-2 py-1 text-xs"
+  />
+
+</div>
+
+<div className="p-2">
+
+  <input
+    value={row.siteName || ""}
+    readOnly={!isEditing}
+    onChange={(e) =>
+      updateField(
+        index,
+        "siteName",
+        e.target.value
+      )
+    }
+    className="w-full border rounded px-2 py-1 text-xs"
+  />
+
+</div>
+
               <div className="p-2">
 
                 <input
