@@ -9,6 +9,8 @@ export default function InputPage({
   setCompanyName,
   companyList,
   setCompanyList,
+  siteName,
+  setSiteName,
   orderDate,
   setOrderDate,
 }) {
@@ -141,6 +143,32 @@ const materialSuggestions = [
 
     </select>
   </div>
+
+  <div>
+
+  <label className="block text-sm font-medium mb-2">
+    現場名
+  </label>
+
+  <input
+    list="site-list"
+    type="text"
+    value={siteName}
+    onChange={(e) =>
+      setSiteName(
+        e.target.value
+      )
+    }
+    className="w-[350px] border rounded-2xl px-4 py-3 bg-white"
+  />
+
+  <datalist id="site-list">
+
+    <option value="会社在庫" />
+
+  </datalist>
+
+</div>
 
   <button
     onClick={() => {

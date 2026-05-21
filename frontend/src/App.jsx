@@ -64,6 +64,9 @@ export default function App() {
   const [companyName, setCompanyName] =
     useState("");
 
+   const [siteName, setSiteName] =
+    useState("");
+
   const [companyList, setCompanyList] =
     useState(() => {
 
@@ -91,6 +94,7 @@ export default function App() {
 
   const EMPTY_ROW = {
     companyName: "",
+    siteName: "",
     orderDate: "",
     materialName: "",
     size: "",
@@ -473,6 +477,9 @@ useEffect(() => {
 
   companyName={companyName}
   setCompanyName={setCompanyName}
+
+  siteName={siteName}
+  setSiteName={setSiteName}
 
   companyList={companyList}
   setCompanyList={setCompanyList}
