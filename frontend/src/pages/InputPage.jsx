@@ -331,8 +331,8 @@ const sizeSuggestions = [
               <div className="p-2">
 
   <input
-    list="material-list"
-    type="text"
+  list={`material-list-${index}`}
+  type="text"
     value={row.materialName || ""}
     onChange={(e) =>
       updateRow(
@@ -344,20 +344,34 @@ const sizeSuggestions = [
     className="w-full border rounded-xl px-3 py-3"
   />
 
-  <datalist id="material-list">
+ {row.materialName?.length >= 2 && (
 
-    {materialSuggestions.map(
-      (name) => (
+  <datalist
+    id={`material-list-${index}`}
+  >
+
+    {materialSuggestions
+
+      .filter(
+        (name) =>
+
+          name.includes(
+            row.materialName
+          )
+      )
+
+      .map((name) => (
 
         <option
           key={name}
           value={name}
         />
 
-      )
-    )}
+      ))}
 
   </datalist>
+
+)}
 
 </div>
 
