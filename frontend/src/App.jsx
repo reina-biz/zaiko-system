@@ -18,6 +18,7 @@ import ClosingStockPage from "./pages/ClosingStockPage";
 import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
 import HistoryPage from "./pages/HistoryPage";
+import SiteMaterialsPage from "./pages/SiteMaterialsPage";
 
 export default function App() {
 
@@ -431,6 +432,7 @@ useEffect(() => {
             {[
               "入力",
               "入力履歴",
+              "各現場材料",
               "単価比較",
               "在庫管理",
               "決算在庫",
@@ -504,6 +506,18 @@ useEffect(() => {
 />
 
         )}
+
+{/* 各現場材料 */}
+
+{tab === "各現場材料" && (
+
+  <SiteMaterialsPage
+
+    rows={historyRows}
+
+  />
+
+)}
 
         {/* 単価比較 */}
 
