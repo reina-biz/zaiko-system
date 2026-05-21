@@ -79,11 +79,13 @@ export default function HistoryPage({
 
   const saveRow = () => {
 
-    setRows(editedRows);
+  setHistoryRows(
+    editedRows
+  );
 
-    setEditingIndex(null);
+  setEditingIndex(null);
 
-  };
+};
 
   const cancelEdit = () => {
 
