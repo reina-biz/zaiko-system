@@ -79,26 +79,34 @@ const dateMatch =
 
 )
   
-    const groupedSites =
+    const groupedCompanies =
 
-    filteredRows.reduce(
-      (acc, row) => {
+  filteredRows.reduce(
+    (acc, row) => {
 
-        const site =
-          row.siteName ||
-          "未設定";
+      const company =
+        row.companyName ||
+        "未設定";
 
-        if (!acc[site]) {
-          acc[site] = [];
-        }
+      const site =
+        row.siteName ||
+        "未設定";
 
-        acc[site].push(row);
+      if (!acc[company]) {
+        acc[company] = {};
+      }
 
-        return acc;
+      if (!acc[company][site]) {
+        acc[company][site] = [];
+      }
 
-      },
-      {}
-    );
+      acc[company][site].push(row);
+
+      return acc;
+
+    },
+    {}
+  );
 
   return (
 
@@ -175,8 +183,20 @@ const dateMatch =
 </div>
 
       {Object.entries(
-        groupedSites
-      ).map(([site, items]) => (
+        groupedCompanies
+      ).map(([company, sites]) => (
+
+ <div key={company}>
+
+  <div className="text-3xl font-bold mb-6">
+
+    {company}
+
+  </div>
+
+{Object.entries(
+  sites
+).map(([site, items]) => (
 
         <div
           key={site}
@@ -320,6 +340,10 @@ const dateMatch =
           </div>
 
         </div>
+
+        ))}
+
+      </div>
 
       ))}
 
