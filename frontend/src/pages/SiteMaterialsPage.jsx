@@ -223,37 +223,24 @@ doc.setFont(
   columnStyles: {
 
   0: {
-    cellWidth: 22,
+    cellWidth: 28,
   },
 
   1: {
-    cellWidth: 24,
+    cellWidth: 52,
   },
 
   2: {
-    cellWidth: 24,
+    cellWidth: 30,
   },
 
   3: {
-    cellWidth: 38,
+    cellWidth: 22,
+    halign: "right",
   },
 
   4: {
-    cellWidth: 24,
-  },
-
-  5: {
-    cellWidth: 18,
-    halign: "right",
-  },
-
-  6: {
-    cellWidth: 28,
-    halign: "right",
-  },
-
-  7: {
-    cellWidth: 32,
+    cellWidth: 30,
     halign: "right",
   },
 
@@ -269,8 +256,6 @@ doc.setFont(
 
     head: [[
       "日付",
-      "会社名",
-      "現場名",
       "材料名",
       "型番",
       "使用数",
@@ -288,7 +273,7 @@ doc.setFont(
 
       {
         content: company,
-        colSpan: 7,
+        colSpan: 5,
         styles: {
 
   font: "NotoSansJP",
@@ -313,7 +298,7 @@ doc.setFont(
 
           {
             content: `現場: ${site}`,
-            colSpan: 7,
+            colSpan: 5,
             styles: {
 
   font: "NotoSansJP",
@@ -334,11 +319,7 @@ doc.setFont(
 
             row.orderDate,
 
-            row.companyName,
-
-            row.siteName,
-
-            row.materialName,
+             row.materialName,
 
             row.size,
 
@@ -384,7 +365,7 @@ rows.push([
 
       `会社合計 : ¥${companyTotal.toLocaleString()}`,
 
-    colSpan: 7,
+    colSpan: 5,
 
     styles: {
 
@@ -439,7 +420,7 @@ if (
 
         `総合計 : ¥${grandTotal.toLocaleString()}`,
 
-      colSpan: 7,
+      colSpan: 5,
 
       styles: {
 
