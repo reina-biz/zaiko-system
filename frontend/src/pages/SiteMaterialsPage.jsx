@@ -173,7 +173,27 @@ const dateMatch =
 
           <h2 className="text-2xl font-bold mb-4">
 
-            {site}
+              {startMonth
+              ?.replace(
+              /(\d{4})-(\d{2})/,
+              "$1年$2月"
+              )}
+
+              {" ～ "}
+
+            {endMonth
+            ?.replace(
+            /(\d{4})-(\d{2})/,
+            "$1年$2月"
+            )}
+
+           {"　"}
+
+           {selectedCompany}
+
+          {"　"}
+
+          {site}
 
           </h2>
 
