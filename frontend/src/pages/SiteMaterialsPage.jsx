@@ -182,7 +182,7 @@ const dateMatch =
 
 </div>
 
- <div className="bg-white rounded-2xl shadow-sm px-4 py-1">
+ <div className="bg-white rounded-2xl shadow-sm px-4 py-2">
 
   <div className="text-right text-lg font-bold">
 
