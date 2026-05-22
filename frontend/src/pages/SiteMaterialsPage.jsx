@@ -237,7 +237,7 @@ const dateMatch =
 
   </div>
 
-  <div className="text-sm text-slate-500">
+  <div className="text-sm text-slate-800">
 
     {startMonth
       ?.replace(
