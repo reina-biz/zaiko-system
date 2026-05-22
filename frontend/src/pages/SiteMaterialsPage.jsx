@@ -236,31 +236,30 @@ const dateMatch =
                 >
 
                  <div className="p-3">
+  {row.orderDate}
+</div>
 
-                 {row.orderDate}
+<div className="p-3">
+  {row.materialName}
+</div>
 
-                 </div>
+<div className="p-3">
+  {row.size}
+</div>
 
+<div className="p-3 text-right">
+  {row.used}
+</div>
 
-                  <div className="p-3">
-                    {row.materialName}
-                  </div>
+<div className="p-3 text-right">
 
-                  <div className="p-3">
-                    {row.size}
-                  </div>
+  {Number(
+    row.price || 0
+  ).toLocaleString()} 円
 
-                  <div className="p-3 text-right">
-                    {row.used}
-                  </div>
-                  <div className="p-3 text-right">
+</div>
 
-                    {Number(
-                     row.price || 0
-                   ).toLocaleString()} 円
-
-                  </div>
-                  <div className="p-3 text-right font-semibold">
+<div className="p-3 text-right font-semibold">
 
   {(
     Number(row.price || 0)
