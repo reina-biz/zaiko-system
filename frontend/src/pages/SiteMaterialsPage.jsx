@@ -1,4 +1,9 @@
 import { useState } from "react";
+
+import * as XLSX from "xlsx";
+
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 export default function SiteMaterialsPage({
   rows,
   companyList,
@@ -79,6 +84,97 @@ const dateMatch =
 
 )
   
+const handleExcelExport = () => {
+
+  const exportData = filteredRows.map((row) => ({
+
+    日付: row.orderDate,
+    会社名: row.companyName,
+    現場名: row.siteName,
+    材料名: row.materialName,
+    型番: row.size,
+    使用数: row.used,
+    単価: row.price,
+
+    合計:
+      Number(row.price || 0)
+      *
+      Number(row.used || 0),
+
+  }));
+
+  const worksheet =
+    XLSX.utils.json_to_sheet(
+      exportData
+    );
+
+  const workbook =
+    XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(
+    workbook,
+    worksheet,
+    "各現場材料"
+  );
+
+  XLSX.writeFile(
+    workbook,
+    "各現場材料.xlsx"
+  );
+
+};
+
+const handlePdfExport = async () => {
+
+  const doc =
+    new jsPDF({
+      orientation: "landscape",
+    });
+
+  autoTable(doc, {
+
+    head: [[
+      "日付",
+      "会社名",
+      "現場名",
+      "材料名",
+      "型番",
+      "使用数",
+      "単価",
+      "合計",
+    ]],
+
+    body: filteredRows.map((row) => [
+
+      row.orderDate,
+      row.companyName,
+      row.siteName,
+      row.materialName,
+      row.size,
+      row.used,
+
+      `${Number(
+        row.price || 0
+      ).toLocaleString()}円`,
+
+      `${(
+        Number(row.price || 0)
+        *
+        Number(row.used || 0)
+      ).toLocaleString()}円`,
+
+    ]),
+
+  });
+
+  doc.save(
+    "各現場材料.pdf"
+  );
+
+};
+
+
+
     const groupedCompanies =
 
   filteredRows.reduce(
@@ -219,6 +315,50 @@ const dateMatch =
 </div>
 
 </div>
+
+</div>
+
+<div className="flex gap-3">
+
+  <button
+
+    onClick={handleExcelExport}
+
+    className="
+      bg-emerald-500
+      hover:bg-emerald-600
+      text-white
+      px-5
+      py-3
+      rounded-2xl
+      font-semibold
+    "
+
+  >
+
+    Excel出力
+
+  </button>
+
+  <button
+
+    onClick={handlePdfExport}
+
+    className="
+      bg-rose-500
+      hover:bg-rose-600
+      text-white
+      px-5
+      py-3
+      rounded-2xl
+      font-semibold
+    "
+
+  >
+
+    PDF出力
+
+  </button>
 
 </div>
 
