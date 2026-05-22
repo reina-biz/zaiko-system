@@ -126,6 +126,11 @@ const handleExcelExport = () => {
 
 const handlePdfExport = async () => {
 
+  const doc =
+  new jsPDF({
+    orientation: "portrait",
+  });
+
   
 
 const response =
@@ -192,10 +197,7 @@ doc.setFont(
   "NotoSansJP"
 );
 
-  new jsPDF({
-    orientation: "portrait",
-  });
-
+  
   autoTable(doc, {
     styles: {
 
