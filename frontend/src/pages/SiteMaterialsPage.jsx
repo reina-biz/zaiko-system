@@ -240,7 +240,7 @@ const dateMatch =
   円
 
 </div>
-<div className="p-4 text-right font-bold text-lg border-t">
+<div className="p-4 flex justify-end font-bold text-lg border-t">
 
   現場合計：
 
