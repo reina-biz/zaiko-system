@@ -218,11 +218,41 @@ const dateMatch =
 
  <div key={company}>
 
-  <div className="text-xl font-bold mt-8 mb-4">
+  <div className="mt-2 mb-2">
+
+  <div className="text-lg font-semibold text-slate-700">
 
     {company}
 
   </div>
+
+  <div className="text-sm text-slate-500">
+
+    {startMonth
+      ?.replace(
+        /(\d{4})-(\d{2})/,
+        "$1年$2月"
+      )}
+
+    {" ～ "}
+
+    {endMonth
+      ?.replace(
+        /(\d{4})-(\d{2})/,
+        "$1年$2月"
+      )}
+
+    {"　"}
+
+    {selectedCompany}
+
+    {"　"}
+
+    {site}
+
+  </div>
+
+</div>
 
 {Object.entries(
   sites
@@ -233,31 +263,7 @@ const dateMatch =
           className="bg-white rounded-3xl shadow-sm p-6 mb-6"
         >
 
-          <h2 className="text-2xl font-bold mb-4">
-
-              {startMonth
-              ?.replace(
-              /(\d{4})-(\d{2})/,
-              "$1年$2月"
-              )}
-
-              {" ～ "}
-
-            {endMonth
-            ?.replace(
-            /(\d{4})-(\d{2})/,
-            "$1年$2月"
-            )}
-
-           {"　"}
-
-           {selectedCompany}
-
-          {"　"}
-
-          {site}
-
-          </h2>
+          
 
           <div className="overflow-hidden rounded-2xl border">
 
