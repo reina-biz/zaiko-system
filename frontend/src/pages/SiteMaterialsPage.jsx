@@ -126,10 +126,7 @@ const handleExcelExport = () => {
 
 const handlePdfExport = async () => {
 
-  const doc =
-  new jsPDF({
-    orientation: "landscape",
-  });
+  
 
 const response =
 
@@ -224,11 +221,11 @@ doc.setFont(
   columnStyles: {
 
   6: {
-    halign: "left",
+    halign: "right"
   },
 
   7: {
-    halign: "left",
+    halign: "right"
   },
 
 },
