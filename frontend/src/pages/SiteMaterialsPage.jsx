@@ -199,7 +199,7 @@ const dateMatch =
 
           <div className="overflow-hidden rounded-2xl border">
 
-            <div className="grid grid-cols-[120px_2fr_2fr_1fr_1fr_1fr] bg-slate-100 font-semibold text-sm">
+            <div className="grid grid-cols-[120px_2fr_2fr_1fr_1fr_1fr_1fr] bg-slate-100 font-semibold text-sm">
 
               <div className="p-3">
                日付
