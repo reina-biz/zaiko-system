@@ -240,7 +240,7 @@ const dateMatch =
   円
 
 </div>
-<div className="p-4 text-right font-bold text-lg bg-slate-50">
+<div className="p-4 text-right font-bold text-lg border-t">
 
   現場合計：
 
@@ -264,15 +264,7 @@ const dateMatch =
 
   円
 
-  <div className="text-sm text-slate-500 mt-1">
-
-    {items[0]?.orderDate
-      ?.replace(
-        /(\d{4})-(\d{2})-(\d{2})/,
-        "$1年$2月$3日"
-      )}
-
-  </div>
+  
 
 </div>
 
