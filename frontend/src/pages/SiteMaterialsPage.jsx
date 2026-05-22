@@ -218,7 +218,7 @@ const dateMatch =
 
  <div
   key={company}
-  className="bg-blue-50 rounded-3xl p-4 mb-6 border border-blue-100"
+  className="bg-indigo-50 rounded-3xl p-4 mb-6 border border-blue-100"
 >
 
   <div className="text-2xl font-bold text-black mb-2 ml-1">
