@@ -216,7 +216,10 @@ const dateMatch =
         groupedCompanies
       ).map(([company, sites]) => (
 
- <div key={company} className="mb-6">
+ <div
+  key={company}
+  className="bg-slate-50 rounded-3xl p-4 mb-6"
+>
 
   <div className="text-2xl font-bold text-black mb-2 ml-1">
 
@@ -230,7 +233,7 @@ const dateMatch =
   sites
 ).map(([site, items]) => (
 
-      <div key={site} className="mb-1">
+      <div key={site} className="mb-3">
 
   <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
 
@@ -258,7 +261,7 @@ const dateMatch =
 
   </div>
 
-  <div className="bg-white rounded-3xl shadow-sm p-6">
+  <div className="bg-white rounded-3xl shadow-sm p-4">
 
     <div className="overflow-hidden rounded-2xl border">
 
