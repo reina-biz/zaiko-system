@@ -180,6 +180,36 @@ const dateMatch =
 
   </div>
 
+  <div className="bg-white rounded-3xl shadow-sm p-6">
+
+  <div className="text-right text-3xl font-bold">
+
+    総合計：
+
+    {filteredRows
+
+      .reduce(
+        (sum, row) =>
+
+          sum +
+
+          (
+            Number(row.price || 0)
+            *
+            Number(row.used || 0)
+          ),
+
+        0
+      )
+
+      .toLocaleString()}
+
+    円
+
+  </div>
+
+</div>
+
 </div>
 
       {Object.entries(
