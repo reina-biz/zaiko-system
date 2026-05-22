@@ -131,7 +131,102 @@ const handlePdfExport = async () => {
     orientation: "portrait",
   });
 
+const response =
+
+  await fetch(
+    "/fonts/NotoSansJP-Regular.ttf"
+  );
+
+const font =
+  await response.arrayBuffer();
+
+let binary = "";
+
+const bytes =
+  new Uint8Array(font);
+
+const chunkSize = 8192;
+
+for (
+
+  let i = 0;
+
+  i < bytes.length;
+
+  i += chunkSize
+
+) {
+
+  binary +=
+
+    String.fromCharCode(
+
+      ...bytes.subarray(
+        i,
+        i + chunkSize
+      )
+
+    );
+
+}
+
+const base64Font =
+  window.btoa(binary);
+
+doc.addFileToVFS(
+
+  "NotoSansJP-Regular.ttf",
+
+  base64Font
+
+);
+
+doc.addFont(
+
+  "NotoSansJP-Regular.ttf",
+
+  "NotoSansJP",
+
+  "normal"
+
+);
+
+doc.setFont(
+  "NotoSansJP"
+);
+
+  new jsPDF({
+    orientation: "portrait",
+  });
+
   autoTable(doc, {
+    styles: {
+
+  font: "NotoSansJP",
+
+  fontStyle: "normal",
+
+  },
+
+  headStyles: {
+
+    font: "NotoSansJP",
+
+    fontStyle: "normal",
+
+    fillColor: [15, 23, 42],
+
+    textColor: 255,
+
+  },
+
+  bodyStyles: {
+
+    font: "NotoSansJP",
+
+    fontStyle: "normal",
+
+  },
 
     head: [[
       "日付",
