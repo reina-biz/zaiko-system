@@ -110,7 +110,7 @@ const dateMatch =
 
   return (
 
-    <div className="space-y-6">
+    <div className="space-y-3">
 
         <div className="bg-white rounded-3xl shadow-sm p-6">
 
@@ -182,9 +182,9 @@ const dateMatch =
 
 </div>
 
- <div className="bg-white rounded-3xl shadow-sm px-4 py-2">
+ <div className="bg-white rounded-3xl shadow-sm px-4 py-0.5">
 
-  <div className="text-right text-xl font-bold">
+  <div className="text-right text-2xl font-bold">
 
     総合計：
 
