@@ -404,6 +404,63 @@ rows.push([
 
 ]);
 
+if (
+
+  company ===
+
+  Object.keys(groupedCompanies)
+
+    .slice(-1)[0]
+
+) {
+
+  const grandTotal =
+
+    filteredRows.reduce(
+
+      (sum, row) =>
+
+        sum +
+
+        (
+          Number(row.price || 0)
+          *
+          Number(row.used || 0)
+        ),
+
+      0
+    );
+
+  rows.push([
+
+    {
+
+      content:
+
+        `総合計 : ¥${grandTotal.toLocaleString()}`,
+
+      colSpan: 7,
+
+      styles: {
+
+        font: "NotoSansJP",
+
+        fontStyle: "normal",
+
+        halign: "right",
+
+        fillColor: [226, 232, 240],
+
+        fontSize: 14,
+
+      },
+
+    },
+
+  ]);
+
+}
+
     return rows;
 
   }),
@@ -427,19 +484,7 @@ const grandTotal =
     0
   );
 
-doc.text(
 
-  `総合計 : ¥${grandTotal.toLocaleString()}`,
-
-  180,
-
-  280,
-
-  {
-    align: "right",
-  }
-
-);
 
   doc.save(
     "各現場材料.pdf"
