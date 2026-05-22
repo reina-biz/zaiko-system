@@ -188,7 +188,7 @@ const dateMatch =
 
  <div key={company}>
 
-  <div className="text-3xl font-bold mb-6">
+  <div className="text-xl font-bold mb-4">
 
     {company}
 
