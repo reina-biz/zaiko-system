@@ -180,7 +180,9 @@ const dateMatch =
 
   </div>
 
-  <div className="bg-white rounded-3xl shadow-sm p-6">
+</div>
+
+ <div className="bg-white rounded-3xl shadow-sm p-6">
 
   <div className="text-right text-3xl font-bold">
 
@@ -207,8 +209,6 @@ const dateMatch =
     円
 
   </div>
-
-</div>
 
 </div>
 
