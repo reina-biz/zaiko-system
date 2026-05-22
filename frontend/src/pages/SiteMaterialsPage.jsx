@@ -229,7 +229,7 @@ const dateMatch =
           className="bg-white rounded-3xl shadow-sm p-6 mb-6" 
         >
 
-          <div className="mb-3">
+          <div className="mb-2">
 
   <div className="text-lg font-semibold text-slate-700">
 
