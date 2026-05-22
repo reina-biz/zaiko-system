@@ -237,46 +237,45 @@ const grandTotal =
 
   margin: {
 
-  left: 6,
-
-  right: 6,
+ left: 2,
+ right: 2,
 
   top: 10,
 
 },
 
-tableWidth: "auto",
+tableWidth: "wrap",
 
 
 
   columnStyles: {
 
-  0: {
-    cellWidth: 26,
-  },
+ 0: {
+  cellWidth: 30,
+},
 
-  1: {
-    cellWidth: 48,
-  },
+1: {
+  cellWidth: 60,
+},
 
-  2: {
-    cellWidth: 26,
-  },
+2: {
+  cellWidth: 32,
+},
 
-  3: {
-    cellWidth: 20,
-    halign: "right",
-  },
+3: {
+  cellWidth: 24,
+  halign: "right",
+},
 
-  4: {
-    cellWidth: 24,
-    halign: "right",
-  },
+4: {
+  cellWidth: 30,
+  halign: "right",
+},
 
-  5: {
-    cellWidth: 28,
-    halign: "right",
-  },
+5: {
+  cellWidth: 34,
+  halign: "right",
+},
 
 },
 
