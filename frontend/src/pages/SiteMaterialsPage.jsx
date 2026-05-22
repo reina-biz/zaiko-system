@@ -246,9 +246,7 @@ const dateMatch =
 
     {selectedCompany}
 
-    {"　"}
-
-    {site}
+  
 
   </div>
 
@@ -263,7 +261,11 @@ const dateMatch =
           className="bg-white rounded-3xl shadow-sm p-6 mb-6"
         >
 
-          
+          <div className="text-lg font-semibold mb-3">
+
+  {site}
+
+</div>
 
           <div className="overflow-hidden rounded-2xl border">
 
