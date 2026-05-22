@@ -218,6 +218,12 @@ const dateMatch =
 
  <div key={company}>
 
+  <div className="text-2xl font-bold text-black mb-4">
+
+  {company}
+
+</div>
+
   
 
 {Object.entries(
@@ -226,18 +232,14 @@ const dateMatch =
 
         <div
           key={site}
-          className="bg-white rounded-3xl shadow-sm p-6 mb-6" 
+          className="bg-white rounded-3xl shadow-sm p-6 mb-2"
         >
 
           <div className="mb-2">
 
-  <div className="text-lg font-semibold text-black">
+  
 
-    {company}
-
-  </div>
-
-  <div className="text-sm text-black">
+  <div className="mb-2 flex items-center gap-3 text-sm text-black font-semibold">
 
     {startMonth
       ?.replace(
@@ -255,7 +257,7 @@ const dateMatch =
 
     {"　"}
 
-    {selectedCompany}
+    {company}
 
     {"　"}
 
