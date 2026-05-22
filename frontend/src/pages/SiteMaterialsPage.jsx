@@ -275,7 +275,6 @@ doc.setFont(
       "型番",
       "使用数",
       "単価",
-      "合計",
     ]],
 
     body: Object.entries(groupedCompanies)
@@ -289,7 +288,7 @@ doc.setFont(
 
       {
         content: company,
-        colSpan: 8,
+        colSpan: 7,
         styles: {
 
   font: "NotoSansJP",
@@ -314,7 +313,7 @@ doc.setFont(
 
           {
             content: `現場: ${site}`,
-            colSpan: 8,
+            colSpan: 7,
             styles: {
 
   font: "NotoSansJP",
@@ -349,17 +348,61 @@ doc.setFont(
               row.price || 0
             ).toLocaleString()}円`,
 
-            `${(
-              Number(row.price || 0)
-              *
-              Number(row.used || 0)
-            ).toLocaleString()}円`,
+            
 
           ]);
 
         });
 
       });
+
+const companyTotal =
+
+  Object.values(sites)
+
+    .flat()
+
+    .reduce(
+
+      (sum, row) =>
+
+        sum +
+
+        (
+          Number(row.price || 0)
+          *
+          Number(row.used || 0)
+        ),
+
+      0
+    );
+
+rows.push([
+
+  {
+    content:
+
+      `会社合計 : ¥${companyTotal.toLocaleString()}`,
+
+    colSpan: 7,
+
+    styles: {
+
+      font: "NotoSansJP",
+
+      fontStyle: "normal",
+
+      halign: "right",
+
+      fillColor: [248, 250, 252],
+
+      fontSize: 12,
+
+    },
+
+  },
+
+]);
 
     return rows;
 
