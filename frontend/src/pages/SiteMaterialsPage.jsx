@@ -427,32 +427,19 @@ const grandTotal =
     0
   );
 
-rows.push([
+doc.text(
+
+  `総合計 : ¥${grandTotal.toLocaleString()}`,
+
+  180,
+
+  280,
 
   {
-    content:
+    align: "right",
+  }
 
-      `総合計 : ¥${grandTotal.toLocaleString()}`,
-
-    colSpan: 7,
-
-    styles: {
-
-      font: "NotoSansJP",
-
-      fontStyle: "normal",
-
-      halign: "right",
-
-      fillColor: [226, 232, 240],
-
-      fontSize: 14,
-
-    },
-
-  },
-
-]);
+);
 
   doc.save(
     "各現場材料.pdf"
