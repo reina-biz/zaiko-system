@@ -235,7 +235,11 @@ const dateMatch =
 
       <div key={site} className="mb-3">
 
-  <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
+  
+
+  <div className="bg-white rounded-3xl shadow-sm p-4">
+
+    <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
 
     {startMonth
       ?.replace(
@@ -256,8 +260,6 @@ const dateMatch =
     {site}
 
   </div>
-
-  <div className="bg-white rounded-3xl shadow-sm p-4">
 
     <div className="overflow-hidden rounded-2xl border">
 
