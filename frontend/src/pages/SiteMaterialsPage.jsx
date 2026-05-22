@@ -252,10 +252,16 @@ doc.setFont(
         content: company,
         colSpan: 8,
         styles: {
-          fontStyle: "bold",
-          fillColor: [226, 232, 240],
-          fontSize: 13,
-        },
+
+  font: "NotoSansJP",
+
+  fontStyle: "normal",
+
+  fillColor: [226, 232, 240],
+
+  fontSize: 13,
+
+},
       },
 
     ]);
@@ -271,9 +277,14 @@ doc.setFont(
             content: `現場: ${site}`,
             colSpan: 8,
             styles: {
-              fontStyle: "bold",
-              fillColor: [241, 245, 249],
-            },
+
+  font: "NotoSansJP",
+
+  fontStyle: "normal",
+
+  fillColor: [241, 245, 249],
+
+},
           },
 
         ]);
