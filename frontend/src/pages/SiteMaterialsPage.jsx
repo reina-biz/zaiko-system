@@ -232,7 +232,7 @@ const dateMatch =
 
                 <div
                   key={index}
-                  className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] border-t text-sm"
+                  className="grid grid-cols-[120px_2fr_2fr_120px_120px_120px] border-t text-sm"
                 >
 
                  <div className="p-3">
