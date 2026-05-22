@@ -253,10 +253,6 @@ const dateMatch =
 
     {"　"}
 
-    {company}
-
-    {"　"}
-
     {site}
 
   </div>
