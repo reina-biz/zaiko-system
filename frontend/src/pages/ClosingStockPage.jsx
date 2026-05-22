@@ -638,27 +638,10 @@ export default function ClosingStockPage({
 
         </button>
 
-        <button
+       
 
-          onClick={() =>
-            window.print()
-          }
-
-          className="
-            bg-slate-700
-            hover:bg-slate-800
-            text-white
-            px-5
-            py-3
-            rounded-2xl
-            font-semibold
-          "
-
-        >
-
-          印刷
-
-        </button>
+          
+        
 
       </div>
 
