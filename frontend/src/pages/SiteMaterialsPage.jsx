@@ -199,7 +199,11 @@ const dateMatch =
 
           <div className="overflow-hidden rounded-2xl border">
 
-            <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] bg-slate-100 font-semibold text-sm">
+            <div className="grid grid-cols-[120px_2fr_2fr_1fr_1fr_1fr] bg-slate-100 font-semibold text-sm">
+
+              <div className="p-3">
+               日付
+              </div>
 
               <div className="p-3">
                 材料名
@@ -230,6 +234,13 @@ const dateMatch =
                   key={index}
                   className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] border-t text-sm"
                 >
+
+                 <div className="p-3">
+
+                 {row.orderDate}
+
+                 </div>
+
 
                   <div className="p-3">
                     {row.materialName}
