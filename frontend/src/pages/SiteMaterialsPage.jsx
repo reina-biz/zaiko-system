@@ -218,7 +218,7 @@ const dateMatch =
 
  <div
   key={company}
-  className="rounded-3xl border-2 border-slate-200 p-4 mb-6"
+  className="bg-white rounded-3xl shadow-sm p-6 mb-6"
 >
 
   <div className="text-2xl font-bold text-black mb-2 ml-1">
@@ -237,7 +237,7 @@ const dateMatch =
 
   
 
-  <div className="bg-white rounded-3xl shadow-sm p-4">
+  <div className="mb-4">
 
     <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
 
