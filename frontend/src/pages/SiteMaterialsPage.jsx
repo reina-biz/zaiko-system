@@ -218,7 +218,7 @@ const dateMatch =
 
  <div key={company} className="mb-6">
 
-  <div className="text-2xl font-bold text-black mb-4">
+  <div className="text-2xl font-bold text-black mb-2 ml-1">
 
   {company}
 
@@ -230,14 +230,7 @@ const dateMatch =
   sites
 ).map(([site, items]) => (
 
-        <div
-          key={site}
-          className="bg-white rounded-3xl shadow-sm p-6 mb-1"
-        >
-
-          <div className="mb-2">
-
-  
+      <div key={site} className="mb-1">
 
   <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
 
@@ -265,9 +258,9 @@ const dateMatch =
 
   </div>
 
-</div>
+  <div className="bg-white rounded-3xl shadow-sm p-6">
 
-          <div className="overflow-hidden rounded-2xl border">
+    <div className="overflow-hidden rounded-2xl border">
 
             <div className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_140px] bg-slate-100 font-semibold text-sm">
 
@@ -375,9 +368,11 @@ const dateMatch =
 
 </div>
 
-          </div>
+    </div>
 
-        </div>
+  </div>
+
+          </div>
 
         ))}
 
