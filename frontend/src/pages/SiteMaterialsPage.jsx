@@ -182,9 +182,9 @@ const dateMatch =
 
 </div>
 
- <div className="bg-white rounded-3xl shadow-sm p-6">
+ <div className="bg-white rounded-3xl shadow-sm p-3">
 
-  <div className="text-right text-3xl font-bold">
+  <div className="text-right text-2xl font-bold">
 
     総合計：
 
