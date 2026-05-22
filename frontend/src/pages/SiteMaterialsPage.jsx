@@ -127,9 +127,9 @@ const handleExcelExport = () => {
 const handlePdfExport = async () => {
 
   const doc =
-    new jsPDF({
-      orientation: "landscape",
-    });
+  new jsPDF({
+    orientation: "portrait",
+  });
 
   autoTable(doc, {
 
@@ -144,26 +144,81 @@ const handlePdfExport = async () => {
       "合計",
     ]],
 
-    body: filteredRows.map((row) => [
+    body: Object.entries(groupedCompanies)
 
-      row.orderDate,
-      row.companyName,
-      row.siteName,
-      row.materialName,
-      row.size,
-      row.used,
+  .flatMap(([company, sites]) => {
 
-      `${Number(
-        row.price || 0
-      ).toLocaleString()}円`,
+    const rows = [];
 
-      `${(
-        Number(row.price || 0)
-        *
-        Number(row.used || 0)
-      ).toLocaleString()}円`,
+    // 会社タイトル
+    rows.push([
 
-    ]),
+      {
+        content: company,
+        colSpan: 8,
+        styles: {
+          fontStyle: "bold",
+          fillColor: [226, 232, 240],
+          fontSize: 13,
+        },
+      },
+
+    ]);
+
+    Object.entries(sites)
+
+      .forEach(([site, items]) => {
+
+        // 現場名
+        rows.push([
+
+          {
+            content: `現場: ${site}`,
+            colSpan: 8,
+            styles: {
+              fontStyle: "bold",
+              fillColor: [241, 245, 249],
+            },
+          },
+
+        ]);
+
+        // データ
+        items.forEach((row) => {
+
+          rows.push([
+
+            row.orderDate,
+
+            row.companyName,
+
+            row.siteName,
+
+            row.materialName,
+
+            row.size,
+
+            row.used,
+
+            `${Number(
+              row.price || 0
+            ).toLocaleString()}円`,
+
+            `${(
+              Number(row.price || 0)
+              *
+              Number(row.used || 0)
+            ).toLocaleString()}円`,
+
+          ]);
+
+        });
+
+      });
+
+    return rows;
+
+  }),
 
   });
 
