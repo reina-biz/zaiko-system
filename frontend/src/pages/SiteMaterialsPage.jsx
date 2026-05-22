@@ -216,7 +216,7 @@ const dateMatch =
         groupedCompanies
       ).map(([company, sites]) => (
 
- <div key={company}>
+ <div key={company} className="mb-6">
 
   <div className="text-2xl font-bold text-black mb-4">
 
@@ -232,14 +232,14 @@ const dateMatch =
 
         <div
           key={site}
-          className="bg-white rounded-3xl shadow-sm p-6 mb-2"
+          className="bg-white rounded-3xl shadow-sm p-6 mb-1"
         >
 
           <div className="mb-2">
 
   
 
-  <div className="mb-2 flex items-center gap-3 text-sm text-black font-semibold">
+  <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
 
     {startMonth
       ?.replace(
