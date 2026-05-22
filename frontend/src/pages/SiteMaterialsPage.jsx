@@ -128,7 +128,7 @@ const handlePdfExport = async () => {
 
   const doc =
   new jsPDF({
-    orientation: "portrait",
+    orientation: "landscape",
   });
 
 const response =
@@ -219,6 +219,19 @@ doc.setFont(
     textColor: 255,
 
   },
+
+
+  columnStyles: {
+
+  6: {
+    halign: "left",
+  },
+
+  7: {
+    halign: "left",
+  },
+
+},
 
   bodyStyles: {
 
