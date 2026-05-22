@@ -410,6 +410,50 @@ rows.push([
 
   });
 
+const grandTotal =
+
+  filteredRows.reduce(
+
+    (sum, row) =>
+
+      sum +
+
+      (
+        Number(row.price || 0)
+        *
+        Number(row.used || 0)
+      ),
+
+    0
+  );
+
+rows.push([
+
+  {
+    content:
+
+      `総合計 : ¥${grandTotal.toLocaleString()}`,
+
+    colSpan: 7,
+
+    styles: {
+
+      font: "NotoSansJP",
+
+      fontStyle: "normal",
+
+      halign: "right",
+
+      fillColor: [226, 232, 240],
+
+      fontSize: 14,
+
+    },
+
+  },
+
+]);
+
   doc.save(
     "各現場材料.pdf"
   );
