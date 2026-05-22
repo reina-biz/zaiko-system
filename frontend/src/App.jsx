@@ -393,11 +393,11 @@ useEffect(() => {
 
     <div className="min-h-screen bg-slate-100 p-3">
 
-      <div className="w-full space-y-6">
+      <div className="w-full space-y-3">
 
         {/* タイトル */}
 
-        <div className="bg-white rounded-3xl shadow-sm p-6 flex justify-between items-center">
+        <div className="bg-white rounded-2xl shadow-sm p-4 flex justify-between items-center">
 
           <div>
 
@@ -425,7 +425,7 @@ useEffect(() => {
 
         {/* タブ */}
 
-        <div className="bg-white rounded-3xl shadow-sm p-4">
+        <div className="bg-white rounded-2xl shadow-sm p-3">
 
           <div className="flex flex-wrap gap-3">
 
