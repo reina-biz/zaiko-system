@@ -197,6 +197,22 @@ doc.setFont(
   "NotoSansJP"
 );
 
+const grandTotal =
+
+  filteredRows.reduce(
+
+    (sum, row) =>
+
+      sum +
+
+      (
+        Number(row.price || 0)
+        *
+        Number(row.used || 0)
+      ),
+
+    0
+  );
   
   autoTable(doc, {
     styles: {
@@ -462,22 +478,7 @@ if (
 
   });
 
-const grandTotal =
 
-  filteredRows.reduce(
-
-    (sum, row) =>
-
-      sum +
-
-      (
-        Number(row.price || 0)
-        *
-        Number(row.used || 0)
-      ),
-
-    0
-  );
 
 
 
