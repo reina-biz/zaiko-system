@@ -231,7 +231,7 @@ const dateMatch =
 
           <div className="mb-2">
 
-  <div className="text-lg font-semibold text-slate-700">
+  <div className="text-lg font-semibold text-black">
 
     {company}
 
