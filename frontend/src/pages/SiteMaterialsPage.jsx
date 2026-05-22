@@ -222,12 +222,39 @@ doc.setFont(
 
   columnStyles: {
 
+  0: {
+    cellWidth: 22,
+  },
+
+  1: {
+    cellWidth: 24,
+  },
+
+  2: {
+    cellWidth: 24,
+  },
+
+  3: {
+    cellWidth: 38,
+  },
+
+  4: {
+    cellWidth: 24,
+  },
+
+  5: {
+    cellWidth: 18,
+    halign: "right",
+  },
+
   6: {
-    halign: "right"
+    cellWidth: 28,
+    halign: "right",
   },
 
   7: {
-    halign: "right"
+    cellWidth: 32,
+    halign: "right",
   },
 
 },
