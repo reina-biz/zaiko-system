@@ -237,8 +237,8 @@ const grandTotal =
 
   margin: {
 
- left: 2,
- right: 2,
+left: 6,
+right: 10,
 
   top: 10,
 
@@ -255,7 +255,7 @@ tableWidth: "wrap",
 },
 
 1: {
-  cellWidth: 60,
+  cellWidth: 54,
 },
 
 2: {
@@ -273,7 +273,7 @@ tableWidth: "wrap",
 },
 
 5: {
-  cellWidth: 34,
+  cellWidth: 28,
   halign: "right",
 },
 
