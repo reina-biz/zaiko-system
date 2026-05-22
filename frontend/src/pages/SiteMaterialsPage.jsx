@@ -22,7 +22,9 @@ const [endMonth,
 
     const filteredRows =
 
-  rows.filter((row) => {
+  rows
+
+  .filter((row) => {
 
     const companyMatch =
 
@@ -65,7 +67,17 @@ const dateMatch =
       dateMatch
     );
 
-  });
+    })
+
+  .sort(
+
+  (a, b) =>
+
+    new Date(a.orderDate)
+    -
+    new Date(b.orderDate)
+
+)
   
     const groupedSites =
 
