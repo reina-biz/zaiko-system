@@ -218,7 +218,7 @@ const dateMatch =
 
  <div key={company}>
 
-  <div className="text-xl font-bold mb-4">
+  <div className="text-xl font-bold mt-8 mb-4">
 
     {company}
 
@@ -377,35 +377,7 @@ const dateMatch =
 
       ))}
 
-<div className="bg-white rounded-3xl shadow-sm p-6">
 
-  <div className="text-right text-3xl font-bold">
-
-    総合計：
-
-    {filteredRows
-
-      .reduce(
-        (sum, row) =>
-
-          sum +
-
-          (
-            Number(row.price || 0)
-            *
-            Number(row.used || 0)
-          ),
-
-        0
-      )
-
-      .toLocaleString()}
-
-    円
-
-  </div>
-
-</div>
 
     </div>
 
