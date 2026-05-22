@@ -223,24 +223,29 @@ doc.setFont(
   columnStyles: {
 
   0: {
-    cellWidth: 28,
+    cellWidth: 26,
   },
 
   1: {
-    cellWidth: 52,
+    cellWidth: 48,
   },
 
   2: {
-    cellWidth: 30,
+    cellWidth: 26,
   },
 
   3: {
-    cellWidth: 22,
+    cellWidth: 20,
     halign: "right",
   },
 
   4: {
-    cellWidth: 30,
+    cellWidth: 24,
+    halign: "right",
+  },
+
+  5: {
+    cellWidth: 28,
     halign: "right",
   },
 
@@ -254,12 +259,15 @@ doc.setFont(
 
   },
 
+  theme: "grid",
+
     head: [[
       "日付",
       "材料名",
       "型番",
       "使用数",
       "単価",
+      "合計",
     ]],
 
     body: Object.entries(groupedCompanies)
@@ -273,7 +281,7 @@ doc.setFont(
 
       {
         content: company,
-        colSpan: 5,
+        colSpan: 6,
         styles: {
 
   font: "NotoSansJP",
@@ -298,7 +306,7 @@ doc.setFont(
 
           {
             content: `現場: ${site}`,
-            colSpan: 5,
+            colSpan: 6,
             styles: {
 
   font: "NotoSansJP",
@@ -328,6 +336,12 @@ doc.setFont(
             `${Number(
               row.price || 0
             ).toLocaleString()}円`,
+
+            `${(
+  Number(row.price || 0)
+  *
+  Number(row.used || 0)
+).toLocaleString()}円`,
 
             
 
@@ -365,7 +379,7 @@ rows.push([
 
       `会社合計 : ¥${companyTotal.toLocaleString()}`,
 
-    colSpan: 5,
+    colSpan: 6,
 
     styles: {
 
@@ -420,7 +434,7 @@ if (
 
         `総合計 : ¥${grandTotal.toLocaleString()}`,
 
-      colSpan: 5,
+      colSpan: 6,
 
       styles: {
 
