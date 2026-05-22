@@ -219,6 +219,19 @@ doc.setFont(
 
   },
 
+  margin: {
+
+  left: 6,
+
+  right: 6,
+
+  top: 10,
+
+},
+
+tableWidth: "auto",
+
+
 
   columnStyles: {
 
@@ -256,6 +269,8 @@ doc.setFont(
     font: "NotoSansJP",
 
     fontStyle: "normal",
+
+    cellPadding: 2,
 
   },
 
@@ -409,22 +424,7 @@ if (
 
 ) {
 
-  const grandTotal =
-
-    filteredRows.reduce(
-
-      (sum, row) =>
-
-        sum +
-
-        (
-          Number(row.price || 0)
-          *
-          Number(row.used || 0)
-        ),
-
-      0
-    );
+  
 
   rows.push([
 
