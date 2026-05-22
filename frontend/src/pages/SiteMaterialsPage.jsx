@@ -179,7 +179,7 @@ const dateMatch =
 
           <div className="overflow-hidden rounded-2xl border">
 
-            <div className="grid grid-cols-[2fr_2fr_1fr] bg-slate-100 font-semibold text-sm">
+            <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] bg-slate-100 font-semibold text-sm">
 
               <div className="p-3">
                 材料名
@@ -193,6 +193,14 @@ const dateMatch =
                 使用数
               </div>
 
+              <div className="p-3 text-right">
+                単価
+              </div>
+
+              <div className="p-3 text-right">
+                合計
+              </div>
+
             </div>
 
             {items.map(
@@ -200,7 +208,7 @@ const dateMatch =
 
                 <div
                   key={index}
-                  className="grid grid-cols-[2fr_2fr_1fr] border-t text-sm"
+                  className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] border-t text-sm"
                 >
 
                   <div className="p-3">
@@ -214,6 +222,59 @@ const dateMatch =
                   <div className="p-3 text-right">
                     {row.used}
                   </div>
+                  <div className="p-3 text-right">
+
+                    {Number(
+                     row.price || 0
+                   ).toLocaleString()} 円
+
+                  </div>
+                  <div className="p-3 text-right font-semibold">
+
+  {(
+    Number(row.price || 0)
+    *
+    Number(row.used || 0)
+  ).toLocaleString()}
+
+  円
+
+</div>
+<div className="p-4 text-right font-bold text-lg bg-slate-50">
+
+  現場合計：
+
+  {items
+
+    .reduce(
+      (sum, row) =>
+
+        sum +
+
+        (
+          Number(row.price || 0)
+          *
+          Number(row.used || 0)
+        ),
+
+      0
+    )
+
+    .toLocaleString()}
+
+  円
+
+  <div className="text-sm text-slate-500 mt-1">
+
+    {items[0]?.orderDate
+      ?.replace(
+        /(\d{4})-(\d{2})-(\d{2})/,
+        "$1年$2月$3日"
+      )}
+
+  </div>
+
+</div>
 
                 </div>
 
