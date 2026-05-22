@@ -114,9 +114,15 @@ const dateMatch =
 
         <div className="bg-white rounded-3xl shadow-sm p-6">
 
-  <div className="flex flex-wrap gap-4">
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-    
+    <div>
+
+  <div className="text-sm font-semibold mb-2">
+
+    開始年月
+
+  </div>
 
     <input
   type="month"
@@ -126,8 +132,18 @@ const dateMatch =
       e.target.value
     )
   }
-  className="border rounded-2xl px-4 py-3"
+  className="w-full border rounded-2xl px-4 py-3"
 />
+
+</div>
+
+<div>
+
+  <div className="text-sm font-semibold mb-2">
+
+    終了年月
+
+  </div>
 
 <input
   type="month"
@@ -137,8 +153,19 @@ const dateMatch =
       e.target.value
     )
   }
-  className="border rounded-2xl px-4 py-3"
+  className="w-full border rounded-2xl px-4 py-3"
 />
+
+</div>
+
+<div>
+
+  <div className="text-sm font-semibold mb-2">
+
+    会社名
+
+  </div>
+
 <select
       value={selectedCompany}
       onChange={(e) =>
@@ -146,7 +173,7 @@ const dateMatch =
           e.target.value
         )
       }
-      className="border rounded-2xl px-4 py-3"
+      className="w-full border rounded-2xl px-4 py-3"
     >
 
       <option value="全て">
@@ -166,6 +193,17 @@ const dateMatch =
       ))}
 
     </select>
+
+</div>
+
+<div>
+
+  <div className="text-sm font-semibold mb-2">
+
+    現場名
+
+  </div>
+
     <input
       type="text"
       placeholder="現場名検索"
@@ -175,15 +213,16 @@ const dateMatch =
           e.target.value
         )
       }
-      className="border rounded-2xl px-4 py-3"
-    />
-
-  </div>
+      className="w-full border rounded-2xl px-4 py-3"
+/>
 
 </div>
 
- <div className="bg-white rounded-3xl shadow-sm px-4 py-0.5">
+</div>
 
+</div>
+
+<div className="bg-white rounded-3xl shadow-sm px-4 py-0.5">
   <div className="text-right text-2xl font-bold">
 
     総合計：
