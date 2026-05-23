@@ -465,6 +465,8 @@ doc.text(
 
 },
 
+tableWidth: "auto",
+
      bodyStyles: {
 
   font:
