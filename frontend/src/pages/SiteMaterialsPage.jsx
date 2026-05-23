@@ -542,8 +542,16 @@ if (
       e.target.value
     )
   }
-  className="w-full border rounded-2xl px-4 py-3"
-/>
+  
+  className="
+  flex-1
+  border
+  rounded-2xl
+  px-4
+  py-3
+"
+
+  />
 
 </div>
 
@@ -608,11 +616,15 @@ if (
 
 <div>
 
-  <div className="md:col-span-2">
+<div className="md:col-span-2">
+
+  <div className="text-sm font-semibold mb-2">
 
     現場名
 
   </div>
+
+  <div className="flex gap-2">
 
     <input
       type="text"
@@ -623,10 +635,62 @@ if (
           e.target.value
         )
       }
-      className="w-full border rounded-2xl px-4 py-3"
-/>
+      className="
+        flex-1
+        border
+        rounded-2xl
+        px-4
+        py-3
+      "
+    />
 
-<div className="flex gap-2 mt-2">
+    <button
+
+      onClick={handleExcelExport}
+
+      className="
+        bg-emerald-500
+        hover:bg-emerald-600
+        text-white
+        px-4
+        py-3
+        rounded-2xl
+        font-semibold
+        whitespace-nowrap
+      "
+
+    >
+
+      Excel
+
+    </button>
+
+    <button
+
+      onClick={handlePdfExport}
+
+      className="
+        bg-rose-500
+        hover:bg-rose-600
+        text-white
+        px-4
+        py-3
+        rounded-2xl
+        font-semibold
+        whitespace-nowrap
+      "
+
+    >
+
+      PDF
+
+    </button>
+
+  </div>
+
+</div>
+
+<div className="flex gap-2">
 
   <button
 
