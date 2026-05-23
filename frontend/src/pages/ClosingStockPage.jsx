@@ -502,13 +502,15 @@ columnStyles: {
   },
 
   4: {
-    cellWidth: 30,
+    cellWidth: 34,
     halign: "right",
   },
 
 },
 
-tableWidth: 198,
+styles: {
+  overflow: "linebreak",
+},
 
 theme: "grid",
 
