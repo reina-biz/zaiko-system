@@ -463,7 +463,7 @@ doc.text(
      margin: {
 
   left: 6,
-  right: 10,
+  right: 6,
 
   top: 10,
 
