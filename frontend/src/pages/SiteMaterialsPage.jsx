@@ -524,7 +524,7 @@ if (
 
         <div className="bg-white rounded-3xl shadow-sm p-6">
 
-  <div className="grid grid-cols-1 md:grid-cols-11 gap-3 items-end">
+ <div className="grid grid-cols-1 md:grid-cols-11 gap-1 items-end">
 
 <div className="md:col-span-2">
 
@@ -678,6 +678,7 @@ if (
   </div>
 
 </div>
+
 
 </div>
 
