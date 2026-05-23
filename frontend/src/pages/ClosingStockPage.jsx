@@ -460,10 +460,13 @@ doc.text(
 
       },
 
-      margin: {
+     margin: {
+
+  left: 6,
+  right: 10,
+
   top: 10,
-  left: 14,
-  right: 14,
+
 },
 
 
@@ -481,31 +484,31 @@ doc.text(
 columnStyles: {
 
   0: {
-    cellWidth: 46,
+    cellWidth: 54,
   },
 
   1: {
-    cellWidth: 28,
+    cellWidth: 32,
   },
 
   2: {
-    cellWidth: 26,
+    cellWidth: 30,
     halign: "right",
   },
 
   3: {
-    cellWidth: 20,
+    cellWidth: 24,
     halign: "right",
   },
 
   4: {
-    cellWidth: 26,
+    cellWidth: 30,
     halign: "right",
   },
 
 },
 
-tableWidth: "auto",
+tableWidth: "wrap",
 
 theme: "grid",
 
