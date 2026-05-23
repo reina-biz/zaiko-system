@@ -397,32 +397,33 @@ doc.text(
 columnStyles: {
 
   0: {
-    cellWidth: 28,
+    cellWidth: 24,
   },
 
   1: {
-    cellWidth: 52,
+    cellWidth: 46,
   },
 
   2: {
-    cellWidth: 36,
+    cellWidth: 34,
   },
 
   3: {
-    cellWidth: 32,
+    cellWidth: 28,
     halign: "right",
   },
 
   4: {
-    cellWidth: 24,
+    cellWidth: 22,
     halign: "right",
   },
 
   5: {
+    cellWidth: 36,
     halign: "right",
   },
 
-}, 
+},
 
       head: [[
 
@@ -436,7 +437,7 @@ columnStyles: {
 
   "在庫",
 
-  "決算在庫金額",
+  "在庫金額",
 
 ]],
 
@@ -465,7 +466,7 @@ columnStyles: {
 
             return [
 
-  `${startMonth} ～ ${endMonth}`,
+ `${startMonth.slice(0, 4)}`,
 
   item.materialName,
 
