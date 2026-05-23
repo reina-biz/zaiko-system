@@ -624,69 +624,7 @@ if (
 
   </div>
 
-  <div className="flex gap-2">
-
-    <input
-      type="text"
-      placeholder="現場名検索"
-      value={searchSite}
-      onChange={(e) =>
-        setSearchSite(
-          e.target.value
-        )
-      }
-      className="
-        flex-1
-        border
-        rounded-2xl
-        px-4
-        py-3
-      "
-    />
-
-    <button
-
-      onClick={handleExcelExport}
-
-      className="
-        bg-emerald-500
-        hover:bg-emerald-600
-        text-white
-        px-4
-        py-3
-        rounded-2xl
-        font-semibold
-        whitespace-nowrap
-      "
-
-    >
-
-      Excel
-
-    </button>
-
-    <button
-
-      onClick={handlePdfExport}
-
-      className="
-        bg-rose-500
-        hover:bg-rose-600
-        text-white
-        px-4
-        py-3
-        rounded-2xl
-        font-semibold
-        whitespace-nowrap
-      "
-
-    >
-
-      PDF
-
-    </button>
-
-  </div>
+  
 
 </div>
 
