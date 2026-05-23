@@ -395,19 +395,19 @@ doc.text(
           columnStyles: {
 
   0: {
-    cellWidth: 32,
+    cellWidth: 28,
   },
 
   1: {
-    cellWidth: 48,
+    cellWidth: 52,
   },
 
   2: {
-    cellWidth: 40,
+    cellWidth: 36,
   },
 
   3: {
-    cellWidth: 30,
+    cellWidth: 32,
     halign: "right",
   },
 
@@ -417,7 +417,6 @@ doc.text(
   },
 
   5: {
-    cellWidth: 36,
     halign: "right",
   },
 
