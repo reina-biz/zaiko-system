@@ -543,8 +543,8 @@ if (
     )
   }
   
-  className="
-  flex-1
+ className="
+  w-full
   border
   rounded-2xl
   px-4
