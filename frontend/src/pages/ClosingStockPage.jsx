@@ -484,15 +484,15 @@ doc.text(
 columnStyles: {
 
   0: {
-    cellWidth: 54,
+    cellWidth: 62,
   },
 
   1: {
-    cellWidth: 32,
+    cellWidth: 38,
   },
 
   2: {
-    cellWidth: 30,
+    cellWidth: 32,
     halign: "right",
   },
 
@@ -502,15 +502,13 @@ columnStyles: {
   },
 
   4: {
-    cellWidth: 34,
+    cellWidth: 38,
     halign: "right",
   },
 
 },
 
-styles: {
-  overflow: "linebreak",
-},
+
 
 theme: "grid",
 
@@ -929,7 +927,7 @@ body:
 
       <h2 className="text-2xl font-bold mb-6">
 
-        決算在庫 TEST
+        決算在庫
 
       </h2>
 
