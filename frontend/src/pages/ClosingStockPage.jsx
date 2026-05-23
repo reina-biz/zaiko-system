@@ -461,12 +461,9 @@ doc.text(
       },
 
       margin: {
-
-  left: 6,
-  right: 6,
-
   top: 10,
-
+  left: 14,
+  right: 14,
 },
 
 
@@ -507,6 +504,8 @@ columnStyles: {
   },
 
 },
+
+tableWidth: "auto",
 
 theme: "grid",
 
