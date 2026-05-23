@@ -508,7 +508,7 @@ columnStyles: {
 
 },
 
-tableWidth: "wrap",
+tableWidth: 198,
 
 theme: "grid",
 
