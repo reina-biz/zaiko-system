@@ -392,6 +392,22 @@ doc.text(
         fontStyle:
           "normal",
 
+          columnStyles: {
+
+  3: {
+    halign: "right",
+  },
+
+  4: {
+    halign: "right",
+  },
+
+  5: {
+    halign: "right",
+  },
+
+},
+
       },
 
       head: [[
