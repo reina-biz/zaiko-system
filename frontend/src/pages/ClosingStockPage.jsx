@@ -384,15 +384,17 @@ doc.text(
 
       },
 
-      bodyStyles: {
+     bodyStyles: {
 
-        font:
-          "NotoSansJP",
+  font:
+    "NotoSansJP",
 
-        fontStyle:
-          "normal",
+  fontStyle:
+    "normal",
 
-          columnStyles: {
+},
+
+columnStyles: {
 
   0: {
     cellWidth: 28,
@@ -420,9 +422,7 @@ doc.text(
     halign: "right",
   },
 
-},
-
-      },
+}, 
 
       head: [[
 
