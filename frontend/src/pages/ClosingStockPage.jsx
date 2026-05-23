@@ -134,6 +134,78 @@ export default function ClosingStockPage({
 
     });
 
+const groupedCompanies =
+
+  rows
+
+    .filter((row) => {
+
+      if (!row.materialName) {
+
+        return false;
+
+      }
+
+      if (
+
+        companyName &&
+
+        row.companyName !==
+          companyName
+
+      ) {
+
+        return false;
+
+      }
+
+      const rowMonth =
+        row.orderDate?.slice(0, 7);
+
+      return (
+
+        rowMonth >= startMonth
+
+        &&
+
+        rowMonth <= endMonth
+
+      );
+
+    })
+
+    .reduce((acc, row) => {
+
+      const company =
+
+        row.companyName ||
+
+        "未設定";
+
+      const site =
+
+        row.siteName ||
+
+        "未設定";
+
+      if (!acc[company]) {
+
+        acc[company] = {};
+
+      }
+
+      if (!acc[company][site]) {
+
+        acc[company][site] = [];
+
+      }
+
+      acc[company][site].push(row);
+
+      return acc;
+
+    }, {});
+
   // =========================
   // 合計
   // =========================
@@ -397,37 +469,33 @@ doc.text(
 columnStyles: {
 
   0: {
-    cellWidth: 24,
+    cellWidth: 54,
   },
 
   1: {
-    cellWidth: 46,
+    cellWidth: 32,
   },
 
   2: {
-    cellWidth: 34,
+    cellWidth: 30,
+    halign: "right",
   },
 
   3: {
-    cellWidth: 28,
+    cellWidth: 24,
     halign: "right",
   },
 
   4: {
-    cellWidth: 22,
-    halign: "right",
-  },
-
-  5: {
-    cellWidth: 36,
+    cellWidth: 32,
     halign: "right",
   },
 
 },
 
-      head: [[
+theme: "grid",
 
-  "日付",
+head: [[
 
   "材料名",
 
@@ -441,52 +509,216 @@ columnStyles: {
 
 ]],
 
-      body:
+body:
 
-        Object.values(groupedRows)
+  Object.entries(groupedCompanies)
 
-          .map((item) => {
+    .flatMap(([company, sites]) => {
 
-            const used20 =
-              item.used * 0.2;
+      const pdfRows = [];
 
-            const stock20 =
-              item.stock * 0.2;
+      // 会社名
+      pdfRows.push([
 
-            const estimatedStock =
-              used20 + stock20;
+        {
+
+          content: company,
+
+          colSpan: 5,
+
+          styles: {
+
+            font: "NotoSansJP",
+
+            fontStyle: "normal",
+
+            fillColor: [226, 232, 240],
+
+            fontSize: 13,
+
+          },
+
+        },
+
+      ]);
+
+      Object.entries(sites)
+
+        .forEach(([site, items]) => {
+
+          // 現場名
+          pdfRows.push([
+
+            {
+
+              content: `現場 : ${site}`,
+
+              colSpan: 5,
+
+              styles: {
+
+                font: "NotoSansJP",
+
+                fontStyle: "normal",
+
+                fillColor: [241, 245, 249],
+
+              },
+
+            },
+
+          ]);
+
+          items.forEach((row) => {
+
+            const stock =
+
+              Math.round(
+
+                (
+
+                  Number(row.used || 0)
+
+                  * 0.2
+
+                )
+
+                +
+
+                (
+
+                  (
+
+                    Number(row.quantity || 0)
+
+                    -
+
+                    Number(row.used || 0)
+
+                  )
+
+                  * 0.2
+
+                )
+
+              );
 
             const amount =
 
-              estimatedStock *
+              stock *
 
-              Number(
-                item.latestPrice || 0
-              );
+              Number(row.price || 0);
 
-            return [
+            pdfRows.push([
 
- `${startMonth.slice(0, 4)}`,
+              row.materialName,
 
-  item.materialName,
+              row.size,
 
-  item.size,
+              `¥${Number(
+                row.price || 0
+              ).toLocaleString()}`,
 
-  `¥${Number(
-    item.latestPrice || 0
-  ).toLocaleString()}`,
+              stock.toLocaleString(),
 
-  Math.round(
-    estimatedStock
-  ),
+              `¥${amount.toLocaleString()}`,
 
-  `¥${Math.round(
-    amount
-  ).toLocaleString()}`,
+            ]);
 
-];
+          });
 
-          }),
+          // 現場合計
+          const siteTotal =
+
+            items.reduce(
+
+              (sum, row) => {
+
+                const stock =
+
+                  Math.round(
+
+                    (
+
+                      Number(row.used || 0)
+
+                      * 0.2
+
+                    )
+
+                    +
+
+                    (
+
+                      (
+
+                        Number(row.quantity || 0)
+
+                        -
+
+                        Number(row.used || 0)
+
+                      )
+
+                      * 0.2
+
+                    )
+
+                  );
+
+                return (
+
+                  sum +
+
+                  (
+
+                    stock *
+
+                    Number(row.price || 0)
+
+                  )
+
+                );
+
+              },
+
+              0
+
+            );
+
+          pdfRows.push([
+
+            {
+
+              content:
+
+                `現場合計 : ¥${siteTotal.toLocaleString()}`,
+
+              colSpan: 5,
+
+              styles: {
+
+                font: "NotoSansJP",
+
+                fontStyle: "normal",
+
+                halign: "right",
+
+                fillColor: [248, 250, 252],
+
+              },
+
+            },
+
+          ]);
+
+        });
+
+      return pdfRows;
+
+    }),
+
+     
 
     });
 
