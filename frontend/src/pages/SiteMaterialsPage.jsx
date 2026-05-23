@@ -524,9 +524,9 @@ if (
 
         <div className="bg-white rounded-3xl shadow-sm p-6">
 
-  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 items-end">
+  <div className="grid grid-cols-1 md:grid-cols-11 gap-3 items-end">
 
-    <div className="md:col-span-1">
+<div className="md:col-span-2">
 
   <div className="text-sm font-semibold mb-2">
 
@@ -555,7 +555,7 @@ if (
 
 </div>
 
-<div className="md:col-span-1">
+<div className="md:col-span-2">
 
   <div className="text-sm font-semibold mb-2">
 
@@ -576,7 +576,7 @@ if (
 
 </div>
 
-<div className="md:col-span-1">
+<div className="md:col-span-3">
 
   <div className="text-sm font-semibold mb-2">
 
@@ -614,9 +614,8 @@ if (
 
 </div>
 
-<div>
 
-<div className="md:col-span-2">
+<div className="md:col-span-4">
 
   <div className="text-sm font-semibold mb-2">
 
@@ -677,8 +676,6 @@ if (
     </button>
 
   </div>
-
-</div>
 
 </div>
 
