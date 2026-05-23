@@ -143,38 +143,41 @@ Object.entries(groupedCompanies)
         });
 
         // 現場合計
-        exportData.push({
-
-          日付: "",
-          材料名: "",
-          型番: "",
-          使用数: "",
-          単価: "現場合計",
-
-          合計:
-            items
-
-              .reduce(
-                (sum, row) =>
-
-                  sum +
-
-                  (
-                    Number(row.price || 0)
-                    *
-                    Number(row.used || 0)
-                  ),
-
-                0
-              )
-
-              .toLocaleString(),
-
-        });
+        
 
       });
 
   });
+
+  exportData.push({
+
+  日付: "",
+  材料名: "",
+  型番: "",
+  使用数: "",
+  単価: "総合計",
+
+  合計:
+
+    filteredRows
+
+      .reduce(
+        (sum, row) =>
+
+          sum +
+
+          (
+            Number(row.price || 0)
+            *
+            Number(row.used || 0)
+          ),
+
+        0
+      )
+
+      .toLocaleString(),
+
+});
 
   const worksheet =
     XLSX.utils.json_to_sheet(
