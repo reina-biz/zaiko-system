@@ -261,7 +261,7 @@ export default function ClosingStockPage({
     const doc =
 
       new jsPDF({
-        orientation: "landscape",
+        orientation: "portrait",
       });
 
     // =====================
@@ -346,15 +346,15 @@ export default function ClosingStockPage({
 
     doc.setFontSize(18);
 
-    doc.text(
+doc.text(
 
-      "決算在庫一覧",
+  `決算在庫一覧  ${companyName || "全会社"}`,
 
-      14,
+  14,
 
-      20
+  20
 
-    );
+);
 
     // =====================
     // 表
@@ -396,21 +396,19 @@ export default function ClosingStockPage({
 
       head: [[
 
-        "材料名",
+  "日付",
 
-        "型番・サイズ",
+  "材料名",
 
-        "最新単価",
+  "型番サイズ",
 
-        "使用20%",
+  "最新単価",
 
-        "在庫20%",
+  "在庫",
 
-        "推定決算在庫",
+  "決算在庫金額",
 
-        "決算在庫金額",
-
-      ]],
+]],
 
       body:
 
@@ -437,31 +435,25 @@ export default function ClosingStockPage({
 
             return [
 
-              item.materialName,
+  `${startMonth} ～ ${endMonth}`,
 
-              item.size,
+  item.materialName,
 
-              `¥${Number(
-                item.latestPrice || 0
-              ).toLocaleString()}`,
+  item.size,
 
-              Math.round(
-                used20
-              ),
+  `¥${Number(
+    item.latestPrice || 0
+  ).toLocaleString()}`,
 
-              Math.round(
-                stock20
-              ),
+  Math.round(
+    estimatedStock
+  ),
 
-              Math.round(
-                estimatedStock
-              ),
+  `¥${Math.round(
+    amount
+  ).toLocaleString()}`,
 
-              `¥${Math.round(
-                amount
-              ).toLocaleString()}`,
-
-            ];
+];
 
           }),
 
