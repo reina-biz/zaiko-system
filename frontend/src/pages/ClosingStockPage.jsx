@@ -438,13 +438,17 @@ doc.text(
 
       styles: {
 
-        font:
-          "NotoSansJP",
+  font:
+    "NotoSansJP",
 
-        fontStyle:
-          "normal",
+  fontStyle:
+    "normal",
 
-      },
+  fontSize: 8,
+
+  cellPadding: 2,
+
+},
 
       headStyles: {
 
@@ -465,7 +469,7 @@ doc.text(
 
 },
 
-tableWidth: "auto",
+
 
      bodyStyles: {
 
@@ -480,25 +484,25 @@ tableWidth: "auto",
 columnStyles: {
 
   0: {
-    cellWidth: 54,
+    cellWidth: 46,
   },
 
   1: {
-    cellWidth: 32,
+    cellWidth: 28,
   },
 
   2: {
-    cellWidth: 30,
+    cellWidth: 26,
     halign: "right",
   },
 
   3: {
-    cellWidth: 24,
+    cellWidth: 20,
     halign: "right",
   },
 
   4: {
-    cellWidth: 32,
+    cellWidth: 26,
     halign: "right",
   },
 
