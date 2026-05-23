@@ -86,22 +86,95 @@ const dateMatch =
   
 const handleExcelExport = () => {
 
-  const exportData = filteredRows.map((row) => ({
+  const exportData = [];
 
-    日付: row.orderDate,
-    会社名: row.companyName,
-    現場名: row.siteName,
-    材料名: row.materialName,
-    型番: row.size,
-    使用数: row.used,
-    単価: row.price,
+Object.entries(groupedCompanies)
 
-    合計:
-      Number(row.price || 0)
-      *
-      Number(row.used || 0),
+  .forEach(([company, sites]) => {
 
-  }));
+    // 会社名
+    exportData.push({
+      日付: company,
+      材料名: "",
+      型番: "",
+      使用数: "",
+      単価: "",
+      合計: "",
+    });
+
+    Object.entries(sites)
+
+      .forEach(([site, items]) => {
+
+        // 現場名
+        exportData.push({
+          日付: `現場：${site}`,
+          材料名: "",
+          型番: "",
+          使用数: "",
+          単価: "",
+          合計: "",
+        });
+
+        // データ
+        items.forEach((row) => {
+
+          exportData.push({
+
+            日付: row.orderDate,
+            材料名: row.materialName,
+            型番: row.size,
+            使用数: row.used,
+
+            単価:
+              Number(
+                row.price || 0
+              ).toLocaleString(),
+
+            合計:
+              (
+                Number(row.price || 0)
+                *
+                Number(row.used || 0)
+              ).toLocaleString(),
+
+          });
+
+        });
+
+        // 現場合計
+        exportData.push({
+
+          日付: "",
+          材料名: "",
+          型番: "",
+          使用数: "",
+          単価: "現場合計",
+
+          合計:
+            items
+
+              .reduce(
+                (sum, row) =>
+
+                  sum +
+
+                  (
+                    Number(row.price || 0)
+                    *
+                    Number(row.used || 0)
+                  ),
+
+                0
+              )
+
+              .toLocaleString(),
+
+        });
+
+      });
+
+  });
 
   const worksheet =
     XLSX.utils.json_to_sheet(
