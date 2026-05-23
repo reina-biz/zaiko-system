@@ -394,15 +394,30 @@ doc.text(
 
           columnStyles: {
 
+  0: {
+    cellWidth: 32,
+  },
+
+  1: {
+    cellWidth: 48,
+  },
+
+  2: {
+    cellWidth: 40,
+  },
+
   3: {
+    cellWidth: 30,
     halign: "right",
   },
 
   4: {
+    cellWidth: 24,
     halign: "right",
   },
 
   5: {
+    cellWidth: 36,
     halign: "right",
   },
 
