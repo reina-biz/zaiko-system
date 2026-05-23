@@ -357,13 +357,9 @@ tableWidth: "wrap",
 
   bodyStyles: {
 
-    font: "NotoSansJP",
+  font: "NotoSansJP",
 
-    fontStyle: "normal",
-
-    cellPadding: 2,
-
-  },
+},
 
   theme: "grid",
 
@@ -457,35 +453,7 @@ tableWidth: "wrap",
 
       });
 
-      exportData.push({
-
-  日付: "",
-  材料名: "",
-  型番: "",
-  使用数: "",
-  単価: "総合計",
-
-  合計:
-
-    filteredRows
-
-      .reduce(
-        (sum, row) =>
-
-          sum +
-
-          (
-            Number(row.price || 0)
-            *
-            Number(row.used || 0)
-          ),
-
-        0
-      )
-
-      .toLocaleString(),
-
-});
+      
 
 const companyTotal =
 
