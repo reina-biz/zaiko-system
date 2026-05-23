@@ -483,7 +483,7 @@ export default function ClosingStockPage({
 
       {/* 上部 */}
 
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
+      <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
 
         {/* 会社 */}
 
@@ -592,58 +592,64 @@ export default function ClosingStockPage({
 
         </div>
 
-      </div>
+     <div>
 
-      {/* ボタン */}
+  <div className="text-sm font-medium mb-2">
 
-      <div className="flex gap-3 mb-6">
+    出力
 
-        <button
+  </div>
 
-          onClick={exportExcel}
+    <div className="flex gap-2">
+  
 
-          className="
-            bg-emerald-500
-            hover:bg-emerald-600
-            text-white
-            px-5
-            py-3
-            rounded-2xl
-            font-semibold
-          "
+    <button
 
-        >
+      onClick={exportExcel}
 
-          Excel出力
+      className="
+        bg-emerald-500
+        hover:bg-emerald-600
+        text-white
+        px-4
+        py-3
+        rounded-2xl
+        font-semibold
+        whitespace-nowrap
+      "
 
-        </button>
+    >
 
-        <button
+      Excel
 
-          onClick={exportPDF}
+    </button>
 
-          className="
-            bg-rose-500
-            hover:bg-rose-600
-            text-white
-            px-5
-            py-3
-            rounded-2xl
-            font-semibold
-          "
+    <button
 
-        >
+      onClick={exportPDF}
 
-          PDF出力
+      className="
+        bg-rose-500
+        hover:bg-rose-600
+        text-white
+        px-4
+        py-3
+        rounded-2xl
+        font-semibold
+        whitespace-nowrap
+      "
 
-        </button>
+    >
 
-       
+      PDF
 
-          
-        
+    </button>
 
-      </div>
+  </div>
+
+</div>
+
+</div>
 
       {/* タイトル */}
 
