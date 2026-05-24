@@ -559,183 +559,73 @@ body:
 
       ]);
 
-      Object.entries(sites)
+      // 材料一覧
+      Object.values(sites)
 
-        .forEach(([site, items]) => {
+        .flat()
 
-          // 現場名
-          pdfRows.push([
+        .forEach((row) => {
 
-            {
+          const stock =
 
-              content: `現場 : ${site}`,
+            Math.round(
 
-              colSpan: 5,
+              (
 
-              styles: {
+                Number(row.used || 0)
 
-                font: "NotoSansJP",
+                * 0.2
 
-                fontStyle: "normal",
+              )
 
-                fillColor: [241, 245, 249],
+              +
 
-              },
-
-            },
-
-          ]);
-
-          items.forEach((row) => {
-
-            const stock =
-
-              Math.round(
+              (
 
                 (
+
+                  Number(row.quantity || 0)
+
+                  -
 
                   Number(row.used || 0)
 
-                  * 0.2
-
                 )
 
-                +
+                * 0.2
 
-                (
-
-                  (
-
-                    Number(row.quantity || 0)
-
-                    -
-
-                    Number(row.used || 0)
-
-                  )
-
-                  * 0.2
-
-                )
-
-              );
-
-            const amount =
-
-              stock *
-
-              Number(row.price || 0);
-
-            pdfRows.push([
-
-              row.materialName,
-
-              row.size,
-
-              `¥${Number(
-                row.price || 0
-              ).toLocaleString()}`,
-
-              stock.toLocaleString(),
-
-              `¥${amount.toLocaleString()}`,
-
-            ]);
-
-          });
-
-          // 現場合計
-          const siteTotal =
-
-            items.reduce(
-
-              (sum, row) => {
-
-                const stock =
-
-                  Math.round(
-
-                    (
-
-                      Number(row.used || 0)
-
-                      * 0.2
-
-                    )
-
-                    +
-
-                    (
-
-                      (
-
-                        Number(row.quantity || 0)
-
-                        -
-
-                        Number(row.used || 0)
-
-                      )
-
-                      * 0.2
-
-                    )
-
-                  );
-
-                return (
-
-                  sum +
-
-                  (
-
-                    stock *
-
-                    Number(row.price || 0)
-
-                  )
-
-                );
-
-              },
-
-              0
+              )
 
             );
 
+          const amount =
+
+            stock *
+
+            Number(row.price || 0);
+
           pdfRows.push([
 
-            {
+            row.materialName,
 
-              content:
+            row.size,
 
-                `現場合計 : ¥${siteTotal.toLocaleString()}`,
+            `¥${Number(
+              row.price || 0
+            ).toLocaleString()}`,
 
-              colSpan: 5,
+            stock.toLocaleString(),
 
-              styles: {
-
-                font: "NotoSansJP",
-
-                fontStyle: "normal",
-
-                halign: "right",
-
-                fillColor: [248, 250, 252],
-
-              },
-
-            },
+            `¥${amount.toLocaleString()}`,
 
           ]);
 
         });
 
       return pdfRows;
+      return pdfRows;
 
     }),
-
-     
 
     });
 
