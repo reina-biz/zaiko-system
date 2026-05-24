@@ -243,9 +243,93 @@ const groupedCompanies =
 
   const exportExcel = () => {
 
+    const companyRows = {};
+
+rows
+
+  .filter((row) => {
+
+    if (!row.materialName) {
+
+      return false;
+
+    }
+
+    if (
+
+      companyName &&
+
+      row.companyName !==
+        companyName
+
+    ) {
+
+      return false;
+
+    }
+
+    const rowMonth =
+      row.orderDate?.slice(0, 7);
+
+    return (
+
+      rowMonth >= startMonth
+
+      &&
+
+      rowMonth <= endMonth
+
+    );
+
+  })
+
+  .forEach((row) => {
+
+    const key =
+
+      `${row.materialName}_${row.size}`;
+
+    if (!companyRows[key]) {
+
+      companyRows[key] = {
+
+        materialName:
+          row.materialName,
+
+        size:
+          row.size,
+
+        used: 0,
+
+        stock: 0,
+
+        latestPrice:
+          row.price,
+
+      };
+
+    }
+
+    companyRows[key].used +=
+
+      Number(row.used || 0);
+
+    companyRows[key].stock +=
+
+      Number(row.quantity || 0)
+
+      -
+
+      Number(row.used || 0);
+
+    companyRows[key].latestPrice =
+      row.price;
+
+  });
+
     const excelData =
 
-      Object.values(groupedRows)
+      Object.values(companyRows)
 
         .map((item) => {
 
