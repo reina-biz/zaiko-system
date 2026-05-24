@@ -340,7 +340,10 @@ rows
             item.stock * 0.2;
 
           const estimatedStock =
-            used20 + stock20;
+
+  Math.round(
+    used20 + stock20
+  );
 
           const amount =
 
@@ -1166,9 +1169,7 @@ Object.values(sites)
 
         <div className="p-3 text-right font-semibold">
 
-          {Math.round(
-            estimatedStock
-          ).toLocaleString()}
+          {estimatedStock.toLocaleString()}
 
         </div>
 
