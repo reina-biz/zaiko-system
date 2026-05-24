@@ -560,67 +560,77 @@ body:
       ]);
 
       // 材料一覧
+      
+
       Object.values(sites)
 
-        .flat()
+  .flat()
 
-        .forEach((row) => {
+  .forEach((row) => {
 
-          const stock =
+    const stock =
 
-            Math.round(
+      Math.round(
 
-              (
+        (
 
-                Number(row.used || 0)
+          Number(row.used || 0)
 
-                * 0.2
+          * 0.2
 
-              )
+        )
 
-              +
+        +
 
-              (
+        (
 
-                (
+          (
 
-                  Number(row.quantity || 0)
+            Number(row.quantity || 0)
 
-                  -
+            -
 
-                  Number(row.used || 0)
+            Number(row.used || 0)
 
-                )
+          )
 
-                * 0.2
+          * 0.2
 
-              )
+        )
 
-            );
+      );
 
-          const amount =
+    const latestPrice =
 
-            stock *
+      groupedRows[
+        `${row.materialName}_${row.size}`
+      ]?.latestPrice || 0;
 
-            Number(row.price || 0);
+    const amount =
 
-          pdfRows.push([
+      stock *
 
-            row.materialName,
+      Number(latestPrice);
 
-            row.size,
+    pdfRows.push([
 
-            `¥${Number(
-              row.price || 0
-            ).toLocaleString()}`,
+      row.materialName,
 
-            stock.toLocaleString(),
+      row.size,
 
-            `¥${amount.toLocaleString()}`,
+      `¥${Number(
+        latestPrice
+      ).toLocaleString()}`,
 
-          ]);
+      stock.toLocaleString(),
 
-        });
+      `¥${amount.toLocaleString()}`,
+
+    ]);
+
+  });    
+
+ 
 
       // 会社合計
       const companyTotal =
@@ -678,6 +688,8 @@ body:
             );
 
           }, 0);
+
+
 
       pdfRows.push([
 
@@ -987,11 +999,17 @@ body:
           const estimatedStock =
             used20 + stock20;
 
+const latestPrice =
+
+  groupedRows[
+    `${row.materialName}_${row.size}`
+  ]?.latestPrice || 0;
+
           const amount =
 
-            estimatedStock *
+  estimatedStock *
 
-            Number(row.price || 0);
+  Number(latestPrice);
 
           return (
 
@@ -1023,8 +1041,8 @@ body:
               <div className="p-3 text-right">
 
                 ¥{Number(
-                  row.price || 0
-                ).toLocaleString()}
+  latestPrice
+).toLocaleString()}
 
               </div>
 
@@ -1095,7 +1113,13 @@ body:
 
                     estimatedStock *
 
-                    Number(row.price || 0)
+Number(
+
+  groupedRows[
+    `${row.materialName}_${row.size}`
+  ]?.latestPrice || 0
+
+)
 
                   )
 
