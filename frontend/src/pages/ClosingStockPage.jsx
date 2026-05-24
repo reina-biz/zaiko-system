@@ -562,7 +562,7 @@ body:
       // 材料一覧
       
 
-    Object.values(companyRows)
+    Object.values(groupedRows)
 
   .forEach((item) => {
 
@@ -610,7 +610,7 @@ body:
       // 会社合計
       const companyTotal =
 
- Object.values(companyRows)
+ Object.values(groupedRows)
 
   .reduce((sum, item) => {
 
