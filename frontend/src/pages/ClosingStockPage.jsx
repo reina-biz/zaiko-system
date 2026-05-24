@@ -562,80 +562,55 @@ body:
       // 材料一覧
       
 
-      Object.values(sites)
+      Object.values(groupedRows)
 
-  .flat()
+  .forEach((item) => {
 
-  .forEach((row) => {
+    const used20 =
+      item.used * 0.2;
 
-    const stock =
+    const stock20 =
+      item.stock * 0.2;
 
-      Math.round(
-
-        (
-
-          Number(row.used || 0)
-
-          * 0.2
-
-        )
-
-        +
-
-        (
-
-          (
-
-            Number(row.quantity || 0)
-
-            -
-
-            Number(row.used || 0)
-
-          )
-
-          * 0.2
-
-        )
-
-      );
-
-    const latestPrice =
-
-      groupedRows[
-        `${row.materialName}_${row.size}`
-      ]?.latestPrice || 0;
+    const estimatedStock =
+      used20 + stock20;
 
     const amount =
 
-      stock *
+      estimatedStock *
 
-      Number(latestPrice);
+      Number(
+        item.latestPrice || 0
+      );
 
     pdfRows.push([
 
-      row.materialName,
+      item.materialName,
 
-      row.size,
+      item.size,
 
       `¥${Number(
-        latestPrice
+        item.latestPrice || 0
       ).toLocaleString()}`,
 
-      stock.toLocaleString(),
+      Math.round(
+        estimatedStock
+      ).toLocaleString(),
 
-      `¥${amount.toLocaleString()}`,
+      `¥${Math.round(
+        amount
+      ).toLocaleString()}`,
 
     ]);
 
-  });    
+  });
 
  
 
       // 会社合計
       const companyTotal =
 
-        Object.values(sites)
+        Object.values(groupedRows)
 
           .flat()
 
