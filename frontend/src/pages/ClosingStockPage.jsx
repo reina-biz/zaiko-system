@@ -420,7 +420,7 @@ const groupedCompanies =
 
 doc.text(
 
-  `決算在庫一覧  ${companyName || "全会社"}`,
+  `決算在庫一覧  ${startMonth}〜${endMonth}  ${companyName || "全会社"}`,
 
   14,
 
