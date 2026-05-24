@@ -252,7 +252,7 @@ if (!groupedRows[key]) {
                 >
 
                   <td className="p-4 whitespace-nowrap">
-                    {name}
+                    {item.materialName}
                   </td>
 
                   <td className="p-4 whitespace-nowrap">
