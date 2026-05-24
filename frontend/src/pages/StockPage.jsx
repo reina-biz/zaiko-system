@@ -59,9 +59,13 @@ export default function StockPage({
 
     .forEach((row) => {
 
-      if (!groupedRows[row.materialName]) {
+      const key =
 
-        groupedRows[row.materialName] = {
+  `${row.materialName}_${row.size}`;
+
+if (!groupedRows[key]) {
+
+        groupedRows[key] = {
           size: row.size,
           quantity: 0,
           orderQuantity: 0,
@@ -70,16 +74,16 @@ export default function StockPage({
 
       }
 
-      groupedRows[row.materialName]
+      groupedRows[key]
         .orderQuantity +=
         Number(row.quantity || 0);
 
-      groupedRows[row.materialName]
+      groupedRows[key]
         .quantity +=
         Number(row.quantity || 0)
         - Number(row.used || 0);
 
-      groupedRows[row.materialName]
+      groupedRows[key]
         .latestPrice =
         row.price;
 
