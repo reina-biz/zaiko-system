@@ -330,58 +330,191 @@ rows
 
   });
 
-    const excelData =
+    const excelData = [];
 
-  Object.values(companyRows)
+Object.entries(groupedCompanies)
 
-    .map((item) => {
+  .forEach(([company, sites]) => {
 
-      const used20 =
-        item.used * 0.2;
+    const companyRows = {};
 
-      const stock20 =
-        item.stock * 0.2;
+    Object.values(sites)
 
-      const estimatedStock =
+      .flat()
 
-        Math.round(
-          used20 + stock20
-        );
+      .forEach((row) => {
 
-      const amount =
+        const key =
 
-        Math.round(
+          `${row.materialName}_${row.size}`;
 
-          estimatedStock *
+        if (!companyRows[key]) {
 
-          Number(
-            item.latestPrice || 0
-          )
+          companyRows[key] = {
 
-        );
+            materialName:
+              row.materialName,
 
-      return {
+            size:
+              row.size,
 
-        "材料名":
-          item.materialName,
+            used: 0,
 
-        "型番・サイズ":
-          item.size,
+            stock: 0,
 
-        "最新単価":
-          Number(
-            item.latestPrice || 0
-          ),
+            latestPrice:
+              row.price,
 
-        "在庫":
-          estimatedStock,
+          };
 
-        "在庫金額":
-          amount,
+        }
 
-      };
+        companyRows[key].used +=
+
+          Number(row.used || 0);
+
+        companyRows[key].stock +=
+
+          Number(row.quantity || 0)
+
+          -
+
+          Number(row.used || 0);
+
+        companyRows[key].latestPrice =
+          row.price;
+
+      });
+
+    // 会社名行
+    excelData.push({
+
+      "材料名": company,
+
+      "型番・サイズ": "",
+
+      "最新単価": "",
+
+      "在庫": "",
+
+      "在庫金額": "",
 
     });
+
+    // 材料一覧
+    Object.values(companyRows)
+
+      .forEach((item) => {
+
+        const used20 =
+          item.used * 0.2;
+
+        const stock20 =
+          item.stock * 0.2;
+
+        const estimatedStock =
+
+          Math.round(
+            used20 + stock20
+          );
+
+        const amount =
+
+          Math.round(
+
+            estimatedStock *
+
+            Number(
+              item.latestPrice || 0
+            )
+
+          );
+
+        excelData.push({
+
+          "材料名":
+            item.materialName,
+
+          "型番・サイズ":
+            item.size,
+
+          "最新単価":
+            Number(
+              item.latestPrice || 0
+            ),
+
+          "在庫":
+            estimatedStock,
+
+          "在庫金額":
+            amount,
+
+        });
+
+      });
+
+    // 会社合計
+    const companyTotal =
+
+      Object.values(companyRows)
+
+        .reduce((sum, item) => {
+
+          const used20 =
+            item.used * 0.2;
+
+          const stock20 =
+            item.stock * 0.2;
+
+          const estimatedStock =
+
+            Math.round(
+              used20 + stock20
+            );
+
+          const amount =
+
+            estimatedStock *
+
+            Number(
+              item.latestPrice || 0
+            );
+
+          return sum + amount;
+
+        }, 0);
+
+    excelData.push({
+
+      "材料名":
+        `会社合計 : ¥${companyTotal.toLocaleString()}`,
+
+      "型番・サイズ": "",
+
+      "最新単価": "",
+
+      "在庫": "",
+
+      "在庫金額": "",
+
+    });
+
+    // 空行
+    excelData.push({
+
+      "材料名": "",
+
+      "型番・サイズ": "",
+
+      "最新単価": "",
+
+      "在庫": "",
+
+      "在庫金額": "",
+
+    });
+
+  });
 
     const worksheet =
 
