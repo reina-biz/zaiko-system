@@ -223,7 +223,10 @@ const groupedCompanies =
           item.stock * 0.2;
 
         const estimatedStock =
-          used20 + stock20;
+
+  Math.round(
+    used20 + stock20
+  );
 
         const amount =
 
@@ -708,7 +711,10 @@ Object.values(sites)
       item.stock * 0.2;
 
     const estimatedStock =
-      used20 + stock20;
+
+  Math.round(
+    used20 + stock20
+  );
 
     const amount =
 
@@ -728,9 +734,7 @@ Object.values(sites)
         item.latestPrice || 0
       ).toLocaleString()}`,
 
-      Math.round(
-        estimatedStock
-      ).toLocaleString(),
+      estimatedStock.toLocaleString(),
 
       `¥${Math.round(
         amount
@@ -756,7 +760,10 @@ Object.values(sites)
         item.stock * 0.2;
 
       const estimatedStock =
-        used20 + stock20;
+
+  Math.round(
+    used20 + stock20
+  );
 
       const amount =
 
@@ -1120,7 +1127,10 @@ Object.values(sites)
       item.stock * 0.2;
 
     const estimatedStock =
-      used20 + stock20;
+
+  Math.round(
+    used20 + stock20
+  );
 
     const amount =
 
@@ -1206,7 +1216,10 @@ Object.values(sites)
         item.stock * 0.2;
 
       const estimatedStock =
-        used20 + stock20;
+
+  Math.round(
+    used20 + stock20
+  );
 
       const amount =
 
