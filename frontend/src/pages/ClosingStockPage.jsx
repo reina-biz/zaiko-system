@@ -329,58 +329,56 @@ rows
 
     const excelData =
 
-      Object.values(companyRows)
+  Object.values(companyRows)
 
-        .map((item) => {
+    .map((item) => {
 
-          const used20 =
-            item.used * 0.2;
+      const used20 =
+        item.used * 0.2;
 
-          const stock20 =
-            item.stock * 0.2;
+      const stock20 =
+        item.stock * 0.2;
 
-          const estimatedStock =
+      const estimatedStock =
 
-  Math.round(
-    used20 + stock20
-  );
+        Math.round(
+          used20 + stock20
+        );
 
-          const amount =
+      const amount =
 
-            estimatedStock *
+        Math.round(
 
-            Number(
-              item.latestPrice || 0
-            );
+          estimatedStock *
 
-          return {
+          Number(
+            item.latestPrice || 0
+          )
 
-            "材料名":
-              item.materialName,
+        );
 
-            "型番・サイズ":
-              item.size,
+      return {
 
-            "最新単価":
-              item.latestPrice,
+        "材料名":
+          item.materialName,
 
-            "使用20%":
-              Math.round(used20),
+        "型番・サイズ":
+          item.size,
 
-            "在庫20%":
-              Math.round(stock20),
+        "最新単価":
+          Number(
+            item.latestPrice || 0
+          ),
 
-            "推定決算在庫":
-              Math.round(
-                estimatedStock
-              ),
+        "在庫":
+          estimatedStock,
 
-            "決算在庫金額":
-              Math.round(amount),
+        "在庫金額":
+          amount,
 
-          };
+      };
 
-        });
+    });
 
     const worksheet =
 
