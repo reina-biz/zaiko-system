@@ -236,11 +236,25 @@ if (!groupedRows[key]) {
 
                 return keywords.every((keyword) =>
 
-                  name
-                    .toLowerCase()
-                    .includes(keyword)
+  (
+    item.materialName || ""
+  )
 
-                );
+    .toLowerCase()
+
+    .includes(keyword)
+
+  ||
+
+  (
+    item.size || ""
+  )
+
+    .toLowerCase()
+
+    .includes(keyword)
+
+);
 
               })
 
