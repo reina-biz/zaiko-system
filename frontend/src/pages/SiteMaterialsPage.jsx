@@ -17,6 +17,28 @@ const [searchSite,
   setSearchSite] =
     useState("");
 
+
+    const siteSuggestions = [
+
+  ...new Set(
+
+    rows
+
+      .filter(
+        (row) =>
+
+          row.siteName
+      )
+
+      .map(
+        (row) =>
+          row.siteName
+      )
+
+  )
+
+];
+
 const [startMonth,
   setStartMonth] =
     useState("");
@@ -700,8 +722,9 @@ if (
   <div className="flex gap-2">
 
     <input
-      type="text"
-      placeholder="現場名検索"
+  list="site-search-list"
+  type="text"
+  placeholder="現場名検索"
       value={searchSite}
       onChange={(e) =>
         setSearchSite(
@@ -716,6 +739,33 @@ if (
         py-3
       "
     />
+
+    {searchSite?.length >= 2 && (
+
+  <datalist id="site-search-list">
+
+    {siteSuggestions
+
+      .filter(
+        (site) =>
+
+          site.includes(
+            searchSite
+          )
+      )
+
+      .map((site) => (
+
+        <option
+          key={site}
+          value={site}
+        />
+
+      ))}
+
+  </datalist>
+
+)}
 
     <button
       onClick={handleExcelExport}
