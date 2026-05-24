@@ -424,7 +424,7 @@ const materialSuggestions = [
     className="w-full border rounded-xl px-3 py-3"
   />
 
-  {row.size?.length >= 2 && (
+  {row.materialName && (
 
   <datalist
     id={`size-list-${index}`}
