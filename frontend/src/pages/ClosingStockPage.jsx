@@ -534,6 +534,56 @@ body:
 
       const pdfRows = [];
 
+      const companyRows = {};
+
+Object.values(sites)
+
+  .flat()
+
+  .forEach((row) => {
+
+    const key =
+
+      `${row.materialName}_${row.size}`;
+
+    if (!companyRows[key]) {
+
+      companyRows[key] = {
+
+        materialName:
+          row.materialName,
+
+        size:
+          row.size,
+
+        used: 0,
+
+        stock: 0,
+
+        latestPrice:
+          row.price,
+
+      };
+
+    }
+
+    companyRows[key].used +=
+
+      Number(row.used || 0);
+
+    companyRows[key].stock +=
+
+      Number(row.quantity || 0)
+
+      -
+
+      Number(row.used || 0);
+
+    companyRows[key].latestPrice =
+      row.price;
+
+  });
+
       // 会社名
       pdfRows.push([
 
@@ -562,7 +612,7 @@ body:
       // 材料一覧
       
 
-    Object.values(groupedRows)
+    Object.values(companyRows)
 
   .forEach((item) => {
 
@@ -610,7 +660,7 @@ body:
       // 会社合計
       const companyTotal =
 
- Object.values(groupedRows)
+ Object.values(companyRows)
 
   .reduce((sum, item) => {
 
