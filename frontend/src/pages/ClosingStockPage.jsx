@@ -869,7 +869,59 @@ body:
 
 {Object.entries(
   groupedCompanies
-).map(([company, sites]) => (
+ ).map(([company, sites]) => {
+
+  const companyRows = {};
+
+ Object.values(sites)
+
+  .flat()
+
+  .forEach((row) => {
+
+    const key =
+
+      `${row.materialName}_${row.size}`;
+
+    if (!companyRows[key]) {
+
+      companyRows[key] = {
+
+        materialName:
+          row.materialName,
+
+        size:
+          row.size,
+
+        used: 0,
+
+        stock: 0,
+
+        latestPrice:
+          row.price,
+
+      };
+
+    }
+
+    companyRows[key].used +=
+
+      Number(row.used || 0);
+
+    companyRows[key].stock +=
+
+      Number(row.quantity || 0)
+
+      -
+
+      Number(row.used || 0);
+
+    companyRows[key].latestPrice =
+      row.price;
+
+  });
+
+  return ( 
 
   <div
     key={company}
@@ -922,7 +974,7 @@ body:
 
       {/* データ */}
 
-      {Object.values(groupedRows)
+      {Object.values(companyRows)
 
   .map((item, index) => {
 
@@ -1010,64 +1062,34 @@ body:
 
         ¥{
 
-          Object.values(sites)
+  Object.values(companyRows)
 
-            .flat()
+    .reduce((sum, item) => {
 
-            .reduce(
+      const used20 =
+        item.used * 0.2;
 
-              (sum, row) => {
+      const stock20 =
+        item.stock * 0.2;
 
-                const estimatedStock =
+      const estimatedStock =
+        used20 + stock20;
 
-                  (
-                    Number(row.used || 0)
-                    * 0.2
-                  )
+      const amount =
 
-                  +
+        estimatedStock *
 
-                  (
-                    (
-                      Number(row.quantity || 0)
+        Number(
+          item.latestPrice || 0
+        );
 
-                      -
+      return sum + amount;
 
-                      Number(row.used || 0)
+    }, 0)
 
-                    )
-                    * 0.2
-                  );
+    .toLocaleString()
 
-                return (
-
-                  sum +
-
-                  (
-
-                    estimatedStock *
-
-Number(
-
-  groupedRows[
-    `${row.materialName}_${row.size}`
-  ]?.latestPrice || 0
-
-)
-
-                  )
-
-                );
-
-              },
-
-              0
-
-            )
-
-            .toLocaleString()
-
-        }
+}
 
       </div>
 
@@ -1075,7 +1097,9 @@ Number(
 
   </div>
 
-))}
+  );
+
+})}
 
      </div>
 
