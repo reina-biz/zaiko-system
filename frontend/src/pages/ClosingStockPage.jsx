@@ -610,59 +610,30 @@ body:
       // 会社合計
       const companyTotal =
 
-        Object.values(groupedRows)
+  Object.values(groupedRows)
 
-          .flat()
+    .reduce((sum, item) => {
 
-          .reduce((sum, row) => {
+      const used20 =
+        item.used * 0.2;
 
-            const stock =
+      const stock20 =
+        item.stock * 0.2;
 
-              Math.round(
+      const estimatedStock =
+        used20 + stock20;
 
-                (
+      const amount =
 
-                  Number(row.used || 0)
+        estimatedStock *
 
-                  * 0.2
+        Number(
+          item.latestPrice || 0
+        );
 
-                )
+      return sum + amount;
 
-                +
-
-                (
-
-                  (
-
-                    Number(row.quantity || 0)
-
-                    -
-
-                    Number(row.used || 0)
-
-                  )
-
-                  * 0.2
-
-                )
-
-              );
-
-            return (
-
-              sum +
-
-              (
-
-                stock *
-
-                Number(row.price || 0)
-
-              )
-
-            );
-
-          }, 0);
+    }, 0);
 
 
 
