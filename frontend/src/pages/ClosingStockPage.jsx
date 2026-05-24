@@ -976,97 +976,85 @@ body:
 
       {/* データ */}
 
-      {Object.values(sites)
+      {Object.values(groupedRows)
 
-        .flat()
+  .map((item, index) => {
 
-        .map((row, index) => {
+    const used20 =
+      item.used * 0.2;
 
-          const used20 =
-            Number(row.used || 0) * 0.2;
+    const stock20 =
+      item.stock * 0.2;
 
-          const stock20 =
+    const estimatedStock =
+      used20 + stock20;
 
-            (
-              Number(row.quantity || 0)
+    const amount =
 
-              -
+      estimatedStock *
 
-              Number(row.used || 0)
+      Number(
+        item.latestPrice || 0
+      );
 
-            ) * 0.2;
+    return (
 
-          const estimatedStock =
-            used20 + stock20;
+      <div
 
-const latestPrice =
+        key={index}
 
-  groupedRows[
-    `${row.materialName}_${row.size}`
-  ]?.latestPrice || 0;
+        className="
+          grid
+          grid-cols-[2fr_1fr_120px_120px_140px]
+          border-t
+          text-sm
+        "
 
-          const amount =
+      >
 
-  estimatedStock *
+        <div className="p-3">
 
-  Number(latestPrice);
+          {item.materialName}
 
-          return (
+        </div>
 
-            <div
+        <div className="p-3">
 
-              key={index}
+          {item.size}
 
-              className="
-                grid
-                grid-cols-[2fr_1fr_120px_120px_140px]
-                border-t
-                text-sm
-              "
+        </div>
 
-            >
+        <div className="p-3 text-right">
 
-              <div className="p-3">
+          ¥{Number(
+            item.latestPrice || 0
+          ).toLocaleString()}
 
-                {row.materialName}
+        </div>
 
-              </div>
+        <div className="p-3 text-right font-semibold">
 
-              <div className="p-3">
+          {Math.round(
+            estimatedStock
+          ).toLocaleString()}
 
-                {row.size}
+        </div>
 
-              </div>
+        <div className="p-3 text-right font-semibold">
 
-              <div className="p-3 text-right">
+          ¥{Math.round(
+            amount
+          ).toLocaleString()}
 
-                ¥{Number(
-  latestPrice
-).toLocaleString()}
+        </div>
 
-              </div>
+      </div>
 
-              <div className="p-3 text-right font-semibold">
+    );
 
-                {Math.round(
-                  estimatedStock
-                ).toLocaleString()}
+  })}
 
-              </div>
 
-              <div className="p-3 text-right font-semibold">
-
-                ¥{Math.round(
-                  amount
-                ).toLocaleString()}
-
-              </div>
-
-            </div>
-
-          );
-
-        })}
 
       {/* 会社合計 */}
 
