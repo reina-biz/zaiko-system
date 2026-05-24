@@ -27,7 +27,12 @@ export default function HistoryPage({
   }, [rows]);
 
   const filteredRows =
-    editedRows.filter((row) => {
+
+  [...editedRows]
+
+    .reverse()
+
+    .filter((row) => {
 
       const companyMatch =
 
@@ -126,9 +131,7 @@ export default function HistoryPage({
 
         <div className="flex items-center justify-between">
 
-          <h1 className="text-3xl font-bold">
-            入力履歴
-          </h1>
+          
 
           <div className="flex gap-3">
 
