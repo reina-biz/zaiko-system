@@ -236,25 +236,11 @@ if (!groupedRows[key]) {
 
                 return keywords.every((keyword) =>
 
-  (
-    item.materialName || ""
-  )
+                  name
+                    .toLowerCase()
+                    .includes(keyword)
 
-    .toLowerCase()
-
-    .includes(keyword)
-
-  ||
-
-  (
-    item.size || ""
-  )
-
-    .toLowerCase()
-
-    .includes(keyword)
-
-);
+                );
 
               })
 
@@ -266,7 +252,7 @@ if (!groupedRows[key]) {
                 >
 
                   <td className="p-4 whitespace-nowrap">
-                    {item.materialName}
+                    {name}
                   </td>
 
                   <td className="p-4 whitespace-nowrap">
