@@ -622,6 +622,92 @@ body:
 
         });
 
+      // 会社合計
+      const companyTotal =
+
+        Object.values(sites)
+
+          .flat()
+
+          .reduce((sum, row) => {
+
+            const stock =
+
+              Math.round(
+
+                (
+
+                  Number(row.used || 0)
+
+                  * 0.2
+
+                )
+
+                +
+
+                (
+
+                  (
+
+                    Number(row.quantity || 0)
+
+                    -
+
+                    Number(row.used || 0)
+
+                  )
+
+                  * 0.2
+
+                )
+
+              );
+
+            return (
+
+              sum +
+
+              (
+
+                stock *
+
+                Number(row.price || 0)
+
+              )
+
+            );
+
+          }, 0);
+
+      pdfRows.push([
+
+        {
+
+          content:
+
+            `会社合計 : ¥${companyTotal.toLocaleString()}`,
+
+          colSpan: 5,
+
+          styles: {
+
+            font: "NotoSansJP",
+
+            fontStyle: "normal",
+
+            halign: "right",
+
+            fillColor: [241, 245, 249],
+
+            fontSize: 11,
+
+          },
+
+        },
+
+      ]);
+
+
       return pdfRows;
       return pdfRows;
 
