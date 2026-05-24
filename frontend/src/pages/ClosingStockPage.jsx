@@ -306,21 +306,21 @@ const groupedCompanies =
 
     XLSX.utils.book_append_sheet(
 
-      workbook,
+  workbook,
 
-      worksheet,
+  worksheet,
 
-      "決算在庫"
+  `${companyName || "全会社"}`
 
-    );
+);
 
     XLSX.writeFile(
 
-      workbook,
+  workbook,
 
-      "決算在庫.xlsx"
+  `決算在庫_${startMonth}-${endMonth}_${companyName || "全会社"}.xlsx`
 
-    );
+);
 
   };
 
