@@ -66,6 +66,8 @@ export default function StockPage({
 if (!groupedRows[key]) {
 
         groupedRows[key] = {
+            materialName:
+  row.materialName,
           size: row.size,
           quantity: 0,
           orderQuantity: 0,
@@ -242,15 +244,15 @@ if (!groupedRows[key]) {
 
               })
 
-              .map(([name, item]) => (
+              .map(([key, item]) => (
 
                 <tr
-                  key={name}
+  key={key}
                   className="border-t hover:bg-slate-50"
                 >
 
                   <td className="p-4 whitespace-nowrap">
-                    {name}
+                    {item.materialName}
                   </td>
 
                   <td className="p-4 whitespace-nowrap">
