@@ -1132,14 +1132,7 @@ Object.values(sites)
 
 </div>
 
-      {/* タイトル */}
-
-      <h2 className="text-2xl font-bold mb-6">
-
-        決算在庫
-
-      </h2>
-
+      
       {/* 表 */}
 
 {Object.entries(
