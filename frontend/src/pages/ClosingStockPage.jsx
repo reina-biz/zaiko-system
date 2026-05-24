@@ -709,7 +709,7 @@ body:
 
 
       return pdfRows;
-      return pdfRows;
+
 
     }),
 
@@ -909,172 +909,217 @@ body:
 
       {/* 表 */}
 
-      <div className="overflow-auto rounded-2xl border bg-white">
+{Object.entries(
+  groupedCompanies
+).map(([company, sites]) => (
 
-        <table className="w-full text-sm min-w-[1400px]">
+  <div
+    key={company}
+    className="
+      bg-white
+      rounded-3xl
+      shadow-sm
+      p-6
+      mb-6
+    "
+  >
 
-          <thead className="bg-slate-100">
+    {/* 会社名 */}
 
-            <tr>
+    <div className="text-2xl font-bold mb-4">
 
-              <th className="p-4 text-left">
-                材料名
-              </th>
+      {company}
 
-              <th className="p-4 text-left">
-                型番・サイズ
-              </th>
+    </div>
 
-              <th className="p-4 text-right">
-                最新単価
-              </th>
+    {/* テーブル */}
 
-              <th className="p-4 text-right">
-                使用20%
-              </th>
+    <div className="overflow-hidden rounded-2xl border">
 
-              <th className="p-4 text-right">
-                在庫20%
-              </th>
+      {/* ヘッダー */}
 
-              <th className="p-4 text-right">
-                推定決算在庫
-              </th>
+      <div className="grid grid-cols-[2fr_1fr_120px_120px_140px] bg-slate-100 font-semibold text-sm">
 
-              <th className="p-4 text-right">
-                決算在庫金額
-              </th>
+        <div className="p-3">
+          材料名
+        </div>
 
-            </tr>
+        <div className="p-3">
+          型番・サイズ
+        </div>
 
-          </thead>
+        <div className="p-3 text-right">
+          最新単価
+        </div>
 
-          <tbody>
+        <div className="p-3 text-right">
+          推定決算在庫
+        </div>
 
-            {Object.values(groupedRows)
+        <div className="p-3 text-right">
+          決算在庫金額
+        </div>
 
-              .map((item, index) => {
+      </div>
 
-                const used20 =
-                  item.used * 0.2;
+      {/* データ */}
 
-                const stock20 =
-                  item.stock * 0.2;
+      {Object.values(sites)
+
+        .flat()
+
+        .map((row, index) => {
+
+          const used20 =
+            Number(row.used || 0) * 0.2;
+
+          const stock20 =
+
+            (
+              Number(row.quantity || 0)
+
+              -
+
+              Number(row.used || 0)
+
+            ) * 0.2;
+
+          const estimatedStock =
+            used20 + stock20;
+
+          const amount =
+
+            estimatedStock *
+
+            Number(row.price || 0);
+
+          return (
+
+            <div
+
+              key={index}
+
+              className="
+                grid
+                grid-cols-[2fr_1fr_120px_120px_140px]
+                border-t
+                text-sm
+              "
+
+            >
+
+              <div className="p-3">
+
+                {row.materialName}
+
+              </div>
+
+              <div className="p-3">
+
+                {row.size}
+
+              </div>
+
+              <div className="p-3 text-right">
+
+                ¥{Number(
+                  row.price || 0
+                ).toLocaleString()}
+
+              </div>
+
+              <div className="p-3 text-right font-semibold">
+
+                {Math.round(
+                  estimatedStock
+                ).toLocaleString()}
+
+              </div>
+
+              <div className="p-3 text-right font-semibold">
+
+                ¥{Math.round(
+                  amount
+                ).toLocaleString()}
+
+              </div>
+
+            </div>
+
+          );
+
+        })}
+
+      {/* 会社合計 */}
+
+      <div className="p-4 flex justify-end font-bold text-lg border-t bg-slate-50">
+
+        会社合計：
+
+        ¥{
+
+          Object.values(sites)
+
+            .flat()
+
+            .reduce(
+
+              (sum, row) => {
 
                 const estimatedStock =
-                  used20 + stock20;
 
-                const amount =
+                  (
+                    Number(row.used || 0)
+                    * 0.2
+                  )
 
-                  estimatedStock *
+                  +
 
-                  Number(
-                    item.latestPrice || 0
+                  (
+                    (
+                      Number(row.quantity || 0)
+
+                      -
+
+                      Number(row.used || 0)
+
+                    )
+                    * 0.2
                   );
 
                 return (
 
-                  <tr
+                  sum +
 
-                    key={index}
+                  (
 
-                    className="
-                      border-t
-                      hover:bg-slate-50
-                    "
+                    estimatedStock *
 
-                  >
+                    Number(row.price || 0)
 
-                    <td className="p-4 whitespace-nowrap">
-
-                      {item.materialName}
-
-                    </td>
-
-                    <td className="p-4 whitespace-nowrap">
-
-                      {item.size}
-
-                    </td>
-
-                    <td className="p-4 text-right whitespace-nowrap">
-
-                      ¥{Number(
-                        item.latestPrice || 0
-                      ).toLocaleString()}
-
-                    </td>
-
-                    <td className="p-4 text-right">
-
-                      {Math.round(
-                        used20
-                      ).toLocaleString()}
-
-                    </td>
-
-                    <td className="p-4 text-right">
-
-                      {Math.round(
-                        stock20
-                      ).toLocaleString()}
-
-                    </td>
-
-                    <td className="p-4 text-right font-semibold">
-
-                      {Math.round(
-                        estimatedStock
-                      ).toLocaleString()}
-
-                    </td>
-
-                    <td className="p-4 text-right font-semibold whitespace-nowrap">
-
-                      ¥{Math.round(
-                        amount
-                      ).toLocaleString()}
-
-                    </td>
-
-                  </tr>
+                  )
 
                 );
 
-              })}
+              },
 
-          </tbody>
+              0
 
-          <tfoot className="bg-slate-100">
+            )
 
-            <tr>
+            .toLocaleString()
 
-              <td
-                colSpan="6"
-                className="p-4 text-right font-bold"
-              >
-
-                決算在庫金額 合計
-
-              </td>
-
-              <td className="p-4 text-right font-bold whitespace-nowrap">
-
-                ¥{Math.round(
-                  totalAmount
-                ).toLocaleString()}
-
-              </td>
-
-            </tr>
-
-          </tfoot>
-
-        </table>
+        }
 
       </div>
 
     </div>
+
+  </div>
+
+))}
+
+     </div>
 
   );
 
