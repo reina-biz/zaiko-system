@@ -61,6 +61,35 @@ export default function PricePage({
   const months =
     generateMonths();
 
+    const filteredCompanies = [
+
+  ...new Set(
+
+    rows
+
+      .filter((row) =>
+
+        row.materialName
+
+          ?.toLowerCase()
+
+          .includes(
+
+            search.toLowerCase()
+
+          )
+
+      )
+
+      .map(
+        (row) =>
+          row.companyName
+      )
+
+  )
+
+];
+
   const groupedMaterials = {};
 
   rows
