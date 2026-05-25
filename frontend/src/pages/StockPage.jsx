@@ -97,12 +97,8 @@ if (!groupedRows[key]) {
 
       <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
 
-        <div>
-
-          
-
-        <div>
-
+    <div>
+        
           <label className="block text-sm font-medium mb-2">
             開始年月
           </label>
@@ -116,11 +112,11 @@ if (!groupedRows[key]) {
             className="w-full border rounded-2xl px-4 py-3"
           />
 
-        </div>
+</div>
 
-        <div>
+<div>
 
-          <label className="block text-sm font-medium mb-2">
+<label className="block text-sm font-medium mb-2">
             終了年月
           </label>
 
@@ -132,7 +128,10 @@ if (!groupedRows[key]) {
             }
             className="w-full border rounded-2xl px-4 py-3"
           />
+          </div>
 
+
+<div>
 <label className="block text-sm font-medium mb-2">
             会社名
           </label>
@@ -167,8 +166,6 @@ if (!groupedRows[key]) {
         </div>
 
 
-        </div>
-
 <div>
 
   <label className="block text-sm font-medium mb-2">
@@ -189,17 +186,13 @@ if (!groupedRows[key]) {
       px-4
       py-3
     "
-  />
+/>
 
 </div>
 
+</div>
 
-
-      </div>
-
-      
-
-      <div className="text-2xl font-bold text-black mb-6 ml-1">
+<div className="text-2xl font-bold text-black mb-6 ml-1">
 
   {companyName || "全会社"}
 
