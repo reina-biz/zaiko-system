@@ -237,11 +237,13 @@ const materialSuggestions = [
       )
     );
 
-    setCompanyName("");
+   setCompanyName("");
 
-    setOrderDate("");
+   setSiteName("");
 
-    setSelectedRows([]);
+   setOrderDate("");
+
+  setSelectedRows([]);
 
   }}
   className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
