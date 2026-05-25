@@ -211,10 +211,11 @@ export default function PricePage({
 
       </div>
 
-      <h2 className="text-2xl font-bold mb-6">
-        単価比較
-      </h2>
+      <div className="text-2xl font-bold text-black mb-6 ml-1">
 
+  {companyName || "全会社"}
+
+</div>
       <div className="overflow-auto rounded-2xl border bg-white">
 
         <table className="w-full text-sm min-w-[1400px]">
