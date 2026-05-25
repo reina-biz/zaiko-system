@@ -251,63 +251,103 @@ if (
 
             {Object.entries(groupedCompanies)
 
-              .filter(([name]) => {
+  .map(([company, materials]) => (
 
-                const keywords =
-                  search
-                    .toLowerCase()
-                    .split(" ")
-                    .filter(Boolean);
+    <>
 
-                return keywords.every((keyword) =>
+      <tr className="bg-slate-200">
 
-                  name
-                    .toLowerCase()
-                    .includes(keyword)
+        <td
+          colSpan={6}
+          className="
+            p-4
+            font-bold
+            text-lg
+          "
+        >
 
-                );
+          {company}
 
-              })
+        </td>
 
-              .map(([key, item]) => (
+      </tr>
 
-                <tr
-  key={key}
-                  className="border-t hover:bg-slate-50"
-                >
+      {Object.entries(materials)
 
-                  <td className="p-4 whitespace-nowrap">
-                    {item.materialName}
-                  </td>
+        .filter(([name]) => {
 
-                  <td className="p-4 whitespace-nowrap">
-                    {item.size}
-                  </td>
+          const keywords =
+            search
+              .toLowerCase()
+              .split(" ")
+              .filter(Boolean);
 
-                  <td className="p-4 text-right whitespace-nowrap">
-                    ¥{Number(
-                      item.latestPrice || 0
-                    ).toLocaleString()}
-                  </td>
+          return keywords.every(
 
-                  <td className="p-4 text-right">
-                    {item.orderQuantity.toLocaleString()}
-                  </td>
+            (keyword) =>
 
-                  <td className="p-4 text-right">
-                    {(
-                      item.orderQuantity -
-                      item.quantity
-                    ).toLocaleString()}
-                  </td>
+              name
+                .toLowerCase()
+                .includes(keyword)
 
-                  <td className="p-4 text-right font-semibold">
-                    {item.quantity.toLocaleString()}
-                  </td>
+          );
 
-                </tr>
+        })
 
-              ))}
+        .map(([key, item]) => (
+
+          <tr
+            key={key}
+            className="
+              border-t
+              hover:bg-slate-50
+            "
+          >
+
+            <td className="p-4 whitespace-nowrap">
+              {item.materialName}
+            </td>
+
+            <td className="p-4 whitespace-nowrap">
+              {item.size}
+            </td>
+
+            <td className="p-4 text-right whitespace-nowrap">
+
+              ¥{Number(
+                item.latestPrice || 0
+              ).toLocaleString()}
+
+            </td>
+
+            <td className="p-4 text-right">
+
+              {item.orderQuantity.toLocaleString()}
+
+            </td>
+
+            <td className="p-4 text-right">
+
+              {(
+                item.orderQuantity -
+                item.quantity
+              ).toLocaleString()}
+
+            </td>
+
+            <td className="p-4 text-right font-semibold">
+
+              {item.quantity.toLocaleString()}
+
+            </td>
+
+          </tr>
+
+        ))}
+
+    </>
+
+))}
 
           </tbody>
 
