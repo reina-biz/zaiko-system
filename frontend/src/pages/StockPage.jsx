@@ -95,42 +95,11 @@ if (!groupedRows[key]) {
 
     <div className="bg-white rounded-3xl shadow-sm p-6">
 
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
+      <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
 
         <div>
 
-          <label className="block text-sm font-medium mb-2">
-            会社名
-          </label>
-
-          <select
-            value={companyName}
-            onChange={(e) =>
-              setCompanyName(
-                e.target.value
-              )
-            }
-            className="w-full border rounded-2xl px-4 py-3 bg-white"
-          >
-
-            <option value="">
-              会社選択
-            </option>
-
-            {companyList.map((company) => (
-
-              <option
-                key={company}
-                value={company}
-              >
-                {company}
-              </option>
-
-            ))}
-
-          </select>
-
-        </div>
+          
 
         <div>
 
@@ -164,27 +133,77 @@ if (!groupedRows[key]) {
             className="w-full border rounded-2xl px-4 py-3"
           />
 
+<label className="block text-sm font-medium mb-2">
+            会社名
+          </label>
+
+          <select
+            value={companyName}
+            onChange={(e) =>
+              setCompanyName(
+                e.target.value
+              )
+            }
+            className="w-full border rounded-2xl px-4 py-3 bg-white"
+          >
+
+            <option value="">
+              会社選択
+            </option>
+
+            {companyList.map((company) => (
+
+              <option
+                key={company}
+                value={company}
+              >
+                {company}
+              </option>
+
+            ))}
+
+          </select>
+
         </div>
 
+
+        </div>
+
+<div>
+
+  <label className="block text-sm font-medium mb-2">
+    材料名検索
+  </label>
+
+  <input
+    type="text"
+    placeholder="材料名検索"
+    value={search}
+    onChange={(e) =>
+      setSearch(e.target.value)
+    }
+    className="
+      w-full
+      border
+      rounded-2xl
+      px-4
+      py-3
+    "
+  />
+
+</div>
+
+
+
       </div>
 
-      <div className="mb-6">
+      
 
-        <input
-          type="text"
-          placeholder="材料名検索"
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-          className="w-full border rounded-2xl px-4 py-3"
-        />
+      <div className="text-2xl font-bold text-black mb-6 ml-1">
 
-      </div>
+  {companyName || "全会社"}
 
-      <h2 className="text-2xl font-bold mb-6">
-        在庫管理
-      </h2>
+</div>
 
       <div className="overflow-auto rounded-2xl border bg-white">
 
