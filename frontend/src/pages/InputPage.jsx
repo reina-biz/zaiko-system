@@ -46,11 +46,12 @@ export default function InputPage({
     }
 
     updatedRows[index] = {
-      ...updatedRows[index],
-      companyName,
-      orderDate,
-      [field]: value,
-    };
+   ...updatedRows[index],
+   companyName,
+   siteName,
+   orderDate,
+   [field]: value,
+};
 
     setRows(updatedRows);
 
