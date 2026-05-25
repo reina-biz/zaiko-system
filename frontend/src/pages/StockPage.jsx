@@ -89,17 +89,17 @@ if (
 
       }
 
-      groupedRows[key]
-        .orderQuantity +=
+      groupedCompanies[company][key]
+  .orderQuantity +=
         Number(row.quantity || 0);
 
-      groupedRows[key]
-        .quantity +=
+      groupedCompanies[company][key]
+  .quantity +=
         Number(row.quantity || 0)
         - Number(row.used || 0);
 
-      groupedRows[key]
-        .latestPrice =
+      groupedCompanies[company][key]
+  .latestPrice =
         row.price;
 
     });
@@ -249,7 +249,7 @@ if (
 
           <tbody>
 
-            {Object.entries(groupedRows)
+            {Object.entries(groupedCompanies)
 
               .filter(([name]) => {
 
