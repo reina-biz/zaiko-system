@@ -149,92 +149,103 @@ rows
 
     <div className="bg-white rounded-3xl shadow-sm p-6">
 
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
+    <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
 
-        <div>
+  <div>
 
-          <label className="block text-sm font-medium mb-2">
-            会社名
-          </label>
+    <label className="block text-sm font-medium mb-2">
+      開始年月
+    </label>
 
-          <select
-            value={companyName}
-            onChange={(e) =>
-              setCompanyName(
-                e.target.value
-              )
-            }
-            className="w-full border rounded-2xl px-4 py-3 bg-white"
-          >
+    <input
+      type="month"
+      value={startMonth}
+      onChange={(e) =>
+        setStartMonth(e.target.value)
+      }
+      className="w-full border rounded-2xl px-4 py-3"
+    />
 
-            <option value="">
-              会社選択
-            </option>
+  </div>
 
-            {companyList.map((company) => (
+  <div>
 
-              <option
-                key={company}
-                value={company}
-              >
-                {company}
-              </option>
+    <label className="block text-sm font-medium mb-2">
+      終了年月
+    </label>
 
-            ))}
+    <input
+      type="month"
+      value={endMonth}
+      onChange={(e) =>
+        setEndMonth(e.target.value)
+      }
+      className="w-full border rounded-2xl px-4 py-3"
+    />
 
-          </select>
+  </div>
 
-        </div>
+  <div>
 
-        <div>
+    <label className="block text-sm font-medium mb-2">
+      会社名
+    </label>
 
-          <label className="block text-sm font-medium mb-2">
-            開始年月
-          </label>
+    <select
+      value={companyName}
+      onChange={(e) =>
+        setCompanyName(
+          e.target.value
+        )
+      }
+      className="w-full border rounded-2xl px-4 py-3 bg-white"
+    >
 
-          <input
-            type="month"
-            value={startMonth}
-            onChange={(e) =>
-              setStartMonth(e.target.value)
-            }
-            className="w-full border rounded-2xl px-4 py-3"
-          />
+      <option value="">
+        会社選択
+      </option>
 
-        </div>
+      {companyList.map((company) => (
 
-        <div>
+        <option
+          key={company}
+          value={company}
+        >
+          {company}
+        </option>
 
-          <label className="block text-sm font-medium mb-2">
-            終了年月
-          </label>
+      ))}
 
-          <input
-            type="month"
-            value={endMonth}
-            onChange={(e) =>
-              setEndMonth(e.target.value)
-            }
-            className="w-full border rounded-2xl px-4 py-3"
-          />
+    </select>
 
-        </div>
+  </div>
 
-      </div>
+  <div>
 
-      <div className="mb-6">
+    <label className="block text-sm font-medium mb-2">
+      材料名検索
+    </label>
 
-        <input
-          type="text"
-          placeholder="材料名検索"
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-          className="w-full border rounded-2xl px-4 py-3"
-        />
+    <input
+      type="text"
+      placeholder="材料名検索"
+      value={search}
+      onChange={(e) =>
+        setSearch(e.target.value)
+      }
+      className="
+        w-full
+        border
+        rounded-2xl
+        px-4
+        py-3
+      "
+    />
 
-      </div>
+  </div>
+
+</div>  
+      
 
       <div className="text-2xl font-bold text-black mb-6 ml-1">
 
