@@ -61,93 +61,89 @@ export default function PricePage({
   const months =
     generateMonths();
 
-    const filteredCompanies = [
+    
 
-  ...new Set(
+  const groupedCompanies = {};
 
-    rows
+rows
 
-      .filter((row) =>
+  .filter((row) => {
 
-        row.materialName
+    if (!row.materialName) {
+      return false;
+    }
 
-          ?.toLowerCase()
+    if (
+  companyName &&
+  row.companyName !==
+    companyName
+) {
 
-          .includes(
+  return false;
 
-            search.toLowerCase()
+}
 
-          )
+    const rowMonth =
+      row.orderDate
+        ?.slice(0, 7)
+        .replaceAll("/", "-");
 
-      )
+    if (
+      rowMonth < startMonth ||
+      rowMonth > endMonth
+    ) {
+      return false;
+    }
 
-      .map(
-        (row) =>
-          row.companyName
-      )
+    return true;
 
-  )
+  })
 
-];
+  .forEach((row) => {
 
-  const groupedMaterials = {};
+    const company =
+      row.companyName || "未設定";
 
-  rows
+    const key =
 
-    .filter((row) => {
+      `${row.materialName}_${row.size}`;
 
-      if (!row.materialName) {
-        return false;
-      }
+    const month =
+      row.orderDate
+        ?.slice(0, 7)
+        .replace("-", "/");
 
-      if (
-        companyName &&
-        row.companyName !== companyName
-      ) {
-        return false;
-      }
+    if (!groupedCompanies[company]) {
 
-      const rowMonth =
-        row.orderDate
-          ?.slice(0, 7)
-          .replaceAll("/", "-");
+      groupedCompanies[company] = {};
 
-      if (
-        rowMonth < startMonth ||
-        rowMonth > endMonth
-      ) {
-        return false;
-      }
+    }
 
-      return true;
+    if (
 
-    })
+      !groupedCompanies[company][key]
 
-    .forEach((row) => {
+    ) {
 
-      const month =
-        row.orderDate
-          ?.slice(0, 7)
-          .replace("-", "/");
+      groupedCompanies[company][key] = {
 
-      const key =
-        `${row.materialName}_${row.size}`;
+        name:
+          row.materialName,
 
-      if (!groupedMaterials[key]) {
+        size:
+          row.size,
 
-        groupedMaterials[key] = {
-          name: row.materialName,
-          size: row.size,
-          prices: {},
-        };
+        prices: {},
 
-      }
+      };
 
-      groupedMaterials[key]
-        .prices[month] =
-        row.price;
+    }
 
-    });
+    groupedCompanies[company][key]
+
+      .prices[month] = row.price;
+
+  });
 
   return (
 
@@ -276,69 +272,121 @@ export default function PricePage({
 
           </thead>
 
-          <tbody>
+<tbody>
 
-            {Object.values(groupedMaterials)
+  {Object.entries(groupedCompanies)
 
-              .filter((item) => {
+    .map(([company, materials]) => (
 
-                const keywords =
-                  search
-                    .toLowerCase()
-                    .split(" ")
-                    .filter(Boolean);
+      
 
-                return keywords.every((keyword) =>
+    <>
 
-                  item.name
-                    .toLowerCase()
-                    .includes(keyword)
+      <tr className="bg-slate-200">
 
-                );
+        <td
 
-              })
+          colSpan={
+            months.length + 2
+          }
 
-              .map((item, index) => (
+          className="
+            p-4
+            font-bold
+            text-lg
+          "
+        >
 
-                <tr
-                  key={index}
-                  className="border-t hover:bg-slate-50"
-                >
+          {company}
 
-                  <td className="p-4 whitespace-nowrap">
-                    {item.name}
-                  </td>
+        </td>
 
-                  <td className="p-4 whitespace-nowrap">
-                    {item.size}
-                  </td>
+      </tr>
 
-                  {months.map((month) => (
+      {Object.values(materials)
 
-                    <td
-                      key={month}
-                      className="px-2 py-3 text-right whitespace-nowrap"
-                    >
+        .filter((item) => {
 
-                      {item.prices[month]
+          const keywords =
+            search
+              .toLowerCase()
+              .split(" ")
+              .filter(Boolean);
 
-                        ? `¥${Number(
-                            item.prices[month]
-                          ).toLocaleString()}`
+          return keywords.every(
 
-                        : "-"
+            (keyword) =>
 
-                      }
+              item.name
 
-                    </td>
+                .toLowerCase()
 
-                  ))}
+                .includes(keyword)
 
-                </tr>
+          );
 
-              ))}
+        })
 
-          </tbody>
+        .map((item, index) => (
+
+          <tr
+            key={index}
+            className="
+              border-t
+              hover:bg-slate-50
+            "
+          >
+
+            <td className="p-4 whitespace-nowrap">
+
+              {item.name}
+
+            </td>
+
+            <td className="p-4 whitespace-nowrap">
+
+              {item.size}
+
+            </td>
+
+            {months.map((month) => (
+
+              <td
+                key={month}
+                className="
+                  px-2
+                  py-3
+                  text-right
+                  whitespace-nowrap
+                "
+              >
+
+                {item.prices[month]
+
+                  ? `¥${Number(
+                      item.prices[month]
+                    ).toLocaleString()}`
+
+                  : "-"
+
+                }
+
+              </td>
+
+            ))}
+
+            
+
+          </tr>
+
+        ))}
+
+    </>
+
+))}
+
+</tbody>
+
 
         </table>
 
