@@ -24,7 +24,7 @@ export default function StockPage({
   const [endMonth, setEndMonth] =
     useState(`${currentYear}-12`);
 
-  const groupedRows = {};
+  const groupedCompanies = {};
 
   rows
 
@@ -63,9 +63,22 @@ export default function StockPage({
 
   `${row.materialName}_${row.size}`;
 
-if (!groupedRows[key]) {
+const company =
+  row.companyName || "未設定";
 
-        groupedRows[key] = {
+if (!groupedCompanies[company]) {
+
+  groupedCompanies[company] = {};
+
+}
+
+if (
+
+  !groupedCompanies[company][key]
+
+) {
+
+  groupedCompanies[company][key] = {
             materialName:
   row.materialName,
           size: row.size,
