@@ -968,50 +968,7 @@ Object.values(sites)
 
         {/* 会社 */}
 
-        <div>
-
-          <label className="block text-sm font-medium mb-2">
-
-            会社名
-
-          </label>
-
-          <select
-
-            value={companyName}
-
-            onChange={(e) =>
-
-              setCompanyName(
-                e.target.value
-              )
-
-            }
-
-            className="w-full border rounded-2xl px-4 py-3 bg-white"
-
-          >
-
-            <option value="">
-              会社選択
-            </option>
-
-            {companyList.map((company) => (
-
-              <option
-                key={company}
-                value={company}
-              >
-
-                {company}
-
-              </option>
-
-            ))}
-
-          </select>
-
-        </div>
+        
 
         {/* 開始年月 */}
 
@@ -1070,6 +1027,51 @@ Object.values(sites)
             className="w-full border rounded-2xl px-4 py-3"
 
           />
+
+        </div>
+
+        <div>
+
+          <label className="block text-sm font-medium mb-2">
+
+            会社名
+
+          </label>
+
+          <select
+
+            value={companyName}
+
+            onChange={(e) =>
+
+              setCompanyName(
+                e.target.value
+              )
+
+            }
+
+            className="w-full border rounded-2xl px-4 py-3 bg-white"
+
+          >
+
+            <option value="">
+              会社選択
+            </option>
+
+            {companyList.map((company) => (
+
+              <option
+                key={company}
+                value={company}
+              >
+
+                {company}
+
+              </option>
+
+            ))}
+
+          </select>
 
         </div>
 
@@ -1204,7 +1206,7 @@ Object.values(sites)
 
     {/* 会社名 */}
 
-    <div className="text-2xl font-bold mb-4">
+    <div className="text-2xl font-bold text-black mb-4 ml-1">
 
       {company}
 
