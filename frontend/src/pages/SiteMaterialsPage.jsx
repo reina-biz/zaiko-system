@@ -55,20 +55,7 @@ const [selectedEditor,
   setSelectedEditor] =
     useState("");
 
-const [companyStockItems,
-  setCompanyStockItems] =
-    useState([]);
 
-const [newStockItem,
-  setNewStockItem] =
-    useState({
-      date: "",
-      materialName: "",
-      size: "",
-      stock: "",
-      used: "",
-      price: "",
-    });
 
     const filteredRows =
 
@@ -897,876 +884,276 @@ const hasSearch =
 
 </div>
 {hasSearch &&
-  Object.entries(
-        groupedCompanies
-      ).map(([company, sites]) => (
+  Object.entries(groupedCompanies).map(
+    ([company, sites]) => (
 
- <div
-  key={company}
-  className="bg-white rounded-3xl shadow-sm p-6 mb-6"
->
+      <div
+        key={company}
+        className="bg-white rounded-3xl shadow-sm p-6 mb-6"
+      >
 
-  <div className="text-2xl font-bold text-black mb-2 ml-1">
+        <div className="text-2xl font-bold text-black mb-2 ml-1">
+          {company}
+        </div>
 
-  {company}
+        {Object.entries(sites).map(
+          ([site, items]) => (
 
-</div>
+            <div
+              key={site}
+              className="mb-6"
+            >
 
-  
+              <div className="mb-1">
 
-{Object.entries(
-  sites
-).map(([site, items]) => (
+                <div className="
+                  mb-1
+                  ml-1
+                  flex
+                  items-start
+                  justify-between
+                ">
 
-      <div key={site} className="mb-3">
+                  <div className="
+                    text-base
+                    text-black
+                    font-semibold
+                  ">
 
-  
+                    {startMonth?.replace(
+                      /(\d{4})-(\d{2})/,
+                      "$1年$2月"
+                    )}
 
-  <div className="mb-1">
+                    {" ～ "}
 
-   <div className="
-  mb-1
-  ml-1
-  flex
-  items-start
-  justify-between
-">
+                    {endMonth?.replace(
+                      /(\d{4})-(\d{2})/,
+                      "$1年$2月"
+                    )}
 
-  <div className="
-    text-base
-    text-black
-    font-semibold
-  ">
+                    {"　"}
 
-    {startMonth
-      ?.replace(
-        /(\d{4})-(\d{2})/,
-        "$1年$2月"
-      )}
+                    {site}
 
-    {" ～ "}
+                  </div>
 
-    {endMonth
-      ?.replace(
-        /(\d{4})-(\d{2})/,
-        "$1年$2月"
-      )}
+                  {editingSite === site ? (
 
-    {"　"}
+                    <div className="flex gap-2">
 
-    {site}
+                      <select
+                        value={selectedEditor}
+                        onChange={(e) =>
+                          setSelectedEditor(
+                            e.target.value
+                          )
+                        }
+                        className="
+                          border
+                          rounded-2xl
+                          px-3
+                          py-2
+                        "
+                      >
 
-  </div>
+                        <option value="">
+                          編集者
+                        </option>
 
-  {editingSite === site ? (
+                      </select>
 
-    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          setEditingSite(null)
+                        }
+                        className="
+                          bg-emerald-500
+                          text-white
+                          px-4
+                          py-2
+                          rounded-2xl
+                        "
+                      >
+                        保存
+                      </button>
 
-  <select
-    value={selectedEditor}
-    onChange={(e) =>
-      setSelectedEditor(
-        e.target.value
-      )
-    }
-    className="
-      border
-      rounded-2xl
-      px-3
-      py-2
-    "
-  >
+                    </div>
 
-    <option value="">
-      編集者
-    </option>
+                  ) : (
 
-  </select>
+                    <button
+                      onClick={() =>
+                        setEditingSite(site)
+                      }
+                      className="
+                        bg-amber-500
+                        text-white
+                        px-4
+                        py-2
+                        rounded-2xl
+                      "
+                    >
+                      編集
+                    </button>
 
-  <button
-    onClick={() =>
-      setEditingSite(null)
-    }
-    className="
-      bg-emerald-500
-      text-white
-      px-4
-      py-2
-      rounded-2xl
-    "
-  >
-    保存
-  </button>
+                  )}
 
-</div>
+                </div>
 
-  ) : (
+                <div className="
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                ">
 
-    <button
-      onClick={() =>
-        setEditingSite(site)
-      }
-      className="
-        bg-amber-500
-        text-white
-        px-4
-        py-2
-        rounded-2xl
-      "
-    >
-      編集
-    </button>
+                  <div className="
+                    grid
+                    grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px]
+                    bg-slate-100
+                    font-semibold
+                    text-sm
+                  ">
 
-  )}
+                    <div className="p-3">日付</div>
+                    <div className="p-3">材料名</div>
+                    <div className="p-3">型番</div>
+                    <div className="p-3 text-right">注文数</div>
+                    <div className="p-3 text-right">使用数</div>
+                    <div className="p-3 text-right">単価</div>
+                    <div className="p-3 text-right">合計</div>
 
-</div>
+                  </div>
 
- 
+                  {items.map((row, index) => (
 
-    <div className="overflow-hidden rounded-2xl border">
+                    <div
+                      key={index}
+                      className="
+                        grid
+                        grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px]
+                        border-t
+                        text-sm
+                      "
+                    >
 
-            <div className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px_50px] bg-slate-100 font-semibold text-sm">
+                      <div className="p-3">
+                        {row.orderDate}
+                      </div>
 
-              <div className="p-3">
-               日付
-              </div>
+                      <div className="p-3">
+                        {row.materialName}
+                      </div>
 
-              <div className="p-3">
-                材料名
-              </div>
+                      <div className="p-3">
+                        {row.size}
+                      </div>
 
-              <div className="p-3">
-                型番
-              </div>
+                      <div className="p-3 text-right">
+                        {row.quantity || 0}
+                      </div>
 
-              <div className="p-3 text-right">
-              注文数
-              </div>
+                      <div className="
+                        p-2
+                        flex
+                        flex-col
+                        items-end
+                      ">
 
-              <div className="p-3 text-right">
-                使用数
-              </div>
+                        <input
+                          type="number"
+                          defaultValue={row.used}
+                          disabled={
+                            editingSite !== site
+                          }
+                          className="
+                            w-16
+                            border
+                            rounded-xl
+                            px-2
+                            py-1
+                            text-right
+                            bg-white
+                          "
+                        />
 
-              <div className="p-3 text-right">
-                単価
-              </div>
+                      </div>
 
-              <div className="p-3 text-right">
-                合計
+                      <div className="p-3 text-right">
+
+                        {Number(
+                          row.price || 0
+                        ).toLocaleString()} 円
+
+                      </div>
+
+                      <div className="
+                        p-3
+                        text-right
+                        font-semibold
+                      ">
+
+                        {(
+                          Number(row.price || 0)
+                          *
+                          Number(row.used || 0)
+                        ).toLocaleString()}
+
+                        円
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                  <div className="
+                    p-4
+                    flex
+                    justify-end
+                    font-bold
+                    text-lg
+                    border-t
+                  ">
+
+                    現場合計：
+
+                    {
+
+                      items.reduce(
+                        (sum, row) =>
+
+                          sum +
+
+                          (
+                            Number(row.price || 0)
+                            *
+                            Number(row.used || 0)
+                          ),
+
+                        0
+
+                      ).toLocaleString()
+
+                    }
+
+                  </div>
+
+                </div>
+
               </div>
 
             </div>
 
-            {items.map(
-              (row, index) => (
-
-                <div
-                  key={index}
-                  className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px] border-t text-sm"
-                >
-
-                 <div className="p-3">
-  {row.orderDate}
-</div>
-
-<div className="p-3">
-  {row.materialName}
-</div>
-
-<div className="p-3">
-  {row.size}
-</div>
-
-<div className="p-3 text-right">
-
-  {row.quantity || 0}
-
-</div>
-
-<div className="
-  p-2
-  flex
-  flex-col
-  items-end
-">
-
-  <input
-    type="number"
-    defaultValue={row.used}
-    disabled={
-      editingSite !== site
-    }
-    className="
-      w-16
-      border
-      rounded-xl
-      px-2
-      py-1
-      text-right
-      bg-white
-    "
-  />
-
-  <div className="
-    text-xs
-    text-slate-500
-    mt-1
-    text-right
-    leading-tight
-  ">
-
-    2026/05/26 14:32
-
-    <br />
-
-    {selectedEditor || "-"}
-
-  </div>
-
-</div>
-
-<div className="p-3 text-right">
-
-  {Number(
-    row.price || 0
-  ).toLocaleString()} 円
-
-</div>
-
-<div className="p-3 text-right font-semibold">
-
-  {(
-    Number(row.price || 0)
-    *
-    Number(row.used || 0)
-  ).toLocaleString()}
-
-  円
-
-</div>
-
-
-                </div>
-
-              )
-            )}
-
-<div className="
-  bg-sky-100
-  px-4
-  py-3
-  font-bold
-  text-sky-800
-  border-t
-">
-
-  ▼ 会社在庫から追加した材料
-
-  </div>
-
- {editingSite === `${site}-stock` ? (
-
-  <div className="
-    flex
-    justify-end
-    gap-2
-    p-3
-    border-t
-    bg-sky-50
-  ">
-
-    <button
-      onClick={() =>
-        setCompanyStockItems([
-          ...companyStockItems,
-          {
-            date: "",
-            materialName: "",
-            size: "",
-            stock: "",
-            used: "",
-            price: "",
-          },
-        ])
-      }
-      className="
-        bg-sky-500
-        text-white
-        px-4
-        py-2
-        rounded-2xl
-        text-sm
-      "
-    >
-      ＋材料追加
-    </button>
-
-    <select
-      value={selectedEditor}
-      onChange={(e) =>
-        setSelectedEditor(
-          e.target.value
-        )
-      }
-      className="
-        border
-        rounded-2xl
-        px-3
-        py-2
-      "
-    >
-
-      <option value="">
-        編集者
-      </option>
-
-    </select>
-
-    <button
-      onClick={() =>
-        setEditingSite(null)
-      }
-      className="
-        bg-emerald-500
-        text-white
-        px-4
-        py-2
-        rounded-2xl
-      "
-    >
-      保存
-    </button>
-
-  </div>
-
-) : (
-
-  <div className="
-    flex
-    justify-end
-    p-3
-    border-t
-    bg-sky-50
-  ">
-
-    <button
-      onClick={() =>
-        setEditingSite(
-          `${site}-stock`
-        )
-      }
-      className="
-        bg-amber-500
-        text-white
-        px-4
-        py-2
-        rounded-2xl
-      "
-    >
-      編集
-    </button>
-
-  </div>
-
-)}
-
-
-
-{companyStockItems.length === 0 ? (
-
-  <div className="
-    p-4
-    text-sm
-    text-slate-500
-  ">
-
-    まだ材料は追加されていません
-
-  </div>
-
-) : (
-
-  companyStockItems.map(
-  (item, index) => {
-
-const materialSuggestions = [
-
-  ...new Set(
-
-    rows
-
-      .filter(
-        (row) =>
-          row.materialName
-      )
-
-      .map(
-        (row) =>
-          row.materialName
-      )
-
-  )
-
-];
-
-const sizeSuggestions = [
-
-  ...new Set(
-
-    rows
-
-      .filter(
-        (row) =>
-
-          row.materialName ===
-            item.materialName
-
-          &&
-
-          row.size
-      )
-
-      .map(
-        (row) =>
-          row.size
-      )
-
-  )
-
-];
-return (
-
-      <div
-        key={index}
-        className="
-          grid
-          grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px]
-          gap-2
-          p-3
-          border-t
-          text-sm
-          items-center
-        "
-      >
-<input
-  type="date"
-  disabled={
-  editingSite !== `${site}-stock`
-}
-  value={item.date || ""}
-  onChange={(e) => {
-
-    const updated =
-      [...companyStockItems];
-
-    updated[index]
-      .date =
-        e.target.value;
-
-    setCompanyStockItems(
-      updated
-    );
-
-  }}
-  className="
-    border
-    rounded-xl
-    px-3
-    py-2
-  "
-
-  
-/>
-        <input
-  list={`material-list-${index}`}
-  placeholder="材料名"
-  disabled={
-  editingSite !== `${site}-stock`
-}
-          value={item.materialName}
-          onChange={(e) => {
-
-            const updated =
-              [...companyStockItems];
-
-            updated[index]
-              .materialName =
-                e.target.value;
-
-            setCompanyStockItems(
-              updated
-            );
-
-          }}
-          className="
-            border
-            rounded-xl
-            px-3
-            py-2
-          "
-        />
-
-         <input
-         list={`size-list-${index}`}
-          placeholder="型番"
-          disabled={
-  editingSite !== `${site}-stock`
-}
-          value={item.size}
-          onChange={(e) => {
-
-            
-
-            const updated =
-              [...companyStockItems];
-
-            updated[index]
-              .size =
-                e.target.value;
-
-            setCompanyStockItems(
-              updated
-            );
-
-          }}
-          className="
-            border
-            rounded-xl
-            px-3
-            py-2
-          "
-
-
-        />
-
-{item.materialName && (
-
-  <datalist
-    id={`size-list-${index}`}
-  >
-
-    {sizeSuggestions
-
-      .filter(
-        (size) =>
-
-          size.includes(
-            item.size || ""
           )
-      )
 
-      .map((size) => (
-
-        <option
-          key={size}
-          value={size}
-        />
-
-      ))}
-
-  </datalist>
-
-)}
-        
-
-        {item.materialName?.length >= 1 && (
-
-  <datalist
-    id={`material-list-${index}`}
-  >
-
-    {materialSuggestions
-
-      .filter(
-        (name) =>
-
-          name.includes(
-            item.materialName
-          )
-      )
-
-      .map((name) => (
-
-        <option
-          key={name}
-          value={name}
-        />
-
-      ))}
-
-  </datalist>
-
-)}
-
-        <div className="
-  flex
-  items-center
-  justify-end
-  px-3
-  font-semibold
-">
-
-  {
-
-    rows.find(
-      (row) =>
-
-        row.materialName ===
-          item.materialName
-
-        &&
-
-        row.size ===
-          item.size
-
-    )?.stock || 0
-
-  }
-
-</div>
-
-        <input
-          type="number"
-          placeholder="使用数"
-          disabled={
-  editingSite !== `${site}-stock`
-}
-          value={item.used}
-          onChange={(e) => {
-
-            const updated =
-              [...companyStockItems];
-
-            updated[index]
-              .used =
-                e.target.value;
-
-            setCompanyStockItems(
-              updated
-            );
-
-          }}
-          className="
-            border
-            rounded-xl
-            px-3
-            py-2
-            text-right
-          "
-        />
-
-        <div className="
-  flex
-  items-center
-  justify-end
-  px-3
-  font-semibold
-">
-
-  {
-
-    Number(
-
-      rows.find((row) => {
-
-        const rowMonth =
-
-          row.orderDate?.slice(0, 7);
-
-        const targetMonth =
-
-          item.date?.slice(0, 7);
-
-        return (
-
-          row.materialName ===
-            item.materialName
-
-          &&
-
-          row.size ===
-            item.size
-
-          &&
-
-          rowMonth ===
-            targetMonth
-
-        );
-
-      })?.price || 0
-
-    ).toLocaleString()
-
-  }
-
-  円
-
-</div>
-
-        <div className="
-  flex
-  items-center
-  justify-end
-  px-3
-  text-right
-  font-semibold
-">
-
-  {(
-    Number(item.price || 0)
-    *
-    Number(item.used || 0)
-  ).toLocaleString()}
-
-  円
-
-</div>
-
-<button
-  onClick={() => {
-
-    const updated =
-      companyStockItems.filter(
-        (_, i) =>
-          i !== index
-      );
-
-    setCompanyStockItems(
-      updated
-    );
-
-  }}
-  className="
-    bg-red-500
-    text-white
-    rounded-lg
-    w-10
-    h-10
-    text-sm
-    flex
-    items-center
-    justify-center
-    self-center
-  "
->
-
-  ✕
-
-</button>
+        )}
 
       </div>
 
-    );
-
-  }
+    )
 
   )
-
-)}
-
-
-
-<div className="
-  p-4
-  flex
-  justify-end
-  font-bold
-  text-base
-  border-t
-  bg-sky-50
-">
-
-  会社在庫追加合計：
-
-  {companyStockItems
-
-    .reduce(
-      (sum, item) =>
-
-        sum +
-
-        (
-          Number(item.price || 0)
-          *
-          Number(item.used || 0)
-        ),
-
-      0
-    )
-
-    .toLocaleString()}
-
-  円
-
-</div>
-
-<div className="
-  p-4
-  flex
-  justify-end
-  font-bold
-  text-lg
-  border-t
-">
-
-  現場合計：
-
-  {
-
-  (
-
-    items.reduce(
-      (sum, row) =>
-
-        sum +
-
-        (
-          Number(row.price || 0)
-          *
-          Number(row.used || 0)
-        ),
-
-      0
-    )
-
-    +
-
-    companyStockItems.reduce(
-      (sum, item) =>
-
-        sum +
-
-        (
-          Number(item.price || 0)
-          *
-          Number(item.used || 0)
-        ),
-
-      0
-    )
-
-  ).toLocaleString()
-
-}
-
-  
-
-</div>
-
-    </div>
-
-  </div>
-
-          </div>
-
-        ))}
-
-        
-
-      </div>
-
-          ))
 }
 
     </div>
