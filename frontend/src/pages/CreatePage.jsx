@@ -37,10 +37,12 @@ export default function CreatePage() {
           }
           className="
             bg-sky-500
-            text-white
-            py-4
-            rounded-2xl
-            font-semibold
+        text-white
+         py-2
+         px-3
+         rounded-2xl
+         font-semibold
+         text-sm
           "
         >
           現場報告書作成
@@ -52,11 +54,13 @@ export default function CreatePage() {
           }
           className="
             bg-indigo-500
-            text-white
-            py-4
-            rounded-2xl
-            font-semibold
-          "
+           text-white
+         py-2
+         px-3
+         rounded-2xl
+         font-semibold
+         text-sm
+         "
         >
           現場報告書一覧
         </button>
@@ -67,10 +71,12 @@ export default function CreatePage() {
           }
           className="
             bg-emerald-500
-            text-white
-            py-4
-            rounded-2xl
-            font-semibold
+           text-white
+           py-2
+           px-3
+           rounded-2xl
+           font-semibold
+          text-sm
           "
         >
           現場材料作成
