@@ -927,7 +927,7 @@ const hasSearch =
   mb-1
   ml-1
   flex
-  items-center
+  items-start
   justify-between
 ">
 
@@ -1161,87 +1161,97 @@ const hasSearch =
 
   ▼ 会社在庫から追加した材料
 
+  </div>
+
+ {editingSite === `${site}-stock` ? (
+
   <div className="
-  flex
-  justify-end
-  gap-2
-  p-3
-  border-t
-  bg-sky-50
-">
-
-  <button
-    onClick={() =>
-      setCompanyStockItems([
-        ...companyStockItems,
-        {
-          materialName: "",
-          size: "",
-          stock: "",
-          used: "",
-          price: "",
-        },
-      ])
-    }
-    className="
-      bg-sky-500
-      text-white
-      px-4
-      py-2
-      rounded-2xl
-      text-sm
-    "
-  >
-    ＋材料追加
-  </button>
-
-  {editingSite === site ? (
-
-    <>
-    
-      <select
-        value={selectedEditor}
-        onChange={(e) =>
-          setSelectedEditor(
-            e.target.value
-          )
-        }
-        className="
-          border
-          rounded-2xl
-          px-3
-          py-2
-        "
-      >
-
-        <option value="">
-          編集者
-        </option>
-
-      </select>
-
-      <button
-        onClick={() =>
-          setEditingSite(null)
-        }
-        className="
-          bg-emerald-500
-          text-white
-          px-4
-          py-2
-          rounded-2xl
-        "
-      >
-        保存
-      </button>
-
-    </>
-
-  ) : (
+    flex
+    justify-end
+    gap-2
+    p-3
+    border-t
+    bg-sky-50
+  ">
 
     <button
       onClick={() =>
-        setEditingSite(site)
+        setCompanyStockItems([
+          ...companyStockItems,
+          {
+            materialName: "",
+            size: "",
+            stock: "",
+            used: "",
+            price: "",
+          },
+        ])
+      }
+      className="
+        bg-sky-500
+        text-white
+        px-4
+        py-2
+        rounded-2xl
+        text-sm
+      "
+    >
+      ＋材料追加
+    </button>
+
+    <select
+      value={selectedEditor}
+      onChange={(e) =>
+        setSelectedEditor(
+          e.target.value
+        )
+      }
+      className="
+        border
+        rounded-2xl
+        px-3
+        py-2
+      "
+    >
+
+      <option value="">
+        編集者
+      </option>
+
+    </select>
+
+    <button
+      onClick={() =>
+        setEditingSite(null)
+      }
+      className="
+        bg-emerald-500
+        text-white
+        px-4
+        py-2
+        rounded-2xl
+      "
+    >
+      保存
+    </button>
+
+  </div>
+
+) : (
+
+  <div className="
+    flex
+    justify-end
+    p-3
+    border-t
+    bg-sky-50
+  ">
+
+    <button
+      onClick={() =>
+        setEditingSite(
+          `${site}-stock`
+        )
       }
       className="
         bg-amber-500
@@ -1254,11 +1264,10 @@ const hasSearch =
       編集
     </button>
 
-  )}
+  </div>
 
-</div>
+)}
 
-</div>
 
 
 {companyStockItems.length === 0 ? (
