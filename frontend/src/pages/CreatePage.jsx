@@ -39,7 +39,7 @@ export default function CreatePage() {
             bg-sky-500
         text-white
          py-2
-         px-3
+         w-40
          rounded-2xl
          font-semibold
          text-sm
