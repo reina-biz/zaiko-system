@@ -1048,8 +1048,11 @@ const hasSearch =
                       ">
 
                         <input
-                          type="number"
-                          defaultValue={row.used}
+  type="number"
+  value={row.used || ""}
+  onChange={(e) => {
+    row.used = e.target.value;
+  }}
                           disabled={
                             editingSite !== site
                           }
