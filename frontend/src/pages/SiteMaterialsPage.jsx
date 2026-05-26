@@ -1049,7 +1049,7 @@ const hasSearch =
 
     <div className="overflow-hidden rounded-2xl border">
 
-            <div className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_140px] bg-slate-100 font-semibold text-sm">
+            <div className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px] bg-slate-100 font-semibold text-sm">
 
               <div className="p-3">
                日付
@@ -1061,6 +1061,10 @@ const hasSearch =
 
               <div className="p-3">
                 型番
+              </div>
+
+              <div className="p-3 text-right">
+              注文数
               </div>
 
               <div className="p-3 text-right">
@@ -1082,7 +1086,7 @@ const hasSearch =
 
                 <div
                   key={index}
-                  className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_140px] border-t text-sm"
+                  className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px] border-t text-sm"
                 >
 
                  <div className="p-3">
@@ -1095,6 +1099,12 @@ const hasSearch =
 
 <div className="p-3">
   {row.size}
+</div>
+
+<div className="p-3 text-right">
+
+  {row.orderCount || 0}
+
 </div>
 
 <div className="
@@ -1164,6 +1174,19 @@ const hasSearch =
 
               )
             )}
+
+<div className="
+  bg-sky-100
+  px-4
+  py-3
+  font-bold
+  text-sky-800
+  border-t
+">
+
+  ▼ 会社在庫から追加した材料
+
+</div>
 
 {companyStockItems.length === 0 ? (
 
