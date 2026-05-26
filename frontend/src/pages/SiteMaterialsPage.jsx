@@ -1487,32 +1487,32 @@ return (
 
 )}
 
-        <input
-          type="number"
-          placeholder="在庫数"
-          value={item.stock}
-          onChange={(e) => {
+        <div className="
+  flex
+  items-center
+  justify-end
+  px-3
+  font-semibold
+">
 
-            const updated =
-              [...companyStockItems];
+  {
 
-            updated[index]
-              .stock =
-                e.target.value;
+    rows.find(
+      (row) =>
 
-            setCompanyStockItems(
-              updated
-            );
+        row.materialName ===
+          item.materialName
 
-          }}
-          className="
-            border
-            rounded-xl
-            px-3
-            py-2
-            text-right
-          "
-        />
+        &&
+
+        row.size ===
+          item.size
+
+    )?.stock || 0
+
+  }
+
+</div>
 
         <input
           type="number"
@@ -1541,32 +1541,54 @@ return (
           "
         />
 
-        <input
-          type="number"
-          placeholder="単価"
-          value={item.price}
-          onChange={(e) => {
+        <div className="
+  flex
+  items-center
+  justify-end
+  px-3
+  font-semibold
+">
 
-            const updated =
-              [...companyStockItems];
+  {
 
-            updated[index]
-              .price =
-                e.target.value;
+    Number(
 
-            setCompanyStockItems(
-              updated
-            );
+      rows.find((row) => {
 
-          }}
-          className="
-            border
-            rounded-xl
-            px-3
-            py-2
-            text-right
-          "
-        />
+        const rowMonth =
+
+          row.orderDate?.slice(0, 7);
+
+        const targetMonth =
+
+          item.date?.slice(0, 7);
+
+        return (
+
+          row.materialName ===
+            item.materialName
+
+          &&
+
+          row.size ===
+            item.size
+
+          &&
+
+          rowMonth ===
+            targetMonth
+
+        );
+
+      })?.price || 0
+
+    ).toLocaleString()
+
+  }
+
+  円
+
+</div>
 
         <div className="
   flex
