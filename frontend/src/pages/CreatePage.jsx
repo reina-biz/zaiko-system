@@ -80,13 +80,15 @@ export default function CreatePage() {
           onClick={() =>
             setPage("現場材料一覧")
           }
-          className="
-            bg-amber-500
-            text-white
-            py-4
-            rounded-2xl
-            font-semibold
-          "
+         className="
+         bg-sky-500
+         text-white
+         py-2
+         px-3
+         rounded-2xl
+         font-semibold
+         text-sm
+         "
         >
           現場材料一覧
         </button>
