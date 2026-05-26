@@ -1287,7 +1287,54 @@ const hasSearch =
 ) : (
 
   companyStockItems.map(
-    (item, index) => (
+  (item, index) => {
+
+const materialSuggestions = [
+
+  ...new Set(
+
+    rows
+
+      .filter(
+        (row) =>
+          row.materialName
+      )
+
+      .map(
+        (row) =>
+          row.materialName
+      )
+
+  )
+
+];
+
+const sizeSuggestions = [
+
+  ...new Set(
+
+    rows
+
+      .filter(
+        (row) =>
+
+          row.materialName ===
+            item.materialName
+
+          &&
+
+          row.size
+      )
+
+      .map(
+        (row) =>
+          row.size
+      )
+
+  )
+
+];
+return (
 
       <div
         key={index}
@@ -1322,9 +1369,12 @@ const hasSearch =
     px-3
     py-2
   "
+
+  
 />
         <input
-          placeholder="材料名"
+  list={`material-list-${index}`}
+  placeholder="材料名"
           value={item.materialName}
           onChange={(e) => {
 
@@ -1348,10 +1398,13 @@ const hasSearch =
           "
         />
 
-        <input
+         <input
+         list={`size-list-${index}`}
           placeholder="型番"
           value={item.size}
           onChange={(e) => {
+
+            
 
             const updated =
               [...companyStockItems];
@@ -1371,7 +1424,68 @@ const hasSearch =
             px-3
             py-2
           "
+
+
         />
+
+{item.materialName && (
+
+  <datalist
+    id={`size-list-${index}`}
+  >
+
+    {sizeSuggestions
+
+      .filter(
+        (size) =>
+
+          size.includes(
+            item.size || ""
+          )
+      )
+
+      .map((size) => (
+
+        <option
+          key={size}
+          value={size}
+        />
+
+      ))}
+
+  </datalist>
+
+)}
+        
+
+        {item.materialName?.length >= 1 && (
+
+  <datalist
+    id={`material-list-${index}`}
+  >
+
+    {materialSuggestions
+
+      .filter(
+        (name) =>
+
+          name.includes(
+            item.materialName
+          )
+      )
+
+      .map((name) => (
+
+        <option
+          key={name}
+          value={name}
+        />
+
+      ))}
+
+  </datalist>
+
+)}
 
         <input
           type="number"
@@ -1503,7 +1617,9 @@ const hasSearch =
 
       </div>
 
-    )
+    );
+
+  }
 
   )
 
