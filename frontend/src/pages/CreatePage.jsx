@@ -56,7 +56,7 @@ export default function CreatePage() {
             bg-indigo-500
            text-white
          py-2
-         px-3
+         px-2
          rounded-2xl
          font-semibold
          text-sm
@@ -73,7 +73,7 @@ export default function CreatePage() {
             bg-emerald-500
            text-white
            py-2
-           px-3
+           px-2
            rounded-2xl
            font-semibold
           text-sm
@@ -87,10 +87,10 @@ export default function CreatePage() {
             setPage("現場材料一覧")
           }
          className="
-         bg-sky-500
+         bg-red-500
          text-white
          py-2
-         px-3
+         px-2
          rounded-2xl
          font-semibold
          text-sm
