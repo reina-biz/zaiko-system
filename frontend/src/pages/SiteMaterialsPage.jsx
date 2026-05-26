@@ -1025,7 +1025,7 @@ const hasSearch =
 
     <div className="overflow-hidden rounded-2xl border">
 
-            <div className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px] bg-slate-100 font-semibold text-sm">
+            <div className="grid grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px_50px] bg-slate-100 font-semibold text-sm">
 
               <div className="p-3">
                日付
@@ -1342,8 +1342,10 @@ return (
           grid
           grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px]
           gap-2
-          p-4
+          p-3
           border-t
+          text-sm
+          items-center
         "
       >
 <input
@@ -1639,9 +1641,9 @@ return (
     bg-red-500
     text-white
     rounded-lg
-    w-8
-    h-8
-    text-xs
+    w-10
+    h-10
+    text-sm
     flex
     items-center
     justify-center
