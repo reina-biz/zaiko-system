@@ -921,9 +921,15 @@ const hasSearch =
 
   
 
-  <div className="mb-4">
+  <div className="mb-1">
 
-    <div className="mb-2 ml-1 flex items-center gap-3 text-sm text-black font-semibold">
+    <div className="
+  mb-2
+  ml-1
+  flex
+  items-center
+  justify-between
+">
 
     {startMonth
       ?.replace(
@@ -945,40 +951,34 @@ const hasSearch =
 
   </div>
 
-  <div className="
-  flex
-  justify-end
-  mb-3
-">
-
-{editingSite === site ? (
+  {editingSite === site ? (
 
   <div className="flex gap-2">
 
     <button
-  onClick={() =>
-    setCompanyStockItems([
-      ...companyStockItems,
-      {
-        materialName: "",
-        size: "",
-        stock: "",
-        used: "",
-        price: "",
-      },
-    ])
-  }
-  className="
-    bg-sky-500
-    text-white
-    px-4
-    py-2
-    rounded-2xl
-    text-sm
-  "
->
-  ＋材料追加
-</button>
+      onClick={() =>
+        setCompanyStockItems([
+          ...companyStockItems,
+          {
+            materialName: "",
+            size: "",
+            stock: "",
+            used: "",
+            price: "",
+          },
+        ])
+      }
+      className="
+        bg-sky-500
+        text-white
+        px-4
+        py-2
+        rounded-2xl
+        text-sm
+      "
+    >
+      ＋材料追加
+    </button>
 
     <select
       value={selectedEditor}
@@ -994,17 +994,12 @@ const hasSearch =
         py-2
       "
     >
-
       <option value="">
         編集者
       </option>
 
       <option value="山田">
         山田
-      </option>
-
-      <option value="田中">
-        田中
       </option>
 
     </select>
@@ -1045,7 +1040,7 @@ const hasSearch =
 
 )}
 
-</div>
+ 
 
     <div className="overflow-hidden rounded-2xl border">
 
