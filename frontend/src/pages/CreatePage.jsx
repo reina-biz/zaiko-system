@@ -56,7 +56,7 @@ export default function CreatePage() {
             bg-indigo-500
            text-white
          py-2
-         W-40
+         w-40
          rounded-2xl
          font-semibold
          text-sm
@@ -73,7 +73,7 @@ export default function CreatePage() {
             bg-emerald-500
            text-white
            py-2
-           W-40
+           w-40
            rounded-2xl
            font-semibold
           text-sm
@@ -90,7 +90,7 @@ export default function CreatePage() {
          bg-red-500
          text-white
          py-2
-         W-40
+         w-40
          rounded-2xl
          font-semibold
          text-sm
