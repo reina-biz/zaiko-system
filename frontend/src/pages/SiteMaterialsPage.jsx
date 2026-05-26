@@ -1079,7 +1079,7 @@ const hasSearch =
 
 <div className="p-3 text-right">
 
-  {row.orderCount || 0}
+  {row.quantity || 0}
 
 </div>
 
