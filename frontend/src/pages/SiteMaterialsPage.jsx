@@ -923,13 +923,19 @@ const hasSearch =
 
   <div className="mb-1">
 
-    <div className="
-  mb-2
+   <div className="
+  mb-1
   ml-1
   flex
   items-center
   justify-between
 ">
+
+  <div className="
+    text-base
+    text-black
+    font-semibold
+  ">
 
     {startMonth
       ?.replace(
@@ -953,92 +959,32 @@ const hasSearch =
 
   {editingSite === site ? (
 
-  <div className="flex gap-2">
+    <div className="flex gap-2">
+
+      ...
+      
+    </div>
+
+  ) : (
 
     <button
       onClick={() =>
-        setCompanyStockItems([
-          ...companyStockItems,
-          {
-            materialName: "",
-            size: "",
-            stock: "",
-            used: "",
-            price: "",
-          },
-        ])
+        setEditingSite(site)
       }
       className="
-        bg-sky-500
-        text-white
-        px-4
-        py-2
-        rounded-2xl
-        text-sm
-      "
-    >
-      ＋材料追加
-    </button>
-
-    <select
-      value={selectedEditor}
-      onChange={(e) =>
-        setSelectedEditor(
-          e.target.value
-        )
-      }
-      className="
-        border
-        rounded-2xl
-        px-3
-        py-2
-      "
-    >
-      <option value="">
-        編集者
-      </option>
-
-      <option value="山田">
-        山田
-      </option>
-
-    </select>
-
-    <button
-      onClick={() =>
-        setEditingSite(null)
-      }
-      className="
-        bg-emerald-500
+        bg-amber-500
         text-white
         px-4
         py-2
         rounded-2xl
       "
     >
-      保存
+      編集
     </button>
 
-  </div>
+  )}
 
-) : (
-
-  <button
-    onClick={() =>
-      setEditingSite(site)
-    }
-    className="
-      bg-amber-500
-      text-white
-      px-4
-      py-2
-      rounded-2xl
-    "
-  >
-    編集
-  </button>
-
-)}
+</div>
 
  
 
