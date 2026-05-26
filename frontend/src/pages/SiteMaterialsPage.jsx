@@ -809,19 +809,6 @@ const hasSearch =
     新規現場入力
   </button>
 
-  <button
-    className="
-      bg-cyan-600
-      text-white
-      px-3
-      py-2
-      rounded-2xl
-      font-semibold
-      text-sm
-    "
-  >
-    新規会社入力
-  </button>
 
   <button
     onClick={handleExcelExport}
