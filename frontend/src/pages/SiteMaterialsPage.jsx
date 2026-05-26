@@ -62,6 +62,7 @@ const [companyStockItems,
 const [newStockItem,
   setNewStockItem] =
     useState({
+      date: "",
       materialName: "",
       size: "",
       stock: "",
@@ -1179,6 +1180,7 @@ const hasSearch =
         setCompanyStockItems([
           ...companyStockItems,
           {
+            date: "",
             materialName: "",
             size: "",
             stock: "",
@@ -1291,13 +1293,36 @@ const hasSearch =
         key={index}
         className="
           grid
-          grid-cols-[2fr_1.5fr_120px_120px_120px_140px_80px]
+          grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px_80px]
           gap-2
           p-4
           border-t
         "
       >
+<input
+  type="date"
+  value={item.date || ""}
+  onChange={(e) => {
 
+    const updated =
+      [...companyStockItems];
+
+    updated[index]
+      .date =
+        e.target.value;
+
+    setCompanyStockItems(
+      updated
+    );
+
+  }}
+  className="
+    border
+    rounded-xl
+    px-3
+    py-2
+  "
+/>
         <input
           placeholder="材料名"
           value={item.materialName}
