@@ -19,6 +19,7 @@ import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
 import HistoryPage from "./pages/HistoryPage";
 import SiteMaterialsPage from "./pages/SiteMaterialsPage";
+import CreatePage from "./pages/CreatePage";
 
 export default function App() {
 
@@ -433,6 +434,7 @@ useEffect(() => {
               "入力",
               "入力履歴",
               "各現場材料",
+              "作成",
               "単価比較",
               "在庫管理",
               "決算在庫",
@@ -517,6 +519,15 @@ useEffect(() => {
     companyList={companyList}
 
   />
+
+)}
+
+
+{/* 作成 */}
+
+{tab === "作成" && (
+
+  <CreatePage />
 
 )}
 
