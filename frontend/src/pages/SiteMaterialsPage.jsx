@@ -1049,23 +1049,23 @@ const hasSearch =
 
                         <input
   type="number"
-  value={row.used || ""}
-  onChange={(e) => {
+  defaultValue={row.used || ""}
+  onInput={(e) => {
     row.used = e.target.value;
   }}
-                          disabled={
-                            editingSite !== site
-                          }
-                          className="
-                            w-16
-                            border
-                            rounded-xl
-                            px-2
-                            py-1
-                            text-right
-                            bg-white
-                          "
-                        />
+  disabled={
+    editingSite !== site
+  }
+  className="
+    w-16
+    border
+    rounded-xl
+    px-2
+    py-1
+    text-right
+    bg-white
+  "
+/>
 
                       </div>
 
