@@ -1340,7 +1340,7 @@ return (
         key={index}
         className="
           grid
-          grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px_80px]
+          grid-cols-[140px_2fr_1.5fr_120px_120px_120px_140px]
           gap-2
           p-4
           border-t
@@ -1348,6 +1348,9 @@ return (
       >
 <input
   type="date"
+  disabled={
+  editingSite !== `${site}-stock`
+}
   value={item.date || ""}
   onChange={(e) => {
 
@@ -1375,6 +1378,9 @@ return (
         <input
   list={`material-list-${index}`}
   placeholder="材料名"
+  disabled={
+  editingSite !== `${site}-stock`
+}
           value={item.materialName}
           onChange={(e) => {
 
@@ -1401,6 +1407,9 @@ return (
          <input
          list={`size-list-${index}`}
           placeholder="型番"
+          disabled={
+  editingSite !== `${site}-stock`
+}
           value={item.size}
           onChange={(e) => {
 
@@ -1517,6 +1526,9 @@ return (
         <input
           type="number"
           placeholder="使用数"
+          disabled={
+  editingSite !== `${site}-stock`
+}
           value={item.used}
           onChange={(e) => {
 
@@ -1626,14 +1638,18 @@ return (
   className="
     bg-red-500
     text-white
-    rounded-xl
-    px-3
-    py-2
-    text-sm
+    rounded-lg
+    w-8
+    h-8
+    text-xs
+    flex
+    items-center
+    justify-center
+    self-center
   "
 >
 
-  削除
+  ✕
 
 </button>
 
