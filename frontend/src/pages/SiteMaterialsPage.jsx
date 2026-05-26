@@ -961,9 +961,43 @@ const hasSearch =
 
     <div className="flex gap-2">
 
-      ...
-      
-    </div>
+  <select
+    value={selectedEditor}
+    onChange={(e) =>
+      setSelectedEditor(
+        e.target.value
+      )
+    }
+    className="
+      border
+      rounded-2xl
+      px-3
+      py-2
+    "
+  >
+
+    <option value="">
+      編集者
+    </option>
+
+  </select>
+
+  <button
+    onClick={() =>
+      setEditingSite(null)
+    }
+    className="
+      bg-emerald-500
+      text-white
+      px-4
+      py-2
+      rounded-2xl
+    "
+  >
+    保存
+  </button>
+
+</div>
 
   ) : (
 
