@@ -25,8 +25,8 @@ export default function CreatePage() {
       {/* ボタン */}
 
       <div className="
-        grid
-        grid-cols-2
+        flex
+        flex-wrap
         md:grid-cols-4
         gap-2
       ">
