@@ -433,7 +433,34 @@ onClick={() =>
   userName,
 
   sections:
-    companySections
+
+  companySections.map(
+
+    (section) => ({
+
+      ...section,
+
+      rows:
+
+        section.rows.filter(
+
+          (row) =>
+
+            row.materialName ||
+
+            row.size ||
+
+            row.quantity ||
+
+            row.price ||
+
+            row.note
+
+        )
+
+    })
+
+  )
 
 };
 
