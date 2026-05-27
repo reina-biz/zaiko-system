@@ -41,6 +41,8 @@ const [
 
 ] = useState("");
 
+
+
 const EMPTY_ROW = {
 
   materialName: "",
@@ -303,8 +305,17 @@ const [
     gap-4
   ">
 
-   <input
+  <input
   type="date"
+
+  value={reportDate}
+
+  onChange={(e) =>
+    setReportDate(
+      e.target.value
+    )
+  }
+
   className="
     border
     rounded-2xl
@@ -319,7 +330,17 @@ const [
 
 <input
   type="text"
+
   placeholder="現場名"
+
+  value={siteName}
+
+  onChange={(e) =>
+    setSiteName(
+      e.target.value
+    )
+  }
+
   className="
     border
     rounded-2xl
@@ -331,7 +352,17 @@ const [
 
 <input
   type="text"
+
   placeholder="入力者名"
+
+  value={userName}
+
+  onChange={(e) =>
+    setUserName(
+      e.target.value
+    )
+  }
+
   className="
     border
     rounded-2xl
@@ -930,40 +961,36 @@ onClick={() =>
              <div className="
   flex
   flex-wrap
-  gap-8
   items-center
+  gap-6
+  text-sm
+  font-medium
 ">
 
-  <div>
-
-    {report.reportDate}
-
+  <div className="w-[120px]">
+    {report.reportDate || "-"}
   </div>
 
-  <div>
-
-    {report.siteName}
-
+  <div className="w-[220px]">
+    {report.siteName || "-"}
   </div>
 
-  <div>
-
-    {report.userName}
-
+  <div className="w-[120px]">
+    {report.userName || "-"}
   </div>
 
-  <div>
+  <div className="w-[120px]">
 
     会社
-    {
-      report.sections.length
-    }
+    {report.sections.length}
     件
 
   </div>
 
   <div className="
+    w-[140px]
     font-bold
+    text-right
   ">
 
     ¥
