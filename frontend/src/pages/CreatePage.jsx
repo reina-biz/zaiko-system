@@ -219,48 +219,7 @@ export default function CreatePage({
 
 </select>
 
-  <input
-  list={`size-list-${index}`}
-  type="text"
-  className="
-    w-full
-    border
-    rounded-xl
-    px-3
-    py-2
-  "
-/>
-
-<datalist
-  id={`size-list-${index}`}
->
-
-  {[
-
-    ...new Set(
-
-      historyRows
-
-        .filter(
-          (row) => row.size
-        )
-
-        .map(
-          (row) => row.size
-        )
-
-    )
-
-  ].map((size) => (
-
-    <option
-      key={size}
-      value={size}
-    />
-
-  ))}
-
-</datalist> 
+  
 
   </div>
 
@@ -354,64 +313,98 @@ export default function CreatePage({
           <div className="p-2">
 
             <input
-              type="text"
-              className="
-                w-full
-                border
-                rounded-xl
-                px-3
-                py-2
-              "
-            />
-
-          </div>
-
-          <div className="p-2">
-
-            <input
-  type="number"
-
-  value={
-
-    historyRows
-
-      .slice()
-
-      .reverse()
-
-      .find(
-        (row) => row.price
-      )?.price || ""
-
-  }
-
+  list={`size-list-${index}`}
+  type="text"
   className="
     w-full
     border
     rounded-xl
     px-3
     py-2
-    text-right
   "
 />
+
+<datalist
+  id={`size-list-${index}`}
+>
+
+  {[
+
+    ...new Set(
+
+      historyRows
+
+        .filter(
+          (row) => row.size
+        )
+
+        .map(
+          (row) => row.size
+        )
+
+    )
+
+  ].map((size) => (
+
+    <option
+      key={size}
+      value={size}
+    />
+
+  ))}
+
+</datalist>
 
           </div>
 
           <div className="p-2">
 
-            <input
-              type="number"
-              className="
-                w-full
-                border
-                rounded-xl
-                px-3
-                py-2
-                text-right
-              "
-            />
+  <input
+    type="number"
+    className="
+      w-full
+      border
+      rounded-xl
+      px-3
+      py-2
+      text-right
+    "
+  />
 
-          </div>
+</div>
+
+<div className="p-2">
+
+  <input
+    type="number"
+
+    value={
+
+      historyRows
+
+        .slice()
+
+        .reverse()
+
+        .find(
+          (row) => row.price
+        )?.price || ""
+
+    }
+
+    className="
+      w-full
+      border
+      rounded-xl
+      px-3
+      py-2
+      text-right
+    "
+  />
+
+</div>
+
+          
 
           <div className="
             p-3
