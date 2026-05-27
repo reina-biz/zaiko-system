@@ -530,6 +530,7 @@ useEffect(() => {
   <CreatePage
 
   companyList={companyList}
+  historyRows={historyRows}
 
 />
 
