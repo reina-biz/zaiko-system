@@ -314,44 +314,6 @@ const [
   "
 />
 
-<button
-onClick={() => {
-
-  const updatedSections = [
-
-    ...companySections
-
-  ];
-
-  updatedSections[
-  companySections.length - 1
-].rows.push({
-
-    ...EMPTY_ROW
-
-  });
-
-  setCompanySections(
-    updatedSections
-  );
-
-}}
-
-  className="
-    bg-sky-500
-    text-white
-    px-5
-    py-3
-    rounded-2xl
-    font-semibold
-  "
->
-
-  
-
-  行追加
-
-</button>
 
 <button
 onClick={() =>
@@ -465,6 +427,44 @@ onClick={() =>
     ))}
 
   </select>
+
+  <button
+
+  onClick={() => {
+
+    const updatedSections = [
+
+      ...companySections
+
+    ];
+
+    updatedSections[
+      sectionIndex
+    ].rows.push({
+
+      ...EMPTY_ROW
+
+    });
+
+    setCompanySections(
+      updatedSections
+    );
+
+  }}
+
+  className="
+    bg-sky-500
+    text-white
+    px-5
+    py-3
+    rounded-2xl
+    font-semibold
+  "
+>
+
+  行追加
+
+</button>
 
 </div>
   
@@ -729,7 +729,29 @@ onClick={() =>
     font-bold
   ">
 
-    現場合計：0 円
+    現場合計：
+
+{section.rows
+
+  .reduce(
+
+    (total, row) =>
+
+      total +
+
+      (
+        Number(row.quantity || 0)
+        *
+        Number(row.price || 0)
+      ),
+
+    0
+
+  )
+
+  .toLocaleString()
+
+} 円
 
   </div>
 
