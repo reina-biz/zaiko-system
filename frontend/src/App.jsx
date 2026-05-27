@@ -118,16 +118,9 @@ const [rows, setRows] =
 
   );
 
-  const [historyRows, setHistoryRows] =
-  
+const [historyRows, setHistoryRows] =
+
   useState(() => {
-    const [
-
-  materialReports,
-
-  setMaterialReports
-
-] = useState([]);
 
     const saved =
       localStorage.getItem(
@@ -139,6 +132,15 @@ const [rows, setRows] =
       : [];
 
   });
+
+  const [
+
+  materialReports,
+
+  setMaterialReports
+
+] = useState([]);
+  
 
 useEffect(() => {
 
