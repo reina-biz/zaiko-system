@@ -41,6 +41,14 @@ const [
 
 ] = useState("");
 
+const [
+
+  selectedReport,
+
+  setSelectedReport
+
+] = useState(null);
+
 
 
 const EMPTY_ROW = {
@@ -1008,14 +1016,22 @@ onClick={() =>
 
             <button
 
-              className="
-                bg-sky-500
-                text-white
-                px-4
-                py-2
-                rounded-xl
-              "
-            >
+  onClick={() =>
+
+    setSelectedReport(
+      report
+    )
+
+  }
+
+  className="
+    bg-sky-500
+    text-white
+    px-4
+    py-2
+    rounded-xl
+  "
+>
 
               詳細
 
@@ -1030,7 +1046,116 @@ onClick={() =>
     )}
 
   </div>
+{selectedReport && (
 
+<div className="
+  border
+  rounded-3xl
+  p-6
+  space-y-6
+">
+
+  <div className="
+    text-2xl
+    font-bold
+  ">
+
+    詳細
+
+  </div>
+
+  {selectedReport.sections.map(
+
+    (section, index) => (
+
+      <div
+        key={index}
+        className="
+          border
+          rounded-2xl
+          p-4
+          space-y-4
+        "
+      >
+
+        <div className="
+          text-xl
+          font-bold
+        ">
+
+          会社 {index + 1}
+
+        </div>
+
+        {section.rows.map(
+
+          (row, rowIndex) => (
+
+            <div
+
+              key={rowIndex}
+
+              className="
+                grid
+                grid-cols-6
+                gap-4
+                border-t
+                py-2
+              "
+            >
+
+              <div>
+                {row.materialName}
+              </div>
+
+              <div>
+                {row.size}
+              </div>
+
+              <div>
+                {row.quantity}
+              </div>
+
+              <div>
+                {row.price}
+              </div>
+
+              <div>
+
+                {(
+                  Number(
+                    row.quantity || 0
+                  )
+
+                  *
+
+                  Number(
+                    row.price || 0
+                  )
+
+                ).toLocaleString()}
+
+              </div>
+
+              <div>
+                {row.note}
+              </div>
+
+            </div>
+
+          )
+
+        )}
+
+      </div>
+
+    )
+
+  )}
+
+</div>
+
+)}
 </div>
 
 )}
