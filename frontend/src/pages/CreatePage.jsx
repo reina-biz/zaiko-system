@@ -456,6 +456,12 @@ onClick={() =>
 
     ]);
 
+    setReportDate("");
+
+    setSiteName("");
+
+    setUserName("");
+
   }}
 
   className="
