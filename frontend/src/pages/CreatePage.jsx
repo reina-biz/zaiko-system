@@ -24,52 +24,55 @@ const EMPTY_ROW = {
 
 };
 
-const [rows, setRows] =
+const [
 
-  useState(
+  companySections,
 
-    Array.from(
+  setCompanySections
+
+] = useState([
+
+  {
+
+    companyName: "",
+
+    rows: Array.from(
       { length: 10 },
       () => ({
         ...EMPTY_ROW
       })
     )
 
-  );
+  }
 
-  const [
+]);
 
-  companyBlocks,
 
-  setCompanyBlocks
-
-] = useState([0]);
 
   const updateRow = (
-  index,
+
+  sectionIndex,
+  rowIndex,
   field,
   value
+
 ) => {
 
-  const updated = [...rows];
+  const updatedSections = [
 
-  updated[index] = {
+    ...companySections
 
-    ...updated[index],
-    [field]: value,
+  ];
 
-  };
+  updatedSections[sectionIndex]
 
-  // 材料名 + 型番
-  // 一致単価取得
+    .rows[rowIndex][field] = value;
 
-  const materialName =
-    updated[index]
-      .materialName;
+  const currentRow =
 
-  const size =
-    updated[index]
-      .size;
+    updatedSections[sectionIndex]
+
+      .rows[rowIndex];
 
   const matchedRow =
 
@@ -84,24 +87,29 @@ const [rows, setRows] =
         (row) =>
 
           row.materialName ===
-            materialName
+            currentRow.materialName
 
           &&
 
-          row.size === size
+          row.size ===
+            currentRow.size
 
       );
 
   if (matchedRow) {
 
-    updated[index].price =
+    currentRow.price =
       matchedRow.price || "";
 
   }
 
-  setRows(updated);
+  setCompanySections(
+    updatedSections
+  );
 
 };
+
+
 
     const materialSuggestions = [
 
@@ -278,41 +286,7 @@ const [rows, setRows] =
   "
 />
 
-{companyBlocks.map((block) => (
 
-  <select
-
-    key={block}
-
-    className="
-      border
-      rounded-2xl
-      px-4
-      py-3
-      w-[300px]
-    "
-  >
-
-    <option value="">
-      会社選択
-    </option>
-
-    {companyList.map((company) => (
-
-      <option
-        key={company}
-        value={company}
-      >
-
-        {company}
-
-      </option>
-
-    ))}
-
-  </select>
-
-))}
 
 
 
@@ -341,19 +315,27 @@ const [rows, setRows] =
 />
 
 <button
-onClick={() =>
+onClick={() => {
 
-  setRows([
+  const updatedSections = [
 
-    ...rows,
+    ...companySections
 
-    {
-      ...EMPTY_ROW
-    }
+  ];
 
-  ])
+  updatedSections[
+  companySections.length - 1
+].rows.push({
 
-}
+    ...EMPTY_ROW
+
+  });
+
+  setCompanySections(
+    updatedSections
+  );
+
+}}
 
   className="
     bg-sky-500
@@ -374,11 +356,22 @@ onClick={() =>
 <button
 onClick={() =>
 
-  setCompanyBlocks([
+  setCompanySections([
 
-    ...companyBlocks,
+    ...companySections,
 
-    companyBlocks.length
+    {
+
+      companyName: "",
+
+      rows: Array.from(
+        { length: 10 },
+        () => ({
+          ...EMPTY_ROW
+        })
+      )
+
+    }
 
   ])
 
@@ -415,7 +408,66 @@ onClick={() =>
   
 
   </div>
+  {companySections.map(
 
+  (section, sectionIndex) => (
+
+<div
+  key={sectionIndex}
+  className="
+    border
+    rounded-3xl
+    p-4
+    space-y-4
+  "
+>
+  <div className="
+  flex
+  items-center
+  gap-4
+">
+
+  <div className="
+    text-xl
+    font-bold
+  ">
+
+    会社 {sectionIndex + 1}
+
+  </div>
+
+  <select
+
+    className="
+      border
+      rounded-2xl
+      px-4
+      py-3
+      w-[300px]
+    "
+  >
+
+    <option value="">
+      会社選択
+    </option>
+
+    {companyList.map((company) => (
+
+      <option
+        key={company}
+        value={company}
+      >
+
+        {company}
+
+      </option>
+
+    ))}
+
+  </select>
+
+</div>
+  
   <div className="
     overflow-hidden
     rounded-2xl
@@ -458,7 +510,7 @@ onClick={() =>
 
     
 
-    {rows.map(
+    {section.rows.map(
       (row, index) => (
 
         <div
@@ -481,7 +533,8 @@ onClick={() =>
   onChange={(e) =>
 
     updateRow(
-      index,
+  sectionIndex,
+  index,
       "materialName",
       e.target.value
     )
@@ -527,10 +580,11 @@ onClick={() =>
   onChange={(e) =>
 
     updateRow(
-      index,
-      "size",
-      e.target.value
-    )
+  sectionIndex,
+  index,
+  "size",
+  e.target.value
+)
 
   }
 
@@ -586,10 +640,11 @@ onClick={() =>
     onChange={(e) =>
 
       updateRow(
-        index,
-        "quantity",
-        e.target.value
-      )
+  sectionIndex,
+  index,
+  "quantity",
+  e.target.value
+)
 
     }
 
@@ -678,7 +733,11 @@ onClick={() =>
 
   </div>
 
-  
+  </div>
+
+))
+
+}
 
 </div>
 
