@@ -546,14 +546,35 @@ onClick={() =>
 
   <select
 
-    className="
-      border
-      rounded-2xl
-      px-4
-      py-3
-      w-[300px]
-    "
-  >
+  value={section.companyName}
+
+  onChange={(e) => {
+
+    const updatedSections = [
+
+      ...companySections
+
+    ];
+
+    updatedSections[
+      sectionIndex
+    ].companyName =
+      e.target.value;
+
+    setCompanySections(
+      updatedSections
+    );
+
+  }}
+
+  className="
+    border
+    rounded-2xl
+    px-4
+    py-3
+    w-[300px]
+  "
+>
 
     <option value="">
       会社選択
@@ -1179,7 +1200,7 @@ onClick={() =>
           font-bold
         ">
 
-          会社 {index + 1}
+          {section.companyName || `会社 ${index + 1}`}
 
         </div>
 
