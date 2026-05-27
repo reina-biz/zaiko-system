@@ -259,17 +259,17 @@ const [rows, setRows] =
     gap-4
   ">
 
-    <input
-      type="date"
-      className="
-        border
-        rounded-2xl
-        px-4
-        py-3
-      "
-    />
+   <input
+  type="date"
+  className="
+    border
+    rounded-2xl
+    px-4
+    py-3
+  "
+/>
 
-    <select
+<select
 
   className="
     border
@@ -298,6 +298,75 @@ const [rows, setRows] =
   ))}
 
 </select>
+
+<input
+  type="text"
+  placeholder="現場名"
+  className="
+    border
+    rounded-2xl
+    px-4
+    py-3
+    w-[300px]
+  "
+/>
+
+<input
+  type="text"
+  placeholder="入力者名"
+  className="
+    border
+    rounded-2xl
+    px-4
+    py-3
+    w-[200px]
+  "
+/>
+
+<button
+  className="
+    bg-sky-500
+    text-white
+    px-5
+    py-3
+    rounded-2xl
+    font-semibold
+  "
+>
+
+  行追加
+
+</button>
+
+<button
+  className="
+    bg-indigo-500
+    text-white
+    px-5
+    py-3
+    rounded-2xl
+    font-semibold
+  "
+>
+
+  会社追加
+
+</button>
+
+<button
+  className="
+    bg-emerald-500
+    text-white
+    px-5
+    py-3
+    rounded-2xl
+    font-semibold
+  "
+>
+
+  保存
+
+</button> 
 
   
 
@@ -565,39 +634,7 @@ const [rows, setRows] =
 
   </div>
 
-  <div className="
-    flex
-    justify-end
-    gap-2
-  ">
-
-    <button
-      className="
-        bg-emerald-500
-        text-white
-        px-5
-        py-3
-        rounded-2xl
-        font-semibold
-      "
-    >
-      保存
-    </button>
-
-    <button
-      className="
-        bg-rose-500
-        text-white
-        px-5
-        py-3
-        rounded-2xl
-        font-semibold
-      "
-    >
-      PDF
-    </button>
-
-  </div>
+  
 
 </div>
 
