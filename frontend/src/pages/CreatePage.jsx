@@ -961,13 +961,14 @@ onClick={() =>
             key={index}
 
             className="
-              border
-              rounded-2xl
-              p-4
-              flex
-              justify-between
-              items-center
-            "
+  border
+  rounded-2xl
+  p-4
+  flex
+  items-center
+  justify-between
+  gap-4
+"
           >
 
             
@@ -1014,28 +1015,96 @@ onClick={() =>
 
 </div>
 
-            <button
+            
+<div className="
+  flex
+  gap-2
+">
 
-  onClick={() =>
+  <button
 
-    setSelectedReport(
-      report
-    )
+    onClick={() =>
 
-  }
+      setSelectedReport(
 
-  className="
-    bg-sky-500
-    text-white
-    px-4
-    py-2
-    rounded-xl
-  "
->
+        selectedReport === report
+          ? null
+          : report
 
-              詳細
+      )
 
-            </button>
+    }
+
+    className="
+      bg-sky-500
+      text-white
+      px-4
+      py-2
+      rounded-xl
+    "
+  >
+
+    詳細
+
+  </button>
+
+  <button
+
+    className="
+      bg-amber-500
+      text-white
+      px-4
+      py-2
+      rounded-xl
+    "
+  >
+
+    編集
+
+  </button>
+
+  <button
+
+    onClick={() => {
+
+      const updated =
+
+        materialReports.filter(
+
+          (_, i) => i !== index
+
+        );
+
+      setMaterialReports(
+        updated
+      );
+
+      if (
+        selectedReport === report
+      ) {
+
+        setSelectedReport(
+          null
+        );
+
+      }
+
+    }}
+
+    className="
+      bg-red-500
+      text-white
+      px-4
+      py-2
+      rounded-xl
+    "
+  >
+
+    削除
+
+  </button>
+
+</div>
 
           </div>
 
