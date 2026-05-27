@@ -17,6 +17,30 @@ export default function CreatePage({
   const [page, setPage] =
     useState("");
 
+const [
+
+  reportDate,
+
+  setReportDate
+
+] = useState("");
+
+const [
+
+  siteName,
+
+  setSiteName
+
+] = useState("");
+
+const [
+
+  userName,
+
+  setUserName
+
+] = useState("");
+
 const EMPTY_ROW = {
 
   materialName: "",
@@ -361,14 +385,18 @@ onClick={() =>
 
     const report = {
 
-      createdAt:
-        new Date()
-          .toISOString(),
+  createdAt:
+    new Date()
+      .toISOString(),
 
-      sections:
-        companySections
+  reportDate,
+  siteName,
+  userName,
 
-    };
+  sections:
+    companySections
+
+};
 
     setMaterialReports([
 
@@ -897,34 +925,53 @@ onClick={() =>
             "
           >
 
-            <div>
+            
 
-              <div>
-                {report.reportDate}
-              </div>
+             <div className="
+  flex
+  flex-wrap
+  gap-8
+  items-center
+">
 
-              <div>
-                {report.siteName}
-              </div>
+  <div>
 
-              <div>
-                {report.userName}
-              </div>
+    {report.reportDate}
 
-              <div>
-                会社
-                {
-                  report.sections.length
-                }
-                件
-              </div>
+  </div>
 
-              <div>
-                ¥
-                {total.toLocaleString()}
-              </div>
+  <div>
 
-            </div>
+    {report.siteName}
+
+  </div>
+
+  <div>
+
+    {report.userName}
+
+  </div>
+
+  <div>
+
+    会社
+    {
+      report.sections.length
+    }
+    件
+
+  </div>
+
+  <div className="
+    font-bold
+  ">
+
+    ¥
+    {total.toLocaleString()}
+
+  </div>
+
+</div>
 
             <button
 
