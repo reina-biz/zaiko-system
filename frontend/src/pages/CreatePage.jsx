@@ -14,6 +14,86 @@ export default function CreatePage({
   const [page, setPage] =
     useState("");
 
+const EMPTY_ROW = {
+
+  materialName: "",
+  size: "",
+  quantity: "",
+  price: "",
+  note: "",
+
+};
+
+const [rows, setRows] =
+  useState(
+
+    Array.from(
+      { length: 10 },
+      () => ({
+        ...EMPTY_ROW
+      })
+    )
+
+  );
+
+  const updateRow = (
+  index,
+  field,
+  value
+) => {
+
+  const updated = [...rows];
+
+  updated[index] = {
+
+    ...updated[index],
+    [field]: value,
+
+  };
+
+  // 材料名 + 型番
+  // 一致単価取得
+
+  const materialName =
+    updated[index]
+      .materialName;
+
+  const size =
+    updated[index]
+      .size;
+
+  const matchedRow =
+
+    historyRows
+
+      .slice()
+
+      .reverse()
+
+      .find(
+
+        (row) =>
+
+          row.materialName ===
+            materialName
+
+          &&
+
+          row.size === size
+
+      );
+
+  if (matchedRow) {
+
+    updated[index].price =
+      matchedRow.price || "";
+
+  }
+
+  setRows(updated);
+
+};
+
     const materialSuggestions = [
 
   ...new Set(
@@ -265,8 +345,8 @@ export default function CreatePage({
 
     
 
-    {Array.from({ length: 10 }).map(
-      (_, index) => (
+    {rows.map(
+      (row, index) => (
 
         <div
           key={index}
@@ -279,9 +359,22 @@ export default function CreatePage({
 
           <div className="p-2">
 
-            <input
+           <input
   list={`material-list-${index}`}
   type="text"
+
+  value={row.materialName}
+
+  onChange={(e) =>
+
+    updateRow(
+      index,
+      "materialName",
+      e.target.value
+    )
+
+  }
+
   className="
     w-full
     border
@@ -312,9 +405,22 @@ export default function CreatePage({
 
           <div className="p-2">
 
-            <input
+           <input
   list={`size-list-${index}`}
   type="text"
+
+  value={row.size}
+
+  onChange={(e) =>
+
+    updateRow(
+      index,
+      "size",
+      e.target.value
+    )
+
+  }
+
   className="
     w-full
     border
@@ -361,6 +467,19 @@ export default function CreatePage({
 
   <input
     type="number"
+
+    value={row.quantity}
+
+    onChange={(e) =>
+
+      updateRow(
+        index,
+        "quantity",
+        e.target.value
+      )
+
+    }
+
     className="
       w-full
       border
@@ -378,19 +497,9 @@ export default function CreatePage({
   <input
     type="number"
 
-    value={
+    value={row.price}
 
-      historyRows
-
-        .slice()
-
-        .reverse()
-
-        .find(
-          (row) => row.price
-        )?.price || ""
-
-    }
+    readOnly
 
     className="
       w-full
@@ -399,6 +508,7 @@ export default function CreatePage({
       px-3
       py-2
       text-right
+      bg-slate-100
     "
   />
 
@@ -414,7 +524,11 @@ export default function CreatePage({
             justify-end
           ">
 
-            0 円
+            {(
+            Number(row.quantity || 0)
+            *
+            Number(row.price || 0)
+            ).toLocaleString()} 円
 
           </div>
 
