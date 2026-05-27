@@ -811,6 +811,150 @@ onClick={() =>
 
 )}
 
+{page === "現場材料一覧" && (
+
+<div className="
+  bg-white
+  rounded-3xl
+  border
+  p-6
+  space-y-6
+">
+
+  <input
+
+    type="text"
+
+    placeholder="
+    日付・現場名・入力者検索
+    "
+
+    className="
+      w-full
+      border
+      rounded-2xl
+      px-4
+      py-3
+    "
+  />
+
+  <div className="
+    space-y-4
+  ">
+
+    {materialReports.map(
+
+      (report, index) => {
+
+        const total =
+
+          report.sections.reduce(
+
+            (sectionTotal, section) =>
+
+              sectionTotal +
+
+              section.rows.reduce(
+
+                (rowTotal, row) =>
+
+                  rowTotal +
+
+                  (
+                    Number(
+                      row.quantity || 0
+                    )
+
+                    *
+
+                    Number(
+                      row.price || 0
+                    )
+
+                  ),
+
+                0
+
+              ),
+
+            0
+
+          );
+
+        return (
+
+          <div
+
+            key={index}
+
+            className="
+              border
+              rounded-2xl
+              p-4
+              flex
+              justify-between
+              items-center
+            "
+          >
+
+            <div>
+
+              <div>
+                {report.reportDate}
+              </div>
+
+              <div>
+                {report.siteName}
+              </div>
+
+              <div>
+                {report.userName}
+              </div>
+
+              <div>
+                会社
+                {
+                  report.sections.length
+                }
+                件
+              </div>
+
+              <div>
+                ¥
+                {total.toLocaleString()}
+              </div>
+
+            </div>
+
+            <button
+
+              className="
+                bg-sky-500
+                text-white
+                px-4
+                py-2
+                rounded-xl
+              "
+            >
+
+              詳細
+
+            </button>
+
+          </div>
+
+        );
+
+      }
+
+    )}
+
+  </div>
+
+</div>
+
+)}
+
      
 
 </div>
