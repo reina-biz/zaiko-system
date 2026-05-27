@@ -20,11 +20,13 @@ export default function CreatePage() {
     ">
 
       <h2 className="
-        text-2xl
-        font-bold
+      text-2xl
+      font-bold
       ">
-        作成
-      </h2>
+
+  {page || "作成"}
+
+</h2>
 
       {/* ボタン */}
 
@@ -106,6 +108,8 @@ export default function CreatePage() {
       </div>
 
       {/* 表示切替 */}
+
+      
 
       {page === "現場報告書作成" && (
 
