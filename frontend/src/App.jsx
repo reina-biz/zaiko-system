@@ -527,7 +527,11 @@ useEffect(() => {
 
 {tab === "作成" && (
 
-  <CreatePage />
+  <CreatePage
+
+  companyList={companyList}
+
+/>
 
 )}
 

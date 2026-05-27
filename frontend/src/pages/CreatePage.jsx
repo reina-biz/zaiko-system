@@ -4,7 +4,11 @@ import {
 
 import InputPage from "./InputPage";
 
-export default function CreatePage() {
+export default function CreatePage({
+
+  companyList
+
+}) {
 
   const [page, setPage] =
     useState("");
@@ -166,15 +170,15 @@ export default function CreatePage() {
     />
 
     <input
-      type="text"
-      placeholder="会社名"
-      className="
-        border
-        rounded-2xl
-        px-4
-        py-3
-      "
-    />
+    type="text"
+    placeholder="会社名"
+    className="
+    border
+    rounded-2xl
+    px-4
+    py-3
+  "
+/>
 
     <input
       type="text"
