@@ -1,4 +1,8 @@
-import { useState } from "react";
+import {
+  useState
+} from "react";
+
+import InputPage from "./InputPage";
 
 export default function CreatePage() {
 
@@ -133,17 +137,18 @@ export default function CreatePage() {
 
       {page === "現場材料作成" && (
 
-        <div className="
-          border
-          rounded-2xl
-          p-6
-        ">
+  <div className="
+    border
+    rounded-2xl
+    p-6
+  ">
 
-          現場材料作成ページ
+    次ここに
+    現場材料作成フォーム入れる
 
-        </div>
+  </div>
 
-      )}
+)}
 
       {page === "現場材料一覧" && (
 
