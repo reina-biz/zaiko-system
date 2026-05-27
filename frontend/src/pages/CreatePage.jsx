@@ -25,6 +25,7 @@ const EMPTY_ROW = {
 };
 
 const [rows, setRows] =
+
   useState(
 
     Array.from(
@@ -35,6 +36,14 @@ const [rows, setRows] =
     )
 
   );
+
+  const [
+
+  companyBlocks,
+
+  setCompanyBlocks
+
+] = useState([0]);
 
   const updateRow = (
   index,
@@ -269,35 +278,43 @@ const [rows, setRows] =
   "
 />
 
-<select
+{companyBlocks.map((block) => (
 
-  className="
-    border
-    rounded-2xl
-    px-4
-    py-3
-    w-[300px]
-  "
->
+  <select
 
-  <option value="">
-    会社選択
-  </option>
+    key={block}
 
-  {companyList.map((company) => (
+    className="
+      border
+      rounded-2xl
+      px-4
+      py-3
+      w-[300px]
+    "
+  >
 
-    <option
-      key={company}
-      value={company}
-    >
-
-      {company}
-
+    <option value="">
+      会社選択
     </option>
 
-  ))}
+    {companyList.map((company) => (
 
-</select>
+      <option
+        key={company}
+        value={company}
+      >
+
+        {company}
+
+      </option>
+
+    ))}
+
+  </select>
+
+))}
+
+
 
 <input
   type="text"
@@ -324,6 +341,20 @@ const [rows, setRows] =
 />
 
 <button
+onClick={() =>
+
+  setRows([
+
+    ...rows,
+
+    {
+      ...EMPTY_ROW
+    }
+
+  ])
+
+}
+
   className="
     bg-sky-500
     text-white
@@ -334,11 +365,24 @@ const [rows, setRows] =
   "
 >
 
+  
+
   行追加
 
 </button>
 
 <button
+onClick={() =>
+
+  setCompanyBlocks([
+
+    ...companyBlocks,
+
+    companyBlocks.length
+
+  ])
+
+}
   className="
     bg-indigo-500
     text-white
