@@ -169,16 +169,35 @@ export default function CreatePage({
       "
     />
 
-    <input
-    type="text"
-    placeholder="会社名"
-    className="
+    <select
+
+  className="
     border
     rounded-2xl
     px-4
     py-3
+    w-[300px]
   "
-/>
+>
+
+  <option value="">
+    会社選択
+  </option>
+
+  {companyList.map((company) => (
+
+    <option
+      key={company}
+      value={company}
+    >
+
+      {company}
+
+    </option>
+
+  ))}
+
+</select>
 
     <input
       type="text"
