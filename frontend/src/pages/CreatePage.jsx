@@ -7,7 +7,10 @@ import InputPage from "./InputPage";
 export default function CreatePage({
 
   companyList,
-  historyRows
+  historyRows,
+
+  materialReports,
+  setMaterialReports
 
 }) {
 
@@ -353,6 +356,49 @@ onClick={() =>
 </button>
 
 <button
+
+  onClick={() => {
+
+    const report = {
+
+      createdAt:
+        new Date()
+          .toISOString(),
+
+      sections:
+        companySections
+
+    };
+
+    setMaterialReports([
+
+      ...materialReports,
+
+      report
+
+    ]);
+
+    // リセット
+
+    setCompanySections([
+
+      {
+
+        companyName: "",
+
+        rows: Array.from(
+          { length: 10 },
+          () => ({
+            ...EMPTY_ROW
+          })
+        )
+
+      }
+
+    ]);
+
+  }}
+
   className="
     bg-emerald-500
     text-white

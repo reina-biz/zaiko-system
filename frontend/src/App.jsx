@@ -119,7 +119,15 @@ const [rows, setRows] =
   );
 
   const [historyRows, setHistoryRows] =
+  
   useState(() => {
+    const [
+
+  materialReports,
+
+  setMaterialReports
+
+] = useState([]);
 
     const saved =
       localStorage.getItem(
@@ -530,7 +538,16 @@ useEffect(() => {
   <CreatePage
 
   companyList={companyList}
+
   historyRows={historyRows}
+
+  materialReports={
+    materialReports
+  }
+
+  setMaterialReports={
+    setMaterialReports
+  }
 
 />
 
