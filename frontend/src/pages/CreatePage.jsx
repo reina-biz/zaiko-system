@@ -1315,29 +1315,37 @@ const [
 
                         onClick={() => {
 
-                          const updated =
+  if (
+    !window.confirm(
+      "本当に削除しますか？"
+    )
+  ) {
+    return;
+  }
 
-                            materialReports.filter(
+  const updated =
 
-                              (_, i) => i !== index
+    materialReports.filter(
 
-                            );
+      (_, i) => i !== index
 
-                          setMaterialReports(
-                            updated
-                          );
+    );
 
-                          if (
-                            selectedReport === report
-                          ) {
+  setMaterialReports(
+    updated
+  );
 
-                            setSelectedReport(
-                              null
-                            );
+  if (
+    selectedReport === report
+  ) {
 
-                          }
+    setSelectedReport(
+      null
+    );
 
-                        }}
+  }
+
+}}
 
                         className="
       bg-red-500
