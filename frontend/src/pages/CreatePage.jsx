@@ -51,6 +51,11 @@ export default function CreatePage({
 
   ] = useState(null);
 
+  const [
+  selectedUser,
+  setSelectedUser
+] = useState("");
+
    const [
    editIndex,
    setEditIndex
@@ -331,27 +336,43 @@ export default function CreatePage({
   "
             />
 
-            <input
-              type="text"
+            <select
 
-              placeholder="入力者名"
+  value={userName}
 
-              value={userName}
+  onChange={(e) =>
+    setUserName(
+      e.target.value
+    )
+  }
 
-              onChange={(e) =>
-                setUserName(
-                  e.target.value
-                )
-              }
-
-              className="
+  className="
     border
     rounded-2xl
     px-4
     py-3
     w-[200px]
   "
-            />
+>
+
+  <option value="">
+    入力者選択
+  </option>
+
+  {userList.map((user) => (
+
+    <option
+      key={user}
+      value={user}
+    >
+
+      {user}
+
+    </option>
+
+  ))}
+
+</select>
 
 
             <button
@@ -930,6 +951,45 @@ export default function CreatePage({
   space-y-6
 ">
 
+          
+          <select
+
+  value={selectedUser}
+
+  onChange={(e) =>
+    setSelectedUser(
+      e.target.value
+    )
+  }
+
+  className="
+    border
+    rounded-2xl
+    px-4
+    py-3
+    w-[250px]
+  "
+>
+
+  <option value="">
+    全担当者
+  </option>
+
+  {userList.map((user) => (
+
+    <option
+      key={user}
+      value={user}
+    >
+
+      {user}
+
+    </option>
+
+  ))}
+
+</select>
+          
           <input
 
             type="text"
@@ -951,7 +1011,20 @@ export default function CreatePage({
     space-y-4
   ">
 
-            {materialReports.map(
+            {materialReports
+
+  .filter(
+
+    (report) =>
+
+      !selectedUser ||
+
+      report.userName ===
+      selectedUser
+
+  )
+
+  .map(
 
               (report, index) => {
 
