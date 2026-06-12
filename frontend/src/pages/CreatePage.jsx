@@ -1062,18 +1062,42 @@ export default function CreatePage({
 
                       <button
 
+                      onClick={() => {
+
+  setReportDate(
+    report.reportDate
+  );
+
+  setSiteName(
+    report.siteName
+  );
+
+  setUserName(
+    report.userName
+  );
+
+  setCompanySections(
+    report.sections
+  );
+
+  setPage(
+    "現場材料作成"
+  );
+
+}}
+
                         className="
-      bg-amber-500
-      text-white
-      px-4
-      py-2
-      rounded-xl
-    "
+                        bg-amber-500
+                        text-white
+                        px-4
+                        py-2
+                        rounded-xl
+                        "
                       >
 
                         編集
 
-                      </button>
+                       </button>
 
                       <button
 
