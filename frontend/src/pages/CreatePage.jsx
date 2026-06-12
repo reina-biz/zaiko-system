@@ -1121,9 +1121,76 @@ export default function CreatePage({
     mt-4
     border-t
     pt-4
+    space-y-4
   ">
 
-    詳細表示テスト
+    {report.sections.map(
+      (section, sectionIndex) => (
+
+        <div
+          key={sectionIndex}
+          className="
+            border
+            rounded-2xl
+            p-4
+          "
+        >
+
+          <div className="
+            font-bold
+            text-lg
+            mb-3
+          ">
+            {section.companyName}
+          </div>
+
+          {section.rows.map(
+            (row, rowIndex) => (
+
+              <div
+                key={rowIndex}
+                className="
+                  grid
+                  grid-cols-5
+                  gap-4
+                  py-1
+                  border-b
+                "
+              >
+
+                <div>
+                  {row.materialName}
+                </div>
+
+                <div>
+                  {row.size}
+                </div>
+
+                <div>
+                  {row.quantity}
+                </div>
+
+                <div>
+                  ¥{Number(row.price).toLocaleString()}
+                </div>
+
+                <div>
+                  ¥{(
+                    Number(row.quantity || 0)
+                    *
+                    Number(row.price || 0)
+                  ).toLocaleString()}
+                </div>
+
+              </div>
+
+            )
+          )}
+
+        </div>
+
+      )
+    )}
 
   </div>
 
