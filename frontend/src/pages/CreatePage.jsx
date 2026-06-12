@@ -975,14 +975,17 @@ export default function CreatePage({
     border
     rounded-2xl
     p-4
-    flex
-    items-center
-    justify-between
-    gap-4
   "
 >
 
-                    <div className="
+  <div className="
+  flex
+  items-center
+  justify-between
+  gap-4
+">
+
+ <div className="
   flex
   flex-wrap
   items-center
@@ -1115,8 +1118,9 @@ export default function CreatePage({
 
                     </div>
 
-                    {selectedReport === report && (
+</div>
 
+{selectedReport === report && (
   <div className="
     mt-4
     border-t
