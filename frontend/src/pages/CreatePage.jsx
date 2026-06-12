@@ -49,6 +49,11 @@ export default function CreatePage({
 
   ] = useState(null);
 
+   const [
+   editIndex,
+   setEditIndex
+  ] = useState(null);
+
 
 
   const EMPTY_ROW = {
@@ -430,13 +435,27 @@ export default function CreatePage({
 
                 };
 
-                setMaterialReports([
+                if (editIndex !== null) {
 
-                  ...materialReports,
+  const updated = [
+    ...materialReports
+  ];
 
-                  report
+  updated[editIndex] =
+    report;
 
-                ]);
+  setMaterialReports(
+    updated
+  );
+
+} else {
+
+  setMaterialReports([
+    ...materialReports,
+    report
+  ]);
+
+}
 
                 // リセット
 
@@ -462,6 +481,8 @@ export default function CreatePage({
                 setSiteName("");
 
                 setUserName("");
+
+                setEditIndex(null);
 
               }}
 
@@ -1079,6 +1100,8 @@ export default function CreatePage({
   setCompanySections(
     report.sections
   );
+
+  setEditIndex(index);
 
   setPage(
     "現場材料作成"
