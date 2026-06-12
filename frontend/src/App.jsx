@@ -88,7 +88,18 @@ export default function App() {
     const [
   userList,
   setUserList
-] = useState([]);
+] = useState(() => {
+
+  const saved =
+    localStorage.getItem(
+      "userList"
+    );
+
+  return saved
+    ? JSON.parse(saved)
+    : [];
+
+});
 
   // =========================
   // 日付
@@ -174,6 +185,15 @@ useEffect(() => {
     );
 
   }, [companyList]);
+
+  useEffect(() => {
+
+  localStorage.setItem(
+    "userList",
+    JSON.stringify(userList)
+  );
+
+}, [userList]);
 
   // =========================
   // CSV出力
