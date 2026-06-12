@@ -1148,6 +1148,54 @@ export default function CreatePage({
             {section.companyName}
           </div>
 
+<div
+  className="
+    grid
+    grid-cols-5
+    gap-4
+    bg-slate-100
+    font-bold
+    p-2
+    rounded-xl
+  "
+>
+
+  <div>材料名</div>
+
+  <div>型番</div>
+
+  <div>数量</div>
+
+  <div>単価</div>
+
+  <div>合計</div>
+
+</div>
+<div className="
+  text-right
+  font-bold
+  mt-3
+">
+
+  会社合計：
+
+  ¥
+
+  {section.rows
+    .reduce(
+      (total, row) =>
+        total +
+        (
+          Number(row.quantity || 0)
+          *
+          Number(row.price || 0)
+        ),
+      0
+    )
+    .toLocaleString()
+  }
+
+</div>
           {section.rows.map(
             (row, rowIndex) => (
 
@@ -1195,6 +1243,39 @@ export default function CreatePage({
 
       )
     )}
+
+<div className="
+  text-right
+  text-xl
+  font-bold
+  border-t
+  pt-3
+">
+
+  総額：
+
+  ¥
+
+  {report.sections
+    .reduce(
+      (grandTotal, section) =>
+        grandTotal +
+        section.rows.reduce(
+          (sectionTotal, row) =>
+            sectionTotal +
+            (
+              Number(row.quantity || 0)
+              *
+              Number(row.price || 0)
+            ),
+          0
+        ),
+      0
+    )
+    .toLocaleString()
+  }
+
+</div>
 
   </div>
 
