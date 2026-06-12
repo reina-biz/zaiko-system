@@ -29,12 +29,14 @@ const [
   setEndMonth
 ] = useState("");
 
+const [
+  reportDate,
+  setReportDate
+] = useState("");
+
   const [
-
     siteName,
-
     setSiteName
-
   ] = useState("");
 
   const [
