@@ -20,12 +20,14 @@ export default function CreatePage({
     useState("");
 
   const [
+  startMonth,
+  setStartMonth
+] = useState("");
 
-    reportDate,
-
-    setReportDate
-
-  ] = useState("");
+const [
+  endMonth,
+  setEndMonth
+] = useState("");
 
   const [
 
@@ -951,51 +953,134 @@ export default function CreatePage({
   space-y-6
 ">
 
-          
-          <select
+  <div className="
+  flex
+  gap-4
+  flex-wrap
+  items-end
+">
 
-  value={selectedUser}
+  <div>
 
-  onChange={(e) =>
-    setSelectedUser(
-      e.target.value
-    )
-  }
+    <div className="
+      text-sm
+      font-medium
+      mb-1
+    ">
+      担当者
+    </div>
 
-  className="
-    border
-    rounded-2xl
-    px-4
-    py-3
-    w-[250px]
-  "
->
+    <select
 
-  <option value="">
-    全担当者
-  </option>
+      value={selectedUser}
 
-  {userList.map((user) => (
+      onChange={(e) =>
+        setSelectedUser(
+          e.target.value
+        )
+      }
 
-    <option
-      key={user}
-      value={user}
+      className="
+        border
+        rounded-2xl
+        px-4
+        py-3
+        w-[200px]
+      "
     >
 
-      {user}
+      <option value="">
+        全担当者
+      </option>
 
-    </option>
+      {userList.map((user) => (
 
-  ))}
+        <option
+          key={user}
+          value={user}
+        >
 
-</select>
+          {user}
+
+        </option>
+
+      ))}
+
+    </select>
+
+  </div>
+
+  <div>
+
+    <div className="
+      text-sm
+      font-medium
+      mb-1
+    ">
+      開始年月
+    </div>
+
+    <input
+      type="month"
+
+      value={startMonth}
+
+      onChange={(e) =>
+        setStartMonth(
+          e.target.value
+        )
+      }
+
+      className="
+        border
+        rounded-2xl
+        px-4
+        py-3
+      "
+    />
+
+  </div>
+
+  <div>
+
+    <div className="
+      text-sm
+      font-medium
+      mb-1
+    ">
+      終了年月
+    </div>
+
+    <input
+      type="month"
+
+      value={endMonth}
+
+      onChange={(e) =>
+        setEndMonth(
+          e.target.value
+        )
+      }
+
+      className="
+        border
+        rounded-2xl
+        px-4
+        py-3
+      "
+    />
+
+  </div>
+
+</div>        
+          
           
           <input
 
             type="text"
 
             placeholder="
-    日付・現場名・入力者検索
+    現場名検索
     "
 
             className="
@@ -1008,21 +1093,92 @@ export default function CreatePage({
           />
 
           <div className="
+  flex
+  gap-4
+  flex-wrap
+">
+
+  <input
+    type="month"
+
+    value={startMonth}
+
+    onChange={(e) =>
+      setStartMonth(
+        e.target.value
+      )
+    }
+
+    className="
+      border
+      rounded-2xl
+      px-4
+      py-3
+    "
+  />
+
+  <input
+    type="month"
+
+    value={endMonth}
+
+    onChange={(e) =>
+      setEndMonth(
+        e.target.value
+      )
+    }
+
+    className="
+      border
+      rounded-2xl
+      px-4
+      py-3
+    "
+  />
+
+</div>
+
+          <div className="
     space-y-4
   ">
 
             {materialReports
 
-  .filter(
+  .filter((report) => {
 
-    (report) =>
+  const reportMonth =
+    report.reportDate?.slice(0, 7);
 
+  return (
+
+    (
       !selectedUser ||
 
       report.userName ===
       selectedUser
+    )
 
-  )
+    &&
+
+    (
+      !startMonth ||
+
+      reportMonth >=
+      startMonth
+    )
+
+    &&
+
+    (
+      !endMonth ||
+
+      reportMonth <=
+      endMonth
+    )
+
+  );
+
+})
 
   .map(
 
