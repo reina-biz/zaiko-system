@@ -17,155 +17,155 @@ export default function CreatePage({
   const [page, setPage] =
     useState("");
 
-const [
+  const [
 
-  reportDate,
+    reportDate,
 
-  setReportDate
+    setReportDate
 
-] = useState("");
+  ] = useState("");
 
-const [
+  const [
 
-  siteName,
+    siteName,
 
-  setSiteName
+    setSiteName
 
-] = useState("");
+  ] = useState("");
 
-const [
+  const [
 
-  userName,
+    userName,
 
-  setUserName
+    setUserName
 
-] = useState("");
+  ] = useState("");
 
-const [
+  const [
 
-  selectedReport,
+    selectedReport,
 
-  setSelectedReport
+    setSelectedReport
 
-] = useState(null);
+  ] = useState(null);
 
 
 
-const EMPTY_ROW = {
+  const EMPTY_ROW = {
 
-  materialName: "",
-  size: "",
-  quantity: "",
-  price: "",
-  note: "",
+    materialName: "",
+    size: "",
+    quantity: "",
+    price: "",
+    note: "",
 
-};
+  };
 
-const [
+  const [
 
-  companySections,
+    companySections,
 
-  setCompanySections
+    setCompanySections
 
-] = useState([
+  ] = useState([
 
-  {
+    {
 
-    companyName: "",
+      companyName: "",
 
-    rows: Array.from(
-      { length: 10 },
-      () => ({
-        ...EMPTY_ROW
-      })
-    )
+      rows: Array.from(
+        { length: 10 },
+        () => ({
+          ...EMPTY_ROW
+        })
+      )
 
-  }
+    }
 
-]);
+  ]);
 
 
 
   const updateRow = (
 
-  sectionIndex,
-  rowIndex,
-  field,
-  value
+    sectionIndex,
+    rowIndex,
+    field,
+    value
 
-) => {
+  ) => {
 
-  const updatedSections = [
+    const updatedSections = [
 
-    ...companySections
+      ...companySections
 
-  ];
-
-  updatedSections[sectionIndex]
-
-    .rows[rowIndex][field] = value;
-
-  const currentRow =
+    ];
 
     updatedSections[sectionIndex]
 
-      .rows[rowIndex];
+      .rows[rowIndex][field] = value;
 
-  const matchedRow =
+    const currentRow =
 
-    historyRows
+      updatedSections[sectionIndex]
 
-      .slice()
+        .rows[rowIndex];
 
-      .reverse()
+    const matchedRow =
 
-      .find(
+      historyRows
 
-        (row) =>
+        .slice()
 
-          row.materialName ===
+        .reverse()
+
+        .find(
+
+          (row) =>
+
+            row.materialName ===
             currentRow.materialName
 
-          &&
+            &&
 
-          row.size ===
+            row.size ===
             currentRow.size
 
-      );
+        );
 
-  if (matchedRow) {
+    if (matchedRow) {
 
-    currentRow.price =
-      matchedRow.price || "";
+      currentRow.price =
+        matchedRow.price || "";
 
-  }
+    }
 
-  setCompanySections(
-    updatedSections
-  );
+    setCompanySections(
+      updatedSections
+    );
 
-};
+  };
 
 
 
-    const materialSuggestions = [
+  const materialSuggestions = [
 
-  ...new Set(
+    ...new Set(
 
-    historyRows
+      historyRows
 
-      .filter(
-        (row) => row.materialName
-      )
+        .filter(
+          (row) => row.materialName
+        )
 
-      .map(
-        (row) =>
-          row.materialName
-      )
+        .map(
+          (row) =>
+            row.materialName
+        )
 
-  )
+    )
 
-];
+  ];
 
   return (
 
@@ -182,9 +182,9 @@ const [
       font-bold
       ">
 
-  {page || "作成"}
+        {page || "作成"}
 
-</h2>
+      </h2>
 
       {/* ボタン */}
 
@@ -216,7 +216,7 @@ const [
           onClick={() =>
             setPage("現場材料一覧")
           }
-         className="
+          className="
          bg-red-500
          text-white
          py-2
@@ -233,7 +233,7 @@ const [
 
       {/* 表示切替 */}
 
-      
+
 
       {page === "現場報告書作成" && (
 
@@ -265,7 +265,7 @@ const [
 
       {page === "現場材料作成" && (
 
-<div className="
+        <div className="
   bg-white
   rounded-3xl
   border
@@ -273,104 +273,104 @@ const [
   space-y-6
 ">
 
-  <div className="
+          <div className="
     flex
     flex-wrap
     gap-4
   ">
 
-  <input
-  type="date"
+            <input
+              type="date"
 
-  value={reportDate}
+              value={reportDate}
 
-  onChange={(e) =>
-    setReportDate(
-      e.target.value
-    )
-  }
+              onChange={(e) =>
+                setReportDate(
+                  e.target.value
+                )
+              }
 
-  className="
+              className="
     border
     rounded-2xl
     px-4
     py-3
   "
-/>
+            />
 
 
 
 
 
-<input
-  type="text"
+            <input
+              type="text"
 
-  placeholder="現場名"
+              placeholder="現場名"
 
-  value={siteName}
+              value={siteName}
 
-  onChange={(e) =>
-    setSiteName(
-      e.target.value
-    )
-  }
+              onChange={(e) =>
+                setSiteName(
+                  e.target.value
+                )
+              }
 
-  className="
+              className="
     border
     rounded-2xl
     px-4
     py-3
     w-[300px]
   "
-/>
+            />
 
-<input
-  type="text"
+            <input
+              type="text"
 
-  placeholder="入力者名"
+              placeholder="入力者名"
 
-  value={userName}
+              value={userName}
 
-  onChange={(e) =>
-    setUserName(
-      e.target.value
-    )
-  }
+              onChange={(e) =>
+                setUserName(
+                  e.target.value
+                )
+              }
 
-  className="
+              className="
     border
     rounded-2xl
     px-4
     py-3
     w-[200px]
   "
-/>
+            />
 
 
-<button
-onClick={() =>
+            <button
+              onClick={() =>
 
-  setCompanySections([
+                setCompanySections([
 
-    ...companySections,
+                  ...companySections,
 
-    {
+                  {
 
-      companyName: "",
+                    companyName: "",
 
-      rows: Array.from(
-        { length: 10 },
-        () => ({
-          ...EMPTY_ROW
-        })
-      )
+                    rows: Array.from(
+                      { length: 10 },
+                      () => ({
+                        ...EMPTY_ROW
+                      })
+                    )
 
-    }
+                  }
 
-  ])
+                ])
 
-}
-  className="
+              }
+              className="
     bg-indigo-500
     text-white
     px-5
@@ -378,94 +378,94 @@ onClick={() =>
     rounded-2xl
     font-semibold
   "
->
+            >
 
-  会社追加
+              会社追加
 
-</button>
+            </button>
 
-<button
+            <button
 
-  onClick={() => {
+              onClick={() => {
 
-    const report = {
+                const report = {
 
-  createdAt:
-    new Date()
-      .toISOString(),
+                  createdAt:
+                    new Date()
+                      .toISOString(),
 
-  reportDate,
-  siteName,
-  userName,
+                  reportDate,
+                  siteName,
+                  userName,
 
-  sections:
+                  sections:
 
-  companySections.map(
+                    companySections.map(
 
-    (section) => ({
+                      (section) => ({
 
-      ...section,
+                        ...section,
 
-      rows:
+                        rows:
 
-        section.rows.filter(
+                          section.rows.filter(
 
-          (row) =>
+                            (row) =>
 
-            row.materialName ||
+                              row.materialName ||
 
-            row.size ||
+                              row.size ||
 
-            row.quantity ||
+                              row.quantity ||
 
-            row.price ||
+                              row.price ||
 
-            row.note
+                              row.note
 
-        )
+                          )
 
-    })
+                      })
 
-  )
+                    )
 
-};
+                };
 
-    setMaterialReports([
+                setMaterialReports([
 
-      ...materialReports,
+                  ...materialReports,
 
-      report
+                  report
 
-    ]);
+                ]);
 
-    // リセット
+                // リセット
 
-    setCompanySections([
+                setCompanySections([
 
-      {
+                  {
 
-        companyName: "",
+                    companyName: "",
 
-        rows: Array.from(
-          { length: 10 },
-          () => ({
-            ...EMPTY_ROW
-          })
-        )
+                    rows: Array.from(
+                      { length: 10 },
+                      () => ({
+                        ...EMPTY_ROW
+                      })
+                    )
 
-      }
+                  }
 
-    ]);
+                ]);
 
-    setReportDate("");
+                setReportDate("");
 
-    setSiteName("");
+                setSiteName("");
 
-    setUserName("");
+                setUserName("");
 
-  }}
+              }}
 
-  className="
+              className="
     bg-emerald-500
     text-white
     px-5
@@ -473,119 +473,119 @@ onClick={() =>
     rounded-2xl
     font-semibold
   "
->
+            >
 
-  保存
+              保存
 
-</button> 
+            </button>
 
-  
 
-  </div>
-  {companySections.map(
 
-  (section, sectionIndex) => (
+          </div>
+          {companySections.map(
 
-<div
-  key={sectionIndex}
-  className="
+            (section, sectionIndex) => (
+
+              <div
+                key={sectionIndex}
+                className="
     border
     rounded-3xl
     p-4
     space-y-4
   "
->
-  <div className="
+              >
+                <div className="
   flex
   items-center
   gap-4
 ">
 
-  <div className="
+                  <div className="
     text-xl
     font-bold
   ">
 
-    会社 {sectionIndex + 1}
+                    会社 {sectionIndex + 1}
 
-  </div>
+                  </div>
 
-  <select
+                  <select
 
-  value={section.companyName}
+                    value={section.companyName}
 
-  onChange={(e) => {
+                    onChange={(e) => {
 
-    const updatedSections = [
+                      const updatedSections = [
 
-      ...companySections
+                        ...companySections
 
-    ];
+                      ];
 
-    updatedSections[
-      sectionIndex
-    ].companyName =
-      e.target.value;
+                      updatedSections[
+                        sectionIndex
+                      ].companyName =
+                        e.target.value;
 
-    setCompanySections(
-      updatedSections
-    );
+                      setCompanySections(
+                        updatedSections
+                      );
 
-  }}
+                    }}
 
-  className="
+                    className="
     border
     rounded-2xl
     px-4
     py-3
     w-[300px]
   "
->
+                  >
 
-    <option value="">
-      会社選択
-    </option>
+                    <option value="">
+                      会社選択
+                    </option>
 
-    {companyList.map((company) => (
+                    {companyList.map((company) => (
 
-      <option
-        key={company}
-        value={company}
-      >
+                      <option
+                        key={company}
+                        value={company}
+                      >
 
-        {company}
+                        {company}
 
-      </option>
+                      </option>
 
-    ))}
+                    ))}
 
-  </select>
+                  </select>
 
-  <button
+                  <button
 
-  onClick={() => {
+                    onClick={() => {
 
-    const updatedSections = [
+                      const updatedSections = [
 
-      ...companySections
+                        ...companySections
 
-    ];
+                      ];
 
-    updatedSections[
-      sectionIndex
-    ].rows.push({
+                      updatedSections[
+                        sectionIndex
+                      ].rows.push({
 
-      ...EMPTY_ROW
+                        ...EMPTY_ROW
 
-    });
+                      });
 
-    setCompanySections(
-      updatedSections
-    );
+                      setCompanySections(
+                        updatedSections
+                      );
 
-  }}
+                    }}
 
-  className="
+                    className="
     bg-sky-500
     text-white
     px-5
@@ -593,21 +593,21 @@ onClick={() =>
     rounded-2xl
     font-semibold
   "
->
+                  >
 
-  行追加
+                    行追加
 
-</button>
+                  </button>
 
-</div>
-  
-  <div className="
+                </div>
+
+                <div className="
     overflow-hidden
     rounded-2xl
     border
   ">
 
-    <div className="
+                  <div className="
       grid
       grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr]
       bg-slate-100
@@ -615,173 +615,173 @@ onClick={() =>
       text-sm
     ">
 
-      <div className="p-3">
-        材料名
-      </div>
+                    <div className="p-3">
+                      材料名
+                    </div>
 
-      <div className="p-3">
-        型番
-      </div>
+                    <div className="p-3">
+                      型番
+                    </div>
 
-      <div className="p-3 text-right">
-        数量
-      </div>
+                    <div className="p-3 text-right">
+                      数量
+                    </div>
 
-      <div className="p-3 text-right">
-        単価
-      </div>
+                    <div className="p-3 text-right">
+                      単価
+                    </div>
 
-      <div className="p-3 text-right">
-        合計
-      </div>
+                    <div className="p-3 text-right">
+                      合計
+                    </div>
 
-      <div className="p-3">
-        備考
-      </div>
+                    <div className="p-3">
+                      備考
+                    </div>
 
-    </div>
+                  </div>
 
-    
 
-    {section.rows.map(
-      (row, index) => (
 
-        <div
-          key={index}
-          className="
+                  {section.rows.map(
+                    (row, index) => (
+
+                      <div
+                        key={index}
+                        className="
             grid
             grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr]
             border-t
           "
-        >
+                      >
 
-          <div className="p-2">
+                        <div className="p-2">
 
-           <input
-  list={`material-list-${index}`}
-  type="text"
+                          <input
+                            list={`material-list-${index}`}
+                            type="text"
 
-  value={row.materialName}
+                            value={row.materialName}
 
-  onChange={(e) =>
+                            onChange={(e) =>
 
-    updateRow(
-  sectionIndex,
-  index,
-      "materialName",
-      e.target.value
-    )
+                              updateRow(
+                                sectionIndex,
+                                index,
+                                "materialName",
+                                e.target.value
+                              )
 
-  }
+                            }
 
-  className="
+                            className="
     w-full
     border
     rounded-xl
     px-3
     py-2
   "
-/>
+                          />
 
-<datalist
-  id={`material-list-${index}`}
->
+                          <datalist
+                            id={`material-list-${index}`}
+                          >
 
-  {materialSuggestions.map(
-    (name) => (
+                            {materialSuggestions.map(
+                              (name) => (
 
-      <option
-        key={name}
-        value={name}
-      />
+                                <option
+                                  key={name}
+                                  value={name}
+                                />
 
-    )
-  )}
+                              )
+                            )}
 
-</datalist>
+                          </datalist>
 
-          </div>
+                        </div>
 
-          <div className="p-2">
+                        <div className="p-2">
 
-           <input
-  list={`size-list-${index}`}
-  type="text"
+                          <input
+                            list={`size-list-${index}`}
+                            type="text"
 
-  value={row.size}
+                            value={row.size}
 
-  onChange={(e) =>
+                            onChange={(e) =>
 
-    updateRow(
-  sectionIndex,
-  index,
-  "size",
-  e.target.value
-)
+                              updateRow(
+                                sectionIndex,
+                                index,
+                                "size",
+                                e.target.value
+                              )
 
-  }
+                            }
 
-  className="
+                            className="
     w-full
     border
     rounded-xl
     px-3
     py-2
   "
-/>
+                          />
 
-<datalist
-  id={`size-list-${index}`}
->
+                          <datalist
+                            id={`size-list-${index}`}
+                          >
 
-  {[
+                            {[
 
-    ...new Set(
+                              ...new Set(
 
-      historyRows
+                                historyRows
 
-        .filter(
-          (row) => row.size
-        )
+                                  .filter(
+                                    (row) => row.size
+                                  )
 
-        .map(
-          (row) => row.size
-        )
+                                  .map(
+                                    (row) => row.size
+                                  )
 
-    )
+                              )
 
-  ].map((size) => (
+                            ].map((size) => (
 
-    <option
-      key={size}
-      value={size}
-    />
+                              <option
+                                key={size}
+                                value={size}
+                              />
 
-  ))}
+                            ))}
 
-</datalist>
+                          </datalist>
 
-          </div>
+                        </div>
 
-          <div className="p-2">
+                        <div className="p-2">
 
-  <input
-    type="number"
+                          <input
+                            type="number"
 
-    value={row.quantity}
+                            value={row.quantity}
 
-    onChange={(e) =>
+                            onChange={(e) =>
 
-      updateRow(
-  sectionIndex,
-  index,
-  "quantity",
-  e.target.value
-)
+                              updateRow(
+                                sectionIndex,
+                                index,
+                                "quantity",
+                                e.target.value
+                              )
 
-    }
+                            }
 
-    className="
+                            className="
       w-full
       border
       rounded-xl
@@ -789,20 +789,20 @@ onClick={() =>
       py-2
       text-right
     "
-  />
+                          />
 
-</div>
+                        </div>
 
-<div className="p-2">
+                        <div className="p-2">
 
-  <input
-    type="number"
+                          <input
+                            type="number"
 
-    value={row.price}
+                            value={row.price}
 
-    readOnly
+                            readOnly
 
-    className="
+                            className="
       w-full
       border
       rounded-xl
@@ -811,13 +811,13 @@ onClick={() =>
       text-right
       bg-slate-100
     "
-  />
+                          />
 
-</div>
+                        </div>
 
-          
 
-          <div className="
+
+                        <div className="
             p-3
             text-right
             flex
@@ -825,82 +825,81 @@ onClick={() =>
             justify-end
           ">
 
-            {(
-            Number(row.quantity || 0)
-            *
-            Number(row.price || 0)
-            ).toLocaleString()} 円
+                          {(
+                            Number(row.quantity || 0)
+                            *
+                            Number(row.price || 0)
+                          ).toLocaleString()} 円
 
-          </div>
+                        </div>
 
-          <div className="p-2">
+                        <div className="p-2">
 
-            <input
-              type="text"
-              className="
+                          <input
+                            type="text"
+                            className="
                 w-full
                 border
                 rounded-xl
                 px-3
                 py-2
               "
-            />
+                          />
 
-          </div>
+                        </div>
 
-        </div>
+                      </div>
 
-      )
-    )}
+                    )
+                  )}
 
-  </div>
+                </div>
 
-  <div className="
+                <div className="
     flex
     justify-end
     text-xl
     font-bold
   ">
 
-    現場合計：
+                  現場合計：
 
-{section.rows
+                  {section.rows
 
-  .reduce(
+                    .reduce(
 
-    (total, row) =>
+                      (total, row) =>
 
-      total +
+                        total +
 
-      (
-        Number(row.quantity || 0)
-        *
-        Number(row.price || 0)
-      ),
+                        (
+                          Number(row.quantity || 0)
+                          *
+                          Number(row.price || 0)
+                        ),
 
-    0
+                      0
 
-  )
+                    )
 
-  .toLocaleString()
+                    .toLocaleString()
 
-} 円
+                  } 円
 
-  </div>
+                </div>
 
-  </div>
+              </div>
 
-))
+            )
+          )}
 
-}
+        </div>
 
-</div>
+      )}
 
-)}
+      {page === "現場材料一覧" && (
 
-{page === "現場材料一覧" && (
-
-<div className="
+        <div className="
   bg-white
   rounded-3xl
   border
@@ -908,86 +907,78 @@ onClick={() =>
   space-y-6
 ">
 
-  <input
+          <input
 
-    type="text"
+            type="text"
 
-    placeholder="
+            placeholder="
     日付・現場名・入力者検索
     "
 
-    className="
+            className="
       w-full
       border
       rounded-2xl
       px-4
       py-3
     "
-  />
+          />
 
-  <div className="
+          <div className="
     space-y-4
   ">
 
-    {materialReports.map(
+            {materialReports.map(
 
-      (report, index) => {
+              (report, index) => {
 
-        const total =
+                const total =
 
-          report.sections.reduce(
+                  report.sections.reduce(
 
-            (sectionTotal, section) =>
+                    (sectionTotal, section) =>
 
-              sectionTotal +
+                      sectionTotal +
 
-              section.rows.reduce(
+                      section.rows.reduce(
 
-                (rowTotal, row) =>
+                        (rowTotal, row) =>
 
-                  rowTotal +
+                          rowTotal +
 
-                  (
-                    Number(
-                      row.quantity || 0
-                    )
+                          (
+                            Number(
+                              row.quantity || 0
+                            )
 
-                    *
+                            *
 
-                    Number(
-                      row.price || 0
-                    )
+                            Number(
+                              row.price || 0
+                            )
 
-                  ),
+                          ),
 
-                0
+                        0
 
-              ),
+                      ),
 
-            0
+                    0
 
-          );
+                  );
 
-        return (
+                return (
 
-          <div
+                  <div
+                    key={index}
+                    className="
+    border
+    rounded-2xl
+    p-4
+  "
+                  >
 
-            key={index}
-
-            className="
-  border
-  rounded-2xl
-  p-4
-  flex
-  items-center
-  justify-between
-  gap-4
-"
-          >
-
-            
-
-             <div className="
+                    <div className="
   flex
   flex-wrap
   items-center
@@ -996,256 +987,145 @@ onClick={() =>
   font-medium
 ">
 
-  <div className="w-[120px]">
-    {report.reportDate || "-"}
-  </div>
+                      <div className="w-[120px]">
+                        {report.reportDate || "-"}
+                      </div>
 
-  <div className="w-[220px]">
-    {report.siteName || "-"}
-  </div>
+                      <div className="w-[220px]">
+                        {report.siteName || "-"}
+                      </div>
 
-  <div className="w-[120px]">
-    {report.userName || "-"}
-  </div>
+                      <div className="w-[120px]">
+                        {report.userName || "-"}
+                      </div>
 
-  <div className="w-[120px]">
+                      <div className="w-[120px]">
 
-    会社
-    {report.sections.length}
-    件
+                        会社
+                        {report.sections.length}
+                        件
 
-  </div>
+                      </div>
 
-  <div className="
+                      <div className="
     w-[140px]
     font-bold
     text-right
   ">
 
-    ¥
-    {total.toLocaleString()}
+                        ¥
+                        {total.toLocaleString()}
 
-  </div>
+                      </div>
 
-</div>
+                    </div>
 
-            
-<div className="
+
+                    <div className="
   flex
   gap-2
 ">
 
-  <button
+                      <button
 
-    onClick={() =>
+                        onClick={() =>
 
-      setSelectedReport(
+                          setSelectedReport(
 
-        selectedReport === report
-          ? null
-          : report
+                            selectedReport === report
+                              ? null
+                              : report
 
-      )
+                          )
 
-    }
+                        }
 
-    className="
+                        className="
       bg-sky-500
       text-white
       px-4
       py-2
       rounded-xl
     "
-  >
+                      >
 
-    詳細
+                        詳細
 
-  </button>
+                      </button>
 
-  <button
+                      <button
 
-    className="
+                        className="
       bg-amber-500
       text-white
       px-4
       py-2
       rounded-xl
     "
-  >
+                      >
 
-    編集
+                        編集
 
-  </button>
+                      </button>
 
-  <button
+                      <button
 
-    onClick={() => {
+                        onClick={() => {
 
-      const updated =
+                          const updated =
 
-        materialReports.filter(
+                            materialReports.filter(
 
-          (_, i) => i !== index
+                              (_, i) => i !== index
 
-        );
+                            );
 
-      setMaterialReports(
-        updated
-      );
+                          setMaterialReports(
+                            updated
+                          );
 
-      if (
-        selectedReport === report
-      ) {
+                          if (
+                            selectedReport === report
+                          ) {
 
-        setSelectedReport(
-          null
-        );
+                            setSelectedReport(
+                              null
+                            );
 
-      }
+                          }
 
-    }}
+                        }}
 
-    className="
+                        className="
       bg-red-500
       text-white
       px-4
       py-2
       rounded-xl
     "
-  >
+                      >
 
-    削除
+                        削除
 
-  </button>
+                      </button>
 
-</div>
+                    </div>
+
+                  </div>
+
+
+                );
+              }
+
+            )}
 
           </div>
 
-        );
-
-      }
-
-    )}
-
-  </div>
-{selectedReport && (
-
-<div className="
-  border
-  rounded-3xl
-  p-6
-  space-y-6
-">
-
-  <div className="
-    text-2xl
-    font-bold
-  ">
-
-    詳細
-
-  </div>
-
-  {selectedReport.sections.map(
-
-    (section, index) => (
-
-      <div
-        key={index}
-        className="
-          border
-          rounded-2xl
-          p-4
-          space-y-4
-        "
-      >
-
-        <div className="
-          text-xl
-          font-bold
-        ">
-
-          {section.companyName || `会社 ${index + 1}`}
-
         </div>
 
-        {section.rows.map(
+            )}
 
-          (row, rowIndex) => (
-
-            <div
-
-              key={rowIndex}
-
-              className="
-                grid
-                grid-cols-6
-                gap-4
-                border-t
-                py-2
-              "
-            >
-
-              <div>
-                {row.materialName}
-              </div>
-
-              <div>
-                {row.size}
-              </div>
-
-              <div>
-                {row.quantity}
-              </div>
-
-              <div>
-                {row.price}
-              </div>
-
-              <div>
-
-                {(
-                  Number(
-                    row.quantity || 0
-                  )
-
-                  *
-
-                  Number(
-                    row.price || 0
-                  )
-
-                ).toLocaleString()}
-
-              </div>
-
-              <div>
-                {row.note}
-              </div>
-
-            </div>
-
-          )
-
-        )}
-
-      </div>
-
-    )
-
-  )}
-
-</div>
-
-)}
-</div>
-
-)}
-
-     
-
-</div>
+    </div>
 
   );
 
