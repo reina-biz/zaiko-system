@@ -969,14 +969,18 @@ export default function CreatePage({
 
                 return (
 
-                  <div
-                    key={index}
-                    className="
+                 <div
+  key={index}
+  className="
     border
     rounded-2xl
     p-4
+    flex
+    items-center
+    justify-between
+    gap-4
   "
-                  >
+>
 
                     <div className="
   flex
