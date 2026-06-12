@@ -197,40 +197,6 @@ const [
 
         <button
           onClick={() =>
-            setPage("現場報告書作成")
-          }
-          className="
-            bg-sky-500
-        text-white
-         py-2
-         w-28
-         rounded-2xl
-         font-semibold
-         text-sm
-          "
-        >
-          現場報告書作成
-        </button>
-
-        <button
-          onClick={() =>
-            setPage("現場報告書一覧")
-          }
-          className="
-            bg-indigo-500
-           text-white
-         py-2
-         w-28
-         rounded-2xl
-         font-semibold
-         text-sm
-         "
-        >
-          現場報告書一覧
-        </button>
-
-        <button
-          onClick={() =>
             setPage("現場材料作成")
           }
           className="
