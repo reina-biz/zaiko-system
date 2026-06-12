@@ -1092,51 +1092,7 @@ const [
     "
           />
 
-          <div className="
-  flex
-  gap-4
-  flex-wrap
-">
-
-  <input
-    type="month"
-
-    value={startMonth}
-
-    onChange={(e) =>
-      setStartMonth(
-        e.target.value
-      )
-    }
-
-    className="
-      border
-      rounded-2xl
-      px-4
-      py-3
-    "
-  />
-
-  <input
-    type="month"
-
-    value={endMonth}
-
-    onChange={(e) =>
-      setEndMonth(
-        e.target.value
-      )
-    }
-
-    className="
-      border
-      rounded-2xl
-      px-4
-      py-3
-    "
-  />
-
-</div>
+          
 
           <div className="
     space-y-4
