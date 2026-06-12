@@ -77,11 +77,18 @@ export default function App() {
           "companyList"
         );
 
+        
+
       return saved
         ? JSON.parse(saved)
         : [];
 
     });
+
+    const [
+  userList,
+  setUserList
+] = useState([]);
 
   // =========================
   // 日付
@@ -536,6 +543,7 @@ useEffect(() => {
 {/* 作成 */}
 
 {tab === "作成" && (
+  
 
   <CreatePage
 
@@ -551,7 +559,11 @@ useEffect(() => {
     setMaterialReports
   }
 
+
+
 />
+
+
 
 )}
 
@@ -612,16 +624,20 @@ useEffect(() => {
 
           <SettingsPage
 
-            companyList={companyList}
-            setCompanyList={setCompanyList}
+  companyList={companyList}
+  setCompanyList={setCompanyList}
 
-            loginId={loginId}
-            setLoginId={setLoginId}
+  userList={userList}
+  setUserList={setUserList}
 
-            loginPassword={loginPassword}
-            setLoginPassword={setLoginPassword}
+  loginId={loginId}
+  setLoginId={setLoginId}
 
-          />
+  loginPassword={loginPassword}
+  setLoginPassword={setLoginPassword}
+
+/>
+          
 
         )}
 

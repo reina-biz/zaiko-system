@@ -10,9 +10,14 @@ export default function SettingsPage({
   companyList,
   setCompanyList,
 
+  userList,
+  setUserList,
+
 }) {
 const [newCompany, setNewCompany] =
   useState("");
+const [newUser, setNewUser]
+  = useState("");
   return (
 
     <div className="space-y-6">
@@ -165,6 +170,120 @@ const [newCompany, setNewCompany] =
 
         </div>
 
+      <div className="bg-white rounded-3xl shadow-sm p-6">
+
+  <h2 className="text-2xl font-bold mb-6">
+    担当者管理
+  </h2>
+
+  <div className="flex gap-3 mb-6">
+
+    <input
+      type="text"
+      placeholder="担当者名"
+      value={newUser}
+      onChange={(e) =>
+        setNewUser(
+          e.target.value
+        )
+      }
+      className="flex-1 border rounded-2xl px-4 py-3"
+    />
+
+    <button
+
+      onClick={() => {
+
+        if (
+          newUser &&
+          !userList.includes(
+            newUser
+          )
+        ) {
+
+          setUserList([
+            ...userList,
+            newUser
+          ]);
+
+          setNewUser("");
+
+        }
+
+      }}
+
+      className="
+        bg-sky-600
+        text-white
+        px-6
+        py-3
+        rounded-2xl
+      "
+    >
+
+      登録
+
+    </button>
+
+  </div>
+
+  <div className="space-y-3">
+
+    {userList.map((user) => (
+
+      <div
+        key={user}
+        className="
+          flex
+          justify-between
+          items-center
+          border
+          rounded-2xl
+          px-4
+          py-3
+        "
+      >
+
+        <span>
+          {user}
+        </span>
+
+        <button
+
+          onClick={() => {
+
+            setUserList(
+
+              userList.filter(
+                (item) =>
+                  item !== user
+              )
+
+            );
+
+          }}
+
+          className="
+            bg-red-500
+            text-white
+            px-4
+            py-2
+            rounded-xl
+          "
+        >
+
+          削除
+
+        </button>
+
+      </div>
+
+    ))}
+
+  </div>
+
+</div>
+      
       </div>
 
     </div>
