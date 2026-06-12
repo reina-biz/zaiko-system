@@ -1111,6 +1111,20 @@ export default function CreatePage({
 
                     </div>
 
+                    {selectedReport === report && (
+
+  <div className="
+    mt-4
+    border-t
+    pt-4
+  ">
+
+    詳細表示テスト
+
+  </div>
+
+)}
+
                   </div>
 
 
