@@ -236,6 +236,58 @@ const exportExcel = (
 
       ]);
 
+      const grandTotal =
+
+  report.sections.reduce(
+
+    (reportTotal, section) =>
+
+      reportTotal +
+
+      section.rows.reduce(
+
+        (sectionTotal, row) =>
+
+          sectionTotal +
+
+          (
+
+            Number(
+              row.quantity || 0
+            )
+
+            *
+
+            Number(
+              row.price || 0
+            )
+
+          ),
+
+        0
+
+      ),
+
+    0
+
+  );
+
+data.push([]);
+
+data.push([
+
+  "総合計",
+
+  "",
+
+  "",
+
+  "",
+
+  grandTotal
+
+]);
+
       data.push([
 
         "材料名",
