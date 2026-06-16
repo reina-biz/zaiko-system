@@ -874,6 +874,10 @@ const getMaterialSuggestions = (
 
                             }
 
+                            onWheel={(e) =>
+  e.target.blur()
+}
+
                             className="
       w-full
       border
