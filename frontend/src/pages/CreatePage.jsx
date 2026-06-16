@@ -174,17 +174,23 @@ const getMaterialSuggestions = (
 
       .filter(
 
-        (history) =>
+  (history) =>
 
-          history.companyName ===
+    history.companyName
 
-          companyName
+      ?.trim()
 
-          &&
+      ===
 
-          history.materialName
+    companyName
 
-      )
+      ?.trim()
+
+    &&
+
+    history.materialName
+
+)
 
       .map(
 
