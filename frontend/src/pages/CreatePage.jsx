@@ -859,9 +859,12 @@ const getMaterialSuggestions = (
                         <div className="p-2">
 
                           <input
-                            type="number"
 
-                            value={row.quantity}
+  type="text"
+
+  inputMode="numeric"
+
+  value={row.quantity}
 
                             onChange={(e) =>
 
