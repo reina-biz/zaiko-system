@@ -162,26 +162,43 @@ const [
 
   };
 
+const getMaterialSuggestions = (
 
+  companyName
 
-  const materialSuggestions = [
+) => [
 
-    ...new Set(
+  ...new Set(
 
-      historyRows
+    historyRows
 
-        .filter(
-          (row) => row.materialName
-        )
+      .filter(
 
-        .map(
-          (row) =>
-            row.materialName
-        )
+        (history) =>
 
-    )
+          history.companyName ===
 
-  ];
+          companyName
+
+          &&
+
+          history.materialName
+
+      )
+
+      .map(
+
+        (history) =>
+
+          history.materialName
+
+      )
+
+  )
+
+];
+
+  
 
   return (
 
@@ -735,16 +752,25 @@ const [
                             id={`material-list-${index}`}
                           >
 
-                            {materialSuggestions.map(
-                              (name) => (
+                            {getMaterialSuggestions(
 
-                                <option
-                                  key={name}
-                                  value={name}
-                                />
+  section.companyName
 
-                              )
-                            )}
+).map(
+
+  (name) => (
+
+    <option
+
+      key={name}
+
+      value={name}
+
+    />
+
+  )
+
+)}
 
                           </datalist>
 
