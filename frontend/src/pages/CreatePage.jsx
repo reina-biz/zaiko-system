@@ -784,28 +784,41 @@ const [
 
                             {[
 
-                              ...new Set(
+  ...new Set(
 
-                                historyRows
+    historyRows
 
-                                  .filter(
-                                    (row) => row.size
-                                  )
+      .filter(
 
-                                  .map(
-                                    (row) => row.size
-                                  )
+        (history) =>
 
-                              )
+          history.materialName ===
 
-                            ].map((size) => (
+          row.materialName
 
-                              <option
-                                key={size}
-                                value={size}
-                              />
+      )
 
-                            ))}
+      .map(
+
+        (history) =>
+
+          history.size
+
+      )
+
+  )
+
+].map((size) => (
+
+  <option
+
+    key={size}
+
+    value={size}
+
+  />
+
+))}
 
                           </datalist>
 
