@@ -224,11 +224,105 @@ const exportExcel = (
 
 ) => {
 
-  console.log(
+  const data = [];
 
-    "Excel",
+  report.sections.forEach(
 
-    report
+    (section) => {
+
+      data.push([
+
+        section.companyName
+
+      ]);
+
+      data.push([
+
+        "材料名",
+
+        "型番",
+
+        "数量",
+
+        "単価",
+
+        "合計"
+
+      ]);
+
+      section.rows.forEach(
+
+        (row) => {
+
+          data.push([
+
+            row.materialName,
+
+            row.size,
+
+            row.quantity,
+
+            row.price,
+
+            Number(
+
+              row.quantity || 0
+
+            )
+
+            *
+
+            Number(
+
+              row.price || 0
+
+            )
+
+          ]);
+
+        }
+
+      );
+
+      data.push([]);
+
+    }
+
+  );
+
+  const ws =
+
+    XLSX.utils
+
+      .aoa_to_sheet(
+
+        data
+
+      );
+
+  const wb =
+
+    XLSX.utils
+
+      .book_new();
+
+  XLSX.utils
+
+    .book_append_sheet(
+
+      wb,
+
+      ws,
+
+      "現場材料"
+
+    );
+
+  XLSX.writeFile(
+
+    wb,
+
+    `${report.siteName}.xlsx`
 
   );
 
