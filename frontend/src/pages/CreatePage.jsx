@@ -2,6 +2,11 @@ import {
   useState
 } from "react";
 
+import * as XLSX from "xlsx";
+
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 import InputPage from "./InputPage";
 
 export default function CreatePage({
@@ -213,7 +218,39 @@ const getMaterialSuggestions = (
 
 ];
 
-  
+const exportExcel = (
+
+  report
+
+) => {
+
+  console.log(
+
+    "Excel",
+
+    report
+
+  );
+
+};
+
+
+
+const exportPDF = (
+
+  report
+
+) => {
+
+  console.log(
+
+    "PDF",
+
+    report
+
+  );
+
+};
 
   return (
 
@@ -1429,6 +1466,54 @@ return (
                         編集
 
                        </button>
+
+                       <button
+
+  onClick={() =>
+
+    exportPDF(
+      report
+    )
+
+  }
+
+  className="
+    bg-rose-500
+    text-white
+    px-4
+    py-2
+    rounded-xl
+  "
+
+>
+
+  PDF
+
+</button>
+
+<button
+
+  onClick={() =>
+
+    exportExcel(
+      report
+    )
+
+  }
+
+  className="
+    bg-emerald-500
+    text-white
+    px-4
+    py-2
+    rounded-xl
+  "
+
+>
+
+  Excel
+
+</button>
 
                       <button
 
