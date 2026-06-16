@@ -60,6 +60,15 @@ const [
   setSelectedUser
 ] = useState("");
 
+const [
+
+  searchSiteName,
+
+  setSearchSiteName
+
+] = useState("");
+
+
    const [
    editIndex,
    setEditIndex
@@ -1129,22 +1138,33 @@ const getMaterialSuggestions = (
 </div>        
           
           
-          <input
+<input
 
-            type="text"
+  type="text"
 
-            placeholder="
-    現場名検索
-    "
+  placeholder="現場名検索"
 
-            className="
-      w-full
-      border
-      rounded-2xl
-      px-4
-      py-3
-    "
-          />
+  value={searchSiteName}
+
+  onChange={(e)=>
+
+    setSearchSiteName(
+
+      e.target.value
+
+    )
+
+  }
+
+  className="
+    w-full
+    border
+    rounded-2xl
+    px-4
+    py-3
+  "
+
+/>
 
           
 
@@ -1159,34 +1179,81 @@ const getMaterialSuggestions = (
   const reportMonth =
     report.reportDate?.slice(0, 7);
 
-  return (
+  if (
 
-    (
-      !selectedUser ||
+  !selectedUser
 
-      report.userName ===
-      selectedUser
-    )
+  &&
 
-    &&
+  !startMonth
 
-    (
-      !startMonth ||
+  &&
 
-      reportMonth >=
-      startMonth
-    )
+  !endMonth
 
-    &&
+  &&
 
-    (
-      !endMonth ||
+  !searchSiteName
 
-      reportMonth <=
-      endMonth
-    )
+) {
 
-  );
+  return false;
+
+}
+
+return (
+
+  (
+
+    !selectedUser ||
+
+    report.userName ===
+
+    selectedUser
+
+  )
+
+  &&
+
+  (
+
+    !startMonth ||
+
+    reportMonth >=
+
+    startMonth
+
+  )
+
+  &&
+
+  (
+
+    !endMonth ||
+
+    reportMonth <=
+
+    endMonth
+
+  )
+
+  &&
+
+  (
+
+    !searchSiteName ||
+
+    report.siteName
+
+      ?.includes(
+
+        searchSiteName
+
+      )
+
+  )
+
+);
 
 })
 
