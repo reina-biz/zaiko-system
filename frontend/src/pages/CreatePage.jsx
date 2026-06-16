@@ -785,7 +785,7 @@ const getMaterialSuggestions = (
                         <div className="p-2">
 
                           <input
-                            id={`size-list-${sectionIndex}-${index}`}
+  list={`size-list-${sectionIndex}-${index}`}
                             type="text"
 
                             value={row.size}
@@ -811,7 +811,7 @@ const getMaterialSuggestions = (
                           />
 
                           <datalist
-                            id={`size-list-${index}`}
+                            id={`size-list-${sectionIndex}-${index}`}
                           >
 
                             {[
