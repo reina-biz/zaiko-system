@@ -729,7 +729,7 @@ const getMaterialSuggestions = (
                         <div className="p-2">
 
                           <input
-                            list={`material-list-${index}`}
+                            list={`material-list-${sectionIndex}-${index}`}
                             type="text"
 
                             value={row.materialName}
@@ -755,8 +755,8 @@ const getMaterialSuggestions = (
                           />
 
                           <datalist
-                            id={`material-list-${index}`}
-                          >
+  id={`material-list-${sectionIndex}-${index}`}
+>
 
                             {getMaterialSuggestions(
 
@@ -785,7 +785,7 @@ const getMaterialSuggestions = (
                         <div className="p-2">
 
                           <input
-                            list={`size-list-${index}`}
+                            id={`size-list-${sectionIndex}-${index}`}
                             type="text"
 
                             value={row.size}
