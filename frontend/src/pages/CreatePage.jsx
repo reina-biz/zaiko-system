@@ -532,15 +532,6 @@ doc.text(
 
 );
 
-  doc.text(
-
-    report.siteName,
-
-    20,
-
-    20
-
-  );
 
   let grandTotal = 0;
 
@@ -730,7 +721,21 @@ autoTable(
 
     },
 
+  headStyles: {
 
+  font:
+
+    "NotoSansJP",
+
+},
+
+bodyStyles: {
+
+  font:
+
+    "NotoSansJP",
+
+},
 
     head: [[
 
