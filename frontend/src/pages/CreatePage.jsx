@@ -398,7 +398,7 @@ data.push([
 
 
 
-const exportPDF = (
+const exportPDF = async (
 
   report
 
@@ -406,7 +406,121 @@ const exportPDF = (
 
   const doc =
 
-    new jsPDF();
+    new jsPDF({
+
+      orientation:
+
+        "portrait",
+
+    });
+
+
+
+  const response =
+
+    await fetch(
+
+      "/fonts/NotoSansJP-Regular.ttf"
+
+    );
+
+
+
+  const font =
+
+    await response
+
+      .arrayBuffer();
+
+
+
+  let binary = "";
+
+
+
+  const bytes =
+
+    new Uint8Array(
+
+      font
+
+    );
+
+
+
+  const chunkSize =
+
+    8192;
+
+
+
+  for (
+
+    let i = 0;
+
+    i < bytes.length;
+
+    i += chunkSize
+
+  ) {
+
+    binary +=
+
+      String.fromCharCode(
+
+        ...bytes.subarray(
+
+          i,
+
+          i + chunkSize
+
+        )
+
+      );
+
+  }
+
+
+
+  const base64Font =
+
+    window.btoa(
+
+      binary
+
+    );
+
+
+
+  doc.addFileToVFS(
+
+    "NotoSansJP-Regular.ttf",
+
+    base64Font
+
+  );
+
+
+
+  doc.addFont(
+
+    "NotoSansJP-Regular.ttf",
+
+    "NotoSansJP",
+
+    "normal"
+
+  );
+
+
+
+  doc.setFont(
+
+    "NotoSansJP"
+
+  );
+
+
 
   doc.text(
 
@@ -417,6 +531,8 @@ const exportPDF = (
     20
 
   );
+
+
 
   doc.save(
 
