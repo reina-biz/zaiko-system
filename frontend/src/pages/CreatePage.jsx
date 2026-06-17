@@ -721,6 +721,30 @@ autoTable(
 
     },
 
+    headStyles: {
+
+  font:
+
+    "NotoSansJP",
+
+  fillColor:
+
+    [255,255,255],
+
+  textColor:
+
+    [0,0,0],
+
+},
+
+bodyStyles: {
+
+  font:
+
+    "NotoSansJP",
+
+},
+
   headStyles: {
 
   font:
