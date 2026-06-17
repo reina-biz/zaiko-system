@@ -591,9 +591,21 @@ report.sections.forEach(
 
     styles: {
 
+      font:
+
+        "NotoSansJP",
+
+      fontStyle:
+
+        "normal",
+
       fillColor:
 
-        [226,232,240],
+        [255,255,255],
+
+      textColor:
+
+        [0,0,0],
 
       fontSize:
 
@@ -717,11 +729,15 @@ autoTable(
 
     styles: {
 
-      font:
+  font:
 
-        "NotoSansJP",
+    "NotoSansJP",
 
-    },
+  fontStyle:
+
+    "normal",
+
+},
 
     headStyles: {
 
@@ -745,6 +761,10 @@ bodyStyles: {
 
     "NotoSansJP",
 
+  fontStyle:
+
+    "normal",
+
 },
 
 
@@ -766,11 +786,15 @@ bodyStyles: {
 
     body,
 
-didParseCell: (data) => {
+didParseCell:(data)=>{
 
-  data.cell.styles.font =
+  data.cell.styles.font=
 
     "NotoSansJP";
+
+  data.cell.styles.fontStyle=
+
+    "normal";
 
 },
 
