@@ -520,7 +520,17 @@ const exportPDF = async (
 
   );
 
+doc.setFontSize(18);
 
+doc.text(
+
+  report.siteName,
+
+  20,
+
+  20
+
+);
 
   doc.text(
 
@@ -578,17 +588,29 @@ report.sections.forEach(
 
     body.push([
 
-      {
+  {
 
-        content:
+    content:
 
-          section.companyName,
+      section.companyName,
 
-        colSpan: 5,
+    colSpan: 5,
 
-      },
+    styles: {
 
-    ]);
+      fillColor:
+
+        [226,232,240],
+
+      fontSize:
+
+        13,
+
+    },
+
+  },
+
+]);
 
 
 
