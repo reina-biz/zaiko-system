@@ -745,21 +745,6 @@ bodyStyles: {
 
 },
 
-  headStyles: {
-
-  font:
-
-    "NotoSansJP",
-
-},
-
-bodyStyles: {
-
-  font:
-
-    "NotoSansJP",
-
-},
 
     head: [[
 
@@ -779,11 +764,19 @@ bodyStyles: {
 
     body,
 
+didParseCell: (data) => {
 
+  data.cell.styles.font =
+
+    "NotoSansJP";
+
+},
 
     theme:
 
       "grid",
+
+      
 
   }
 
