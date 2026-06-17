@@ -516,9 +516,11 @@ const exportPDF = async (
 
   doc.setFont(
 
-    "NotoSansJP"
+  "NotoSansJP",
 
-  );
+  "normal"
+
+);
 
 doc.setFontSize(18);
 
