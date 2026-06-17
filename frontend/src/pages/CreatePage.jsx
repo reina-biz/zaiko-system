@@ -800,7 +800,11 @@ didParseCell:(data)=>{
 
     theme:
 
-      "plain",
+      "grid",
+
+      tableLineColor: [0,0,0],
+
+tableLineWidth: 0.1,
 
       
 
