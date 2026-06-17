@@ -532,6 +532,211 @@ const exportPDF = async (
 
   );
 
+  let grandTotal = 0;
+
+const body = [];
+
+report.sections.forEach(
+
+  (section) => {
+
+    const companyTotal =
+
+      section.rows.reduce(
+
+        (sum, row) =>
+
+          sum +
+
+          (
+
+            Number(
+
+              row.quantity || 0
+
+            )
+
+            *
+
+            Number(
+
+              row.price || 0
+
+            )
+
+          ),
+
+        0
+
+      );
+
+    grandTotal +=
+
+      companyTotal;
+
+
+
+    body.push([
+
+      {
+
+        content:
+
+          section.companyName,
+
+        colSpan: 5,
+
+      },
+
+    ]);
+
+
+
+    section.rows.forEach(
+
+      (row) => {
+
+        body.push([
+
+          row.materialName,
+
+          row.size,
+
+          row.quantity,
+
+          `${Number(
+
+            row.price || 0
+
+          ).toLocaleString()}円`,
+
+          `${(
+
+            Number(
+
+              row.quantity || 0
+
+            )
+
+            *
+
+            Number(
+
+              row.price || 0
+
+            )
+
+          ).toLocaleString()}円`
+
+        ]);
+
+      }
+
+    );
+
+
+
+    body.push([
+
+      {
+
+        content:
+
+          `会社合計 : ¥${companyTotal.toLocaleString()}`,
+
+        colSpan: 5,
+
+        styles: {
+
+          halign:
+
+            "right",
+
+        },
+
+      },
+
+    ]);
+
+  }
+
+);
+
+
+
+body.push([
+
+  {
+
+    content:
+
+      `総合計 : ¥${grandTotal.toLocaleString()}`,
+
+    colSpan: 5,
+
+    styles: {
+
+      halign:
+
+        "right",
+
+      fontSize:
+
+        14,
+
+    },
+
+  },
+
+]);
+
+
+
+autoTable(
+
+  doc,
+
+  {
+
+    startY: 30,
+
+    styles: {
+
+      font:
+
+        "NotoSansJP",
+
+    },
+
+
+
+    head: [[
+
+      "材料名",
+
+      "型番",
+
+      "数量",
+
+      "単価",
+
+      "合計",
+
+    ]],
+
+
+
+    body,
+
+
+
+    theme:
+
+      "grid",
+
+  }
+
+);
 
 
   doc.save(
