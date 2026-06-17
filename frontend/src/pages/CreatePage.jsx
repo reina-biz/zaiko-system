@@ -800,7 +800,7 @@ didParseCell:(data)=>{
 
     theme:
 
-      "grid",
+      "plain",
 
       
 
