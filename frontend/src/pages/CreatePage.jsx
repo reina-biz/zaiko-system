@@ -404,11 +404,23 @@ const exportPDF = (
 
 ) => {
 
-  console.log(
+  const doc =
 
-    "PDF",
+    new jsPDF();
 
-    report
+  doc.text(
+
+    report.siteName,
+
+    20,
+
+    20
+
+  );
+
+  doc.save(
+
+    `${report.siteName}.pdf`
 
   );
 
