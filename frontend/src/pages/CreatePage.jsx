@@ -727,6 +727,16 @@ autoTable(
 
     startY: 30,
 
+    margin: {
+
+  left: 5,
+
+  right: 5,
+
+},
+
+tableWidth: "auto",
+
     styles: {
 
   font:
