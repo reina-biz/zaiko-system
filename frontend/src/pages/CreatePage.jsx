@@ -226,45 +226,35 @@ const exportExcel = (
 
   const data = [];
 
+  let grandTotal = 0;
+
   report.sections.forEach(
 
     (section) => {
 
-      data.push([
+      const companyTotal =
 
-        section.companyName
+  section.rows.reduce(
 
-      ]);
+    (total, row) =>
 
-      const grandTotal =
+      total +
 
-  report.sections.reduce(
+      (
 
-    (reportTotal, section) =>
+        Number(
 
-      reportTotal +
+          row.quantity || 0
 
-      section.rows.reduce(
+        )
 
-        (sectionTotal, row) =>
+        *
 
-          sectionTotal +
+        Number(
 
-          (
+          row.price || 0
 
-            Number(
-              row.quantity || 0
-            )
-
-            *
-
-            Number(
-              row.price || 0
-            )
-
-          ),
-
-        0
+        )
 
       ),
 
@@ -272,7 +262,87 @@ const exportExcel = (
 
   );
 
+
+  grandTotal +=
+
+  companyTotal;
+
+data.push([
+
+  section.companyName
+
+]);
+
+data.push([
+
+  "材料名",
+
+  "型番",
+
+  "数量",
+
+  "単価",
+
+  "合計"
+
+]);
+
+section.rows.forEach(
+
+  (row) => {
+
+    data.push([
+
+      row.materialName,
+
+      row.size,
+
+      row.quantity,
+
+      row.price,
+
+      Number(
+
+        row.quantity || 0
+
+      )
+
+      *
+
+      Number(
+
+        row.price || 0
+
+      )
+
+    ]);
+
+  }
+
+);
+
 data.push([]);
+
+data.push([
+
+  "会社合計",
+
+  "",
+
+  "",
+
+  "",
+
+  companyTotal
+
+]);
+
+data.push([]);
+    }
+
+  );
+
+  data.push([]);
 
 data.push([
 
@@ -287,60 +357,6 @@ data.push([
   grandTotal
 
 ]);
-
-      data.push([
-
-        "材料名",
-
-        "型番",
-
-        "数量",
-
-        "単価",
-
-        "合計"
-
-      ]);
-
-      section.rows.forEach(
-
-        (row) => {
-
-          data.push([
-
-            row.materialName,
-
-            row.size,
-
-            row.quantity,
-
-            row.price,
-
-            Number(
-
-              row.quantity || 0
-
-            )
-
-            *
-
-            Number(
-
-              row.price || 0
-
-            )
-
-          ]);
-
-        }
-
-      );
-
-      data.push([]);
-
-    }
-
-  );
 
   const ws =
 
