@@ -288,32 +288,22 @@ const materialSuggestions = [
 
       <div className="rounded-2xl border bg-white overflow-hidden">
 
-        <div className="grid grid-cols-[4fr_3fr_0.8fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
+        <div className="grid grid-cols-[4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
 
           
-          <div className="p-4">
-            材料名
-          </div>
+          <div className="p-4">材料名</div>
 
-          <div className="p-4">
-            型番・サイズ
-          </div>
+<div className="p-4">型番・サイズ</div>
 
-          <div className="p-4">
-           単価
-          </div>
+<div className="p-4">前回単価</div>
 
-          <div className="p-4">
-           注文数
-          </div>
+<div className="p-4">単価</div>
 
-          <div className="p-4">
-           使用数
-          </div>
+<div className="p-4">注文数</div>
 
-          <div className="p-4">
-            備考
-          </div>
+<div className="p-4">使用数</div>
+
+<div className="p-4">備考</div>
 
         </div>
 
@@ -358,7 +348,8 @@ const materialSuggestions = [
 
             <div
               key={index}
-              className="grid grid-cols-[4fr_3fr_0.8fr_0.8fr_0.8fr_2fr] border-t"
+              className="grid grid-cols-[4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t"
+            
             >
 
               
@@ -455,6 +446,45 @@ const materialSuggestions = [
 
 
 </div>
+
+<div className="p-2">
+
+  <div className="w-full border rounded-xl px-3 py-3 bg-slate-50">
+
+    {
+
+      historyRows
+
+        .slice()
+
+        .reverse()
+
+        .find(
+
+          h =>
+
+            h.companyName === companyName
+
+            &&
+
+            h.materialName === row.materialName
+
+            &&
+
+            h.size === row.size
+
+        )?.price
+
+      ||
+
+      "-"
+
+    }
+
+  </div>
+
+</div>
+
 <div className="p-2">
   <input
     type="text"
