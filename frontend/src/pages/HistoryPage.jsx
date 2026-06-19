@@ -19,6 +19,9 @@ export default function HistoryPage({
 
      useState(null);
 
+  const [editingGroup, setEditingGroup] =
+  useState(null);
+
 
   const [editedRows, setEditedRows] =
     useState(rows);
@@ -178,6 +181,10 @@ console.log("groupedRows", groupedRows);
 
       openIndex === index;
 
+      const isEditing =
+
+  editingGroup === index;
+
     return (
 
       <div
@@ -249,6 +256,38 @@ console.log("groupedRows", groupedRows);
             }
 
           </button>
+
+          <button
+
+  onClick={() =>
+
+    setEditingGroup(
+
+      isEditing
+
+        ? null
+
+        : index
+
+    )
+
+  }
+
+  className="bg-sky-600 text-white px-4 py-2 rounded-xl"
+
+>
+
+  {
+
+    isEditing
+
+    ? "編集終了"
+
+    : "編集"
+
+  }
+
+</button>
 
         </div>
 
