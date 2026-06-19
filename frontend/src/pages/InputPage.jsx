@@ -470,7 +470,7 @@ const materialSuggestions = [
         e.target.value
       )
     }
-    className="w-full border rounded-xl px-3 py-3 text-right"
+    className="w-full border rounded-xl px-3 py-3"
   />
 </div>
 
@@ -485,7 +485,8 @@ const materialSuggestions = [
         e.target.value
       )
     }
-    className="w-full border rounded-xl px-3 py-3 text-right"
+    className="w-full border rounded-xl px-3 py-3"
+  
   />
 </div>
 
@@ -500,7 +501,7 @@ const materialSuggestions = [
                       e.target.value
                     )
                   }
-                  className="w-full border rounded-xl px-3 py-3 text-right"
+                  className="w-full border rounded-xl px-3 py-3"
                 />
               </div>
 
