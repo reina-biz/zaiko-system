@@ -52,9 +52,29 @@ export default function InputPage({
    [field]: value,
 };
 
-if (field === "materialName") {
+if (
+  field === "materialName"
+  ||
+  field === "size"
+) {
 
-  const lastPrice =
+  const material =
+
+    field === "materialName"
+
+      ? value
+
+      : updatedRows[index].materialName;
+
+  const size =
+
+    field === "size"
+
+      ? value
+
+      : updatedRows[index].size;
+
+  const lastRow =
 
     historyRows
 
@@ -70,15 +90,19 @@ if (field === "materialName") {
 
           &&
 
-          h.materialName === value
+          h.materialName === material
+
+          &&
+
+          h.size === size
 
       );
 
-  if (lastPrice) {
+  if (lastRow) {
 
     updatedRows[index].price =
 
-      lastPrice.price;
+      lastRow.price;
 
   }
 
@@ -264,7 +288,7 @@ const materialSuggestions = [
 
       <div className="rounded-2xl border bg-white overflow-hidden">
 
-        <div className="grid grid-cols-[4fr_3fr_1.1fr_0.9fr_0.9fr_1.5fr] bg-slate-100 text-sm font-semibold">
+        <div className="grid grid-cols-[4fr_3fr_0.8fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
 
           
           <div className="p-4">
@@ -334,7 +358,7 @@ const materialSuggestions = [
 
             <div
               key={index}
-              className="grid grid-cols-[4fr_3fr_1.1fr_0.9fr_0.9fr_1.5fr] border-t"
+              className="grid grid-cols-[4fr_3fr_0.8fr_0.8fr_0.8fr_2fr] border-t"
             >
 
               
