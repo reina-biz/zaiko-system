@@ -17,9 +17,6 @@ export default function InputPage({
   setOrderDate,
 }) {
 
-  const [selectedRows, setSelectedRows] =
-    useState([]);
-
     
 
   const EMPTY_ROW = {
@@ -191,31 +188,7 @@ const materialSuggestions = [
     + 行追加
   </button>
 
-  <button
-  onClick={() => {
-
-    const updatedRows =
-
-      rows.filter(
-        (_, index) =>
-
-          !selectedRows.includes(
-            index
-          )
-
-      );
-
-    setRows(
-      updatedRows
-    );
-
-    setSelectedRows([]);
-
-  }}
-  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl font-semibold transition"
->
-  選択削除
-</button>
+ 
 
   <button
   onClick={() => {
@@ -259,12 +232,9 @@ const materialSuggestions = [
 
       <div className="rounded-2xl border bg-white overflow-hidden">
 
-        <div className="grid grid-cols-[80px_4fr_3fr_1.1fr_0.9fr_0.9fr_1.5fr] bg-slate-100 text-sm font-semibold">
+        <div className="grid grid-cols-[4fr_3fr_1.1fr_0.9fr_0.9fr_1.5fr] bg-slate-100 text-sm font-semibold">
 
-          <div className="p-4 text-center">
-            選択
-          </div>
-
+          
           <div className="p-4">
             材料名
           </div>
@@ -273,15 +243,15 @@ const materialSuggestions = [
             型番・サイズ
           </div>
 
-          <div className="p-2">
+          <div className="p-4 text-center">
            単価
           </div>
 
-          <div className="p-2">
+          <div className="p-4 text-center">
            注文数
           </div>
 
-          <div className="p-2">
+          <div className="p-4 text-center">
            使用数
           </div>
 
@@ -332,38 +302,10 @@ const materialSuggestions = [
 
             <div
               key={index}
-              className="grid grid-cols-[80px_4fr_3fr_1.1fr_0.9fr_0.9fr_1.5fr] border-t"
+              className="grid grid-cols-[4fr_3fr_1.1fr_0.9fr_0.9fr_1.5fr] border-t"
             >
 
-              <div className="p-2 flex items-center justify-center">
-
-                <input
-                  type="checkbox"
-                  checked={selectedRows.includes(index)}
-                  onChange={(e) => {
-
-                    if (e.target.checked) {
-
-                      setSelectedRows([
-                        ...selectedRows,
-                        index,
-                      ]);
-
-                    } else {
-
-                      setSelectedRows(
-                        selectedRows.filter(
-                          (i) =>
-                            i !== index
-                        )
-                      );
-
-                    }
-
-                  }}
-                />
-
-              </div>
+              
 
               <div className="p-2">
 
