@@ -275,17 +275,17 @@ const materialSuggestions = [
             型番・サイズ
           </div>
 
-          <div className="p-4">
-            単価
-          </div>
+          <div className="p-4 pl-3">
+  単価
+</div>
 
-          <div className="p-4">
-            注文数
-          </div>
+<div className="p-4 pl-3">
+  注文数
+</div>
 
-          <div className="p-4">
-            使用数
-          </div>
+<div className="p-4 pl-3">
+  使用数
+</div>
 
           <div className="p-4">
             備考
