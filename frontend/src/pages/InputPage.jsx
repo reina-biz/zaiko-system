@@ -219,7 +219,7 @@ const materialSuggestions = [
 
    setOrderDate("");
 
-  setSelectedRows([]);
+  
 
   }}
   className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
@@ -243,15 +243,15 @@ const materialSuggestions = [
             型番・サイズ
           </div>
 
-          <div className="p-4 text-center">
+          <div className="p-4">
            単価
           </div>
 
-          <div className="p-4 text-center">
+          <div className="p-4">
            注文数
           </div>
 
-          <div className="p-4 text-center">
+          <div className="p-4">
            使用数
           </div>
 
