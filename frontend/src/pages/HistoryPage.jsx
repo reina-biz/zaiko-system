@@ -261,23 +261,25 @@ console.log("groupedRows", groupedRows);
 
   <button
 
-    onClick={() =>
+  onClick={() => {
 
-      setEditingGroup(
+    if (isEditing) {
 
-        isEditing
+      setHistoryRows(editedRows);
 
-        ? null
+      setEditingGroup(null);
 
-        : index
+    } else {
 
-      )
+      setEditingGroup(index);
 
     }
 
-    className="bg-sky-600 text-white px-4 py-2 rounded-xl"
+  }}
 
-  >
+  className="bg-sky-600 text-white px-4 py-2 rounded-xl"
+
+>
 
     {
 
@@ -322,158 +324,178 @@ console.log("groupedRows", groupedRows);
         </div>
 
         {
+  isOpen && (
 
-          isOpen && (
+    <div className="mt-6 space-y-2">
 
-            <div className="mt-6 space-y-2">
+      {group.rows.map((row, i) => (
 
-              {
+        <div
+          key={i}
+          className="grid grid-cols-[2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm"
+        >
 
-                group.rows.map(
+          <input
+            value={row.materialName || ""}
+            disabled={!isEditing}
+            onChange={(e) => {
 
-                  (row, i) => (
+              const updated = [...editedRows];
 
-                    <div
+              const targetIndex =
+                editedRows.indexOf(row);
 
-                      key={i}
+              updated[targetIndex] = {
 
-                      className="grid grid-cols-[2fr_1.5fr_80px_80px_100px_2fr] gap-4 border rounded-xl p-3 text-sm"
+                ...updated[targetIndex],
 
-                    >
+                materialName:
+                  e.target.value,
 
-                      <div>
+              };
 
-  {
+              setEditedRows(updated);
 
-    isEditing
+            }}
+            className="border rounded px-2 py-1"
+          />
 
-    ? (
+          <input
+            value={row.size || ""}
+            disabled={!isEditing}
+            onChange={(e) => {
 
-      <input
+              const updated = [...editedRows];
 
-  type="text"
+              const targetIndex =
+                editedRows.indexOf(row);
 
-  value={row.materialName}
+              updated[targetIndex] = {
 
-  onChange={(e) => {
+                ...updated[targetIndex],
 
-    const updated = [...editedRows];
+                size:
+                  e.target.value,
 
-    const targetIndex =
+              };
 
-      editedRows.indexOf(row);
+              setEditedRows(updated);
 
-    updated[targetIndex] = {
+            }}
+            className="border rounded px-2 py-1"
+          />
 
-      ...updated[targetIndex],
+          <input
+            type="number"
+            value={row.price || ""}
+            disabled={!isEditing}
+            onChange={(e) => {
 
-      materialName:
+              const updated = [...editedRows];
 
-        e.target.value,
+              const targetIndex =
+                editedRows.indexOf(row);
 
-    };
+              updated[targetIndex] = {
 
-    setEditedRows(updated);
+                ...updated[targetIndex],
 
-  }}
+                price:
+                  e.target.value,
 
-  className="w-full border rounded px-2 py-1"
+              };
 
-/>
+              setEditedRows(updated);
 
-    )
+            }}
+            className="border rounded px-2 py-1 text-right"
+          />
 
-    : (
+          <input
+            type="number"
+            value={row.quantity || ""}
+            disabled={!isEditing}
+            onChange={(e) => {
 
-      row.materialName
+              const updated = [...editedRows];
 
-    )
+              const targetIndex =
+                editedRows.indexOf(row);
 
-  }
+              updated[targetIndex] = {
 
-</div>
+                ...updated[targetIndex],
 
-  <div>
+                quantity:
+                  e.target.value,
 
-  {
+              };
 
-    isEditing
+              setEditedRows(updated);
 
-    ? (
+            }}
+            className="border rounded px-2 py-1 text-right"
+          />
 
-      <input
+          <input
+            type="number"
+            value={row.used || ""}
+            disabled={!isEditing}
+            onChange={(e) => {
 
-        type="number"
+              const updated = [...editedRows];
 
-        value={row.quantity}
+              const targetIndex =
+                editedRows.indexOf(row);
 
-        onChange={(e)=>{
+              updated[targetIndex] = {
 
-          const updated=[...editedRows];
+                ...updated[targetIndex],
 
-          const targetIndex=
+                used:
+                  e.target.value,
 
-            editedRows.indexOf(row);
+              };
 
-          updated[targetIndex]={
+              setEditedRows(updated);
 
-            ...updated[targetIndex],
+            }}
+            className="border rounded px-2 py-1 text-right"
+          />
 
-            quantity:e.target.value,
+          <input
+            value={row.note || ""}
+            disabled={!isEditing}
+            onChange={(e) => {
 
-          };
+              const updated = [...editedRows];
 
-          setEditedRows(updated);
+              const targetIndex =
+                editedRows.indexOf(row);
 
-        }}
+              updated[targetIndex] = {
 
-        className="w-full border rounded px-2 py-1"
+                ...updated[targetIndex],
 
-      />
+                note:
+                  e.target.value,
 
-    )
+              };
 
-    : (
+              setEditedRows(updated);
 
-      row.quantity
+            }}
+            className="border rounded px-2 py-1"
+          />
 
-    )
+        </div>
 
-  }
+      ))}
 
-</div>                    
+    </div>
 
-                      <div className="text-right">
-
-                        {row.used}
-
-                      </div>
-
-                      <div className="text-right">
-
-                        ¥{row.price}
-
-                      </div>
-
-                      <div>
-
-                        {row.note}
-
-                      </div>
-
-                    </div>
-
-                  )
-
-                )
-
-              }
-
-            </div>
-
-          )
-
-        }
+  )
+}
 
       </div>
 
