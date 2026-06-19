@@ -28,13 +28,13 @@ export default function HistoryPage({
 
   const filteredRows =
 
+  
+
   [...editedRows]
 
     .reverse()
 
     .filter((row) => {
-
-      
 
       const companyMatch =
 
@@ -67,6 +67,38 @@ export default function HistoryPage({
       );
 
     });
+
+    const groupedRows = Object.values(
+
+  filteredRows.reduce((acc, row) => {
+
+    const key =
+
+      `${row.orderDate}_${row.companyName}_${row.siteName}`;
+
+    if (!acc[key]) {
+
+      acc[key] = {
+
+        orderDate: row.orderDate,
+
+        companyName: row.companyName,
+
+        siteName: row.siteName,
+
+        rows: [],
+
+      };
+
+    }
+
+    acc[key].rows.push(row);
+
+    return acc;
+
+  }, {})
+
+);
 
     const displayRows =
 
@@ -240,10 +272,11 @@ export default function HistoryPage({
 
         {displayRows.map((row) => {
 
-  const index =
-    editedRows.indexOf(row);
 
-    const isEditing =
+const index =
+  editedRows.indexOf(row);
+
+const isEditing =
   editingIndex === index;
 
           return (
