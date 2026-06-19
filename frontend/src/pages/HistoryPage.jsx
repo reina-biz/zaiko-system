@@ -103,7 +103,13 @@ export default function HistoryPage({
 
 );
 
-  
+console.log("rows", rows);
+
+console.log("editedRows", editedRows);
+
+console.log("filteredRows", filteredRows);
+
+console.log("groupedRows", groupedRows);
 
   
 
