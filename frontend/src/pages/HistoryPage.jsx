@@ -334,17 +334,9 @@ console.log("groupedRows", groupedRows);
 
   <div>型番・サイズ</div>
 
-  <div className="text-right">
-    単価
-  </div>
-
-  <div className="text-right">
-    注文数
-  </div>
-
-  <div className="text-right">
-    使用数
-  </div>
+ <div>単価</div>
+<div>注文数</div>
+<div>使用数</div>
 
   <div>
     備考
