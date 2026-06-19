@@ -226,7 +226,7 @@ export default function HistoryPage({
 
         </div>
 
-        {groupedRows.map((group) => {
+        {filteredRows.map((row) => {
 
   const index =
     editedRows.indexOf(row);
