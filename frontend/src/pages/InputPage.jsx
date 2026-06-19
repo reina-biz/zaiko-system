@@ -52,6 +52,38 @@ export default function InputPage({
    [field]: value,
 };
 
+if (field === "materialName") {
+
+  const lastPrice =
+
+    historyRows
+
+      .slice()
+
+      .reverse()
+
+      .find(
+
+        h =>
+
+          h.companyName === companyName
+
+          &&
+
+          h.materialName === value
+
+      );
+
+  if (lastPrice) {
+
+    updatedRows[index].price =
+
+      lastPrice.price;
+
+  }
+
+}
+
     setRows(updatedRows);
 
   };
