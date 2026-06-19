@@ -14,9 +14,7 @@ export default function HistoryPage({
   const [search, setSearch] =
     useState("");
 
-  const [editingIndex, setEditingIndex] =
-    useState(null);
-
+  
   const [openIndex, setOpenIndex] =
 
      useState(null);
@@ -105,70 +103,7 @@ export default function HistoryPage({
 
 );
 
-    const displayRows =
-
-  filteredRows.slice(
-
-    0,
-
-    100
-
-  );
-
-  const updateField = (
-    index,
-    field,
-    value
-  ) => {
-
-    const updated =
-      [...editedRows];
-
-    updated[index][field] =
-      value;
-
-    setEditedRows(updated);
-
-  };
-
-  const saveRow = () => {
-
-  const updatedRows =
-    [...editedRows];
-
-  setEditedRows(
-    updatedRows
-  );
-
-  setHistoryRows(
-    updatedRows
-  );
-
-  setEditingIndex(null);
-
-};
-
-  const cancelEdit = () => {
-
-    setEditedRows(rows);
-
-    setEditingIndex(null);
-
-  };
-
-  const deleteRow = (index) => {
-
-  const updatedRows =
-    editedRows.filter(
-      (_, i) =>
-        i !== index
-    );
-
-  setEditedRows(updatedRows);
-
-  setHistoryRows(updatedRows);
-
-};
+  
 
   
 
@@ -198,7 +133,7 @@ export default function HistoryPage({
                 全て
               </option>
 
-              {companyList.map((company) => (
+              {companyList?.map((company) => (
 
                 <option
                   key={company}
@@ -229,305 +164,163 @@ export default function HistoryPage({
 
       </div>
 
-      <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
+      <div className="space-y-4">
 
-        <div className="grid grid-cols-[120px_120px_120px_2fr_2fr_80px_80px_100px_1.5fr_90px] bg-slate-100 text-xs font-bold border-b">
+  {groupedRows.map((group, index) => {
 
-          <div className="p-2">
-            日付
-          </div>
+    const isOpen =
 
-          <div className="p-2">
-            会社名
-          </div>
+      openIndex === index;
 
-          <div className="p-2">
-            現場名
-          </div>
+    return (
 
-          <div className="p-2">
-            材料名
-          </div>
+      <div
 
-          <div className="p-2">
-            型番
-          </div>
+        key={index}
 
-          <div className="p-2 text-right">
-            注文数
-          </div>
+        className="bg-white rounded-3xl shadow-sm p-6"
 
-          <div className="p-2 text-right">
-            使用数
-          </div>
+      >
 
-          <div className="p-2 text-right">
-            単価
-          </div>
+        <div className="flex justify-between items-center">
 
-          <div className="p-2">
-            備考
-          </div>
+          <div>
 
-          <div className="p-2 text-center">
-            操作
-          </div>
+            <div className="text-sm text-slate-500">
 
-        </div>
-
-        {groupedRows.map((group, index) => {
-
-        
-        const isOpen =
-
-                openIndex === index;
-
-          const isEditing = false;
-
-          return (
-
-            <div
-              key={index}
-              className="grid grid-cols-[120px_120px_120px_2fr_2fr_80px_80px_100px_1.5fr_90px] border-t"
-            >
-
-              <div className="p-2">
-
-                <input
-                  type="date"
-                  value={group.orderDate}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "orderDate",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs"
-                />
-
-              </div>
-
-<div className="p-2">
-
-  <input
-    value={group.companyName || ""}
-    readOnly={!isEditing}
-    onChange={(e) =>
-      updateField(
-        index,
-        "companyName",
-        e.target.value
-      )
-    }
-    className="w-full border rounded px-2 py-1 text-xs"
-  />
-
-</div>
-
-<div className="p-2">
-
-  <input
-    value={group.siteName || ""}
-    readOnly={!isEditing}
-    onChange={(e) =>
-      updateField(
-        index,
-        "siteName",
-        e.target.value
-      )
-    }
-    className="w-full border rounded px-2 py-1 text-xs"
-  />
-
-</div>
-
-              <div className="p-2">
-
-                <input
-                  value={row.materialName}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "materialName",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs"
-                />
-
-              </div>
-
-              <div className="p-2">
-
-                <input
-                  value={row.size}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "size",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs"
-                />
-
-              </div>
-
-              <div className="p-2">
-
-                <input
-                  value={row.quantity}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "quantity",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs text-right"
-                />
-
-              </div>
-
-              <div className="p-2">
-
-                <input
-                  value={row.used}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "used",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs text-right"
-                />
-
-              </div>
-
-              <div className="p-2">
-
-                <input
-                  value={row.price}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "price",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs text-right"
-                />
-
-              </div>
-
-              <div className="p-2">
-
-                <input
-                  value={row.note}
-                  readOnly={!isEditing}
-                  onChange={(e) =>
-                    updateField(
-                      index,
-                      "note",
-                      e.target.value
-                    )
-                  }
-                  className="w-full border rounded px-2 py-1 text-xs"
-                />
-
-              </div>
-
-              <div className="p-2 flex items-center justify-center gap-1">
-
-                {isEditing ? (
-
-                  <>
-
-                    <button
-                      onClick={saveRow}
-                      className="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]"
-                    >
-                      保存
-                    </button>
-
-                    <button
-                      onClick={cancelEdit}
-                      className="bg-slate-400 text-white px-2 py-1 rounded text-[10px]"
-                    >
-                      取消
-                    </button>
-
-                  </>
-
-                ) : (
-
-                  <>
-
-                  <button
-
-  onClick={() =>
-
-    setOpenIndex(
-
-      isOpen
-
-      ? null
-
-      : index
-
-    )
-
-  }
-
-  className="bg-slate-600 text-white px-2 py-1 rounded text-[10px]"
-
->
-
-  {isOpen
-
-    ? "閉じる"
-
-    : "詳細"}
-
-</button>
-       
-                    <button
-                      onClick={() =>
-                        setEditingIndex(index)
-                      }
-                      className="bg-sky-600 text-white px-2 py-1 rounded text-[10px]"
-                    >
-                      編集
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        deleteRow(index)
-                      }
-                      className="bg-red-500 text-white px-2 py-1 rounded text-[10px]"
-                    >
-                      削除
-                    </button>
-
-                  </>
-
-                )}
-
-              </div>
+              {group.orderDate}
 
             </div>
 
-          );
+            <div className="text-lg font-bold">
 
-        })}
+              {group.companyName}
+
+            </div>
+
+            <div className="text-sm text-slate-600">
+
+              {group.siteName}
+
+            </div>
+
+            <div className="text-xs text-slate-400 mt-1">
+
+              材料 {group.rows.length}件
+
+            </div>
+
+          </div>
+
+          <button
+
+            onClick={() =>
+
+              setOpenIndex(
+
+                isOpen
+
+                  ? null
+
+                  : index
+
+              )
+
+            }
+
+            className="bg-slate-700 text-white px-4 py-2 rounded-xl"
+
+          >
+
+            {
+
+              isOpen
+
+              ? "閉じる"
+
+              : "詳細"
+
+            }
+
+          </button>
+
+        </div>
+
+        {
+
+          isOpen && (
+
+            <div className="mt-6 space-y-2">
+
+              {
+
+                group.rows.map(
+
+                  (row, i) => (
+
+                    <div
+
+                      key={i}
+
+                      className="grid grid-cols-[2fr_1.5fr_80px_80px_100px_2fr] gap-4 border rounded-xl p-3 text-sm"
+
+                    >
+
+                      <div>
+
+                        {row.materialName}
+
+                      </div>
+
+                      <div>
+
+                        {row.size}
+
+                      </div>
+
+                      <div className="text-right">
+
+                        {row.quantity}
+
+                      </div>
+
+                      <div className="text-right">
+
+                        {row.used}
+
+                      </div>
+
+                      <div className="text-right">
+
+                        ¥{row.price}
+
+                      </div>
+
+                      <div>
+
+                        {row.note}
+
+                      </div>
+
+                    </div>
+
+                  )
+
+                )
+
+              }
+
+            </div>
+
+          )
+
+        }
+
+      </div>
+
+    );
+
+  })}
 
       </div>
 
