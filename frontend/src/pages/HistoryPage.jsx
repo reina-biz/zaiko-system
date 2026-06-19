@@ -280,7 +280,9 @@ export default function HistoryPage({
         
         const isOpen =
 
-        openIndex === index;
+                openIndex === index;
+
+          const isEditing = false;
 
           return (
 
@@ -293,7 +295,7 @@ export default function HistoryPage({
 
                 <input
                   type="date"
-                  value={row.orderDate}
+                  value={group.orderDate}
                   readOnly={!isEditing}
                   onChange={(e) =>
                     updateField(
@@ -310,7 +312,7 @@ export default function HistoryPage({
 <div className="p-2">
 
   <input
-    value={row.companyName || ""}
+    value={group.companyName || ""}
     readOnly={!isEditing}
     onChange={(e) =>
       updateField(
@@ -327,7 +329,7 @@ export default function HistoryPage({
 <div className="p-2">
 
   <input
-    value={row.siteName || ""}
+    value={group.siteName || ""}
     readOnly={!isEditing}
     onChange={(e) =>
       updateField(
