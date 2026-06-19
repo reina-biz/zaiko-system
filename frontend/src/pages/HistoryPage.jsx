@@ -328,6 +328,30 @@ console.log("groupedRows", groupedRows);
 
     <div className="mt-6 space-y-2">
 
+    <div className="grid grid-cols-[2fr_1.5fr_100px_100px_100px_2fr] gap-3 px-2 text-sm font-bold text-slate-500">
+
+  <div>材料名</div>
+
+  <div>型番・サイズ</div>
+
+  <div className="text-right">
+    単価
+  </div>
+
+  <div className="text-right">
+    注文数
+  </div>
+
+  <div className="text-right">
+    使用数
+  </div>
+
+  <div>
+    備考
+  </div>
+
+</div>
+
       {group.rows.map((row, i) => (
 
         <div
