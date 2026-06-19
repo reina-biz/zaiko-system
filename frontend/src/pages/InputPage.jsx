@@ -1,4 +1,8 @@
-import { useState } from "react";
+import {
+  useState
+} from "react";
+
+import InputPage from "./InputPage";
 
 export default function InputPage({
   rows,
@@ -271,15 +275,15 @@ const materialSuggestions = [
             型番・サイズ
           </div>
 
-          <div className="p-4 text-right">
+          <div className="p-4">
             単価
           </div>
 
-          <div className="p-4 text-right">
+          <div className="p-4">
             注文数
           </div>
 
-          <div className="p-4 text-right">
+          <div className="p-4">
             使用数
           </div>
 
