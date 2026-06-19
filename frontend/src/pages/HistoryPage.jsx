@@ -17,6 +17,11 @@ export default function HistoryPage({
   const [editingIndex, setEditingIndex] =
     useState(null);
 
+  const [openIndex, setOpenIndex] =
+
+     useState(null);
+
+
   const [editedRows, setEditedRows] =
     useState(rows);
 
@@ -270,14 +275,12 @@ export default function HistoryPage({
 
         </div>
 
-        {displayRows.map((row) => {
+        {groupedRows.map((group, index) => {
 
+        
+        const isOpen =
 
-const index =
-  editedRows.indexOf(row);
-
-const isEditing =
-  editingIndex === index;
+        openIndex === index;
 
           return (
 
@@ -466,6 +469,34 @@ const isEditing =
 
                   <>
 
+                  <button
+
+  onClick={() =>
+
+    setOpenIndex(
+
+      isOpen
+
+      ? null
+
+      : index
+
+    )
+
+  }
+
+  className="bg-slate-600 text-white px-2 py-1 rounded text-[10px]"
+
+>
+
+  {isOpen
+
+    ? "閉じる"
+
+    : "詳細"}
+
+</button>
+       
                     <button
                       onClick={() =>
                         setEditingIndex(index)
