@@ -34,6 +34,16 @@ export default function HistoryPage({
 
     .filter((row) => {
 
+      const displayRows =
+
+  filteredRows.slice(
+
+    0,
+
+    100
+
+  );
+
       const companyMatch =
 
         selectedCompany === "全て"
@@ -226,7 +236,7 @@ export default function HistoryPage({
 
         </div>
 
-        {filteredRows.map((row) => {
+        {displayRows.map((row) => {
 
   const index =
     editedRows.indexOf(row);
