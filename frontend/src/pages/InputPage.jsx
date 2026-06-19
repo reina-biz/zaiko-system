@@ -98,13 +98,7 @@ if (
 
       );
 
-  if (lastRow) {
-
-    updatedRows[index].price =
-
-      lastRow.price;
-
-  }
+  
 
 }
 
@@ -484,6 +478,45 @@ const materialSuggestions = [
   </div>
 
 </div>
+
+<div className="p-2">
+
+  <div className="w-full border rounded-xl px-3 py-3 bg-slate-50">
+
+    {
+
+      historyRows
+
+        .slice()
+
+        .reverse()
+
+        .find(
+
+          h =>
+
+            h.companyName === companyName
+
+            &&
+
+            h.materialName === row.materialName
+
+            &&
+
+            h.size === row.size
+
+        )?.price
+
+      ||
+
+      "-"
+
+    }
+
+  </div>
+
+</div>
+
 
 <div className="p-2">
   <input
