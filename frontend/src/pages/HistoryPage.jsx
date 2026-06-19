@@ -34,15 +34,7 @@ export default function HistoryPage({
 
     .filter((row) => {
 
-      const displayRows =
-
-  filteredRows.slice(
-
-    0,
-
-    100
-
-  );
+      
 
       const companyMatch =
 
@@ -75,6 +67,16 @@ export default function HistoryPage({
       );
 
     });
+
+    const displayRows =
+
+  filteredRows.slice(
+
+    0,
+
+    100
+
+  );
 
   const updateField = (
     index,
