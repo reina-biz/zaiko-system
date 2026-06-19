@@ -195,7 +195,7 @@ console.log("groupedRows", groupedRows);
 
       >
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start">
 
           <div>
 
@@ -225,69 +225,99 @@ console.log("groupedRows", groupedRows);
 
           </div>
 
-          <button
+          <div className="flex gap-2">
 
-            onClick={() =>
+  <button
 
-              setOpenIndex(
+    onClick={() =>
 
-                isOpen
+      setOpenIndex(
 
-                  ? null
-
-                  : index
-
-              )
-
-            }
-
-            className="bg-slate-700 text-white px-4 py-2 rounded-xl"
-
-          >
-
-            {
-
-              isOpen
-
-              ? "閉じる"
-
-              : "詳細"
-
-            }
-
-          </button>
-
-          <button
-
-  onClick={() =>
-
-    setEditingGroup(
-
-      isEditing
+        isOpen
 
         ? null
 
         : index
 
-    )
+      )
 
-  }
+    }
 
-  className="bg-sky-600 text-white px-4 py-2 rounded-xl"
+    className="bg-slate-700 text-white px-4 py-2 rounded-xl"
 
->
+  >
 
-  {
+    {
 
-    isEditing
+      isOpen
 
-    ? "編集終了"
+      ? "閉じる"
 
-    : "編集"
+      : "詳細"
 
-  }
+    }
 
-</button>
+  </button>
+
+  <button
+
+    onClick={() =>
+
+      setEditingGroup(
+
+        isEditing
+
+        ? null
+
+        : index
+
+      )
+
+    }
+
+    className="bg-sky-600 text-white px-4 py-2 rounded-xl"
+
+  >
+
+    {
+
+      isEditing
+
+      ? "編集終了"
+
+      : "編集"
+
+    }
+
+  </button>
+
+  <button
+
+    onClick={() => {
+
+      const updatedRows =
+
+        editedRows.filter(
+
+          r => !group.rows.includes(r)
+
+        );
+
+      setEditedRows(updatedRows);
+
+      setHistoryRows(updatedRows);
+
+    }}
+
+    className="bg-red-500 text-white px-4 py-2 rounded-xl"
+
+  >
+
+    削除
+
+  </button>
+
+</div>
 
         </div>
 
@@ -313,21 +343,105 @@ console.log("groupedRows", groupedRows);
 
                       <div>
 
-                        {row.materialName}
+  {
 
-                      </div>
+    isEditing
 
-                      <div>
+    ? (
 
-                        {row.size}
+      <input
 
-                      </div>
+  type="text"
 
-                      <div className="text-right">
+  value={row.materialName}
 
-                        {row.quantity}
+  onChange={(e) => {
 
-                      </div>
+    const updated = [...editedRows];
+
+    const targetIndex =
+
+      editedRows.indexOf(row);
+
+    updated[targetIndex] = {
+
+      ...updated[targetIndex],
+
+      materialName:
+
+        e.target.value,
+
+    };
+
+    setEditedRows(updated);
+
+  }}
+
+  className="w-full border rounded px-2 py-1"
+
+/>
+
+    )
+
+    : (
+
+      row.materialName
+
+    )
+
+  }
+
+</div>
+
+  <div>
+
+  {
+
+    isEditing
+
+    ? (
+
+      <input
+
+        type="number"
+
+        value={row.quantity}
+
+        onChange={(e)=>{
+
+          const updated=[...editedRows];
+
+          const targetIndex=
+
+            editedRows.indexOf(row);
+
+          updated[targetIndex]={
+
+            ...updated[targetIndex],
+
+            quantity:e.target.value,
+
+          };
+
+          setEditedRows(updated);
+
+        }}
+
+        className="w-full border rounded px-2 py-1"
+
+      />
+
+    )
+
+    : (
+
+      row.quantity
+
+    )
+
+  }
+
+</div>                    
 
                       <div className="text-right">
 
