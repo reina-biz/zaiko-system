@@ -206,31 +206,91 @@ console.log("groupedRows", groupedRows);
 
           <div>
 
-            <div className="text-sm text-slate-500">
+  {isEditing ? (
 
-              {group.orderDate}
+    <>
+      <input
+        type="date"
+        value={group.orderDate}
+        onChange={(e) => {
+          const updated = [...editedRows];
 
-            </div>
+          group.rows.forEach((r) => {
+            const idx = updated.indexOf(r);
+            updated[idx] = {
+              ...updated[idx],
+              orderDate: e.target.value,
+            };
+          });
 
-            <div className="text-lg font-bold">
+          setEditedRows(updated);
+        }}
+        className="border rounded px-2 py-1 mb-2"
+      />
 
-              {group.companyName}
+      <input
+        type="text"
+        value={group.companyName}
+        onChange={(e) => {
+          const updated = [...editedRows];
 
-            </div>
+          group.rows.forEach((r) => {
+            const idx = updated.indexOf(r);
+            updated[idx] = {
+              ...updated[idx],
+              companyName: e.target.value,
+            };
+          });
 
-            <div className="text-sm text-slate-600">
+          setEditedRows(updated);
+        }}
+        className="border rounded px-2 py-1 mb-2 w-full"
+      />
 
-              {group.siteName}
+      <input
+        type="text"
+        value={group.siteName}
+        onChange={(e) => {
+          const updated = [...editedRows];
 
-            </div>
+          group.rows.forEach((r) => {
+            const idx = updated.indexOf(r);
+            updated[idx] = {
+              ...updated[idx],
+              siteName: e.target.value,
+            };
+          });
 
-            <div className="text-xs text-slate-400 mt-1">
+          setEditedRows(updated);
+        }}
+        className="border rounded px-2 py-1 w-full"
+      />
 
-              材料 {group.rows.length}件
+    </>
 
-            </div>
+  ) : (
 
-          </div>
+    <>
+      <div className="text-sm text-slate-500">
+        {group.orderDate}
+      </div>
+
+      <div className="text-lg font-bold">
+        {group.companyName}
+      </div>
+
+      <div className="text-sm text-slate-600">
+        {group.siteName}
+      </div>
+
+      <div className="text-xs text-slate-400 mt-1">
+        材料 {group.rows.length}件
+      </div>
+    </>
+
+  )}
+
+</div>
 
           <div className="flex gap-2">
 
