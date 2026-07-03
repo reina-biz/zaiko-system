@@ -17,10 +17,10 @@ export default function HistoryPage({
   const currentYear = new Date().getFullYear();
 
 const [startMonth, setStartMonth] =
-  useState(`${currentYear}-01`);
+  useState("");
 
 const [endMonth, setEndMonth] =
-  useState(`${currentYear}-12`);
+  useState("");
 
 const [selectedSite, setSelectedSite] =
   useState("");
