@@ -36,6 +36,9 @@ const [endMonth, setEndMonth] =
   const [targetAmount, setTargetAmount] =
   useState("");
 
+const [adjustedRows, setAdjustedRows] =
+  useState(null);
+
   // =========================
   // groupedRows
   // =========================
@@ -963,9 +966,63 @@ Object.values(sites)
 
   const adjustInventory = () => {
 
-  alert("OK");
+  const baseRows = Object.values(groupedRows).map((item) => {
+
+    const used20 = item.used * 0.2;
+
+    const stock20 = item.stock * 0.2;
+
+    const estimatedStock =
+      Math.round(used20 + stock20);
+
+    const amount =
+      estimatedStock *
+      Number(item.latestPrice || 0);
+
+    return {
+      ...item,
+      estimatedStock,
+      amount,
+    };
+
+  });
+
+  const currentTotal =
+    baseRows.reduce(
+      (sum, item) => sum + item.amount,
+      0
+    );
+
+  const ratio =
+    Number(targetAmount) / currentTotal;
+
+  const adjusted =
+    baseRows.map((item) => {
+
+      const newStock =
+        Math.round(
+          item.estimatedStock * ratio
+        );
+
+      return {
+
+        ...item,
+
+        estimatedStock: newStock,
+
+        amount:
+          newStock *
+          Number(item.latestPrice || 0),
+
+      };
+
+    });
+
+  setAdjustedRows(adjusted);
 
 };
+
+  
 
   return (
 
@@ -1242,9 +1299,10 @@ Object.values(sites)
 
       {/* データ */}
 
-      {Object.values(companyRows)
+   {(adjustedRows ?? Object.values(companyRows))
 
-  .map((item, index) => {
+   .map((item, index) => {
+
 
     const used20 =
       item.used * 0.2;
@@ -1303,15 +1361,18 @@ Object.values(sites)
 
         <div className="p-3 text-right font-semibold">
 
-          {estimatedStock.toLocaleString()}
+          {(
+           item.estimatedStock ??
+           estimatedStock
+           ).toLocaleString()}
 
         </div>
 
         <div className="p-3 text-right font-semibold">
 
-          ¥{Math.round(
-            amount
-          ).toLocaleString()}
+         ¥{Math.round(
+         item.amount ?? amount
+         ).toLocaleString()}
 
         </div>
 
@@ -1330,10 +1391,9 @@ Object.values(sites)
         会社合計：
 
         ¥{
-
-  Object.values(companyRows)
-
-    .reduce((sum, item) => {
+  
+  (adjustedRows ?? Object.values(companyRows)).reduce(
+  (sum, item) => {
 
       const used20 =
         item.used * 0.2;
@@ -1355,7 +1415,7 @@ Object.values(sites)
           item.latestPrice || 0
         );
 
-      return sum + amount;
+      return sum + (item.amount ?? amount);
 
     }, 0)
 
@@ -1373,8 +1433,54 @@ Object.values(sites)
 
 })}
 
-     </div>
+<div className="bg-slate-100 rounded-2xl p-6 mt-6">
 
-  );
+  <div className="text-xl font-bold">
+
+    目標金額：
+    ¥{Number(targetAmount || 0).toLocaleString()}
+
+  </div>
+
+  <div className="text-xl font-bold mt-2">
+
+    調整後金額：
+    ¥{
+      adjustedRows
+        ? adjustedRows
+            .reduce(
+              (sum, item) =>
+                sum + item.amount,
+              0
+            )
+            .toLocaleString()
+        : "0"
+    }
+
+  </div>
+
+  <div className="text-xl font-bold mt-2 text-blue-600">
+
+    差額：
+    ¥{
+      adjustedRows
+        ? (
+            adjustedRows.reduce(
+              (sum, item) =>
+                sum + item.amount,
+              0
+            ) -
+            Number(targetAmount || 0)
+          ).toLocaleString()
+        : "0"
+    }
+
+  </div>
+
+</div>
+
+</div>
+
+);
 
 }
