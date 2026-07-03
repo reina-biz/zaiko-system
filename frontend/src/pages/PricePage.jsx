@@ -16,10 +16,10 @@ export default function PricePage({
     new Date().getFullYear();
 
   const [startMonth, setStartMonth] =
-    useState(`${currentYear}-01`);
+  useState("");
 
   const [endMonth, setEndMonth] =
-    useState(`${currentYear}-12`);
+  useState("");
 
   const generateMonths = () => {
 
@@ -247,12 +247,13 @@ rows
 </div>  
       
 
-      <div className="text-2xl font-bold text-black mb-6 ml-1">
-
-  {companyName || "全会社"}
-
-</div>
-      <div className="overflow-auto rounded-2xl border bg-white">
+      {hasSearch && (
+  <div className="text-2xl font-bold text-black mb-6 ml-1">
+    {companyName || "全会社"}
+  </div>
+)}
+        {hasSearch && (
+        <div className="overflow-auto rounded-2xl border bg-white">
 
         <table className="w-full text-sm min-w-[1400px]">
 
@@ -402,6 +403,8 @@ rows
         </table>
 
       </div>
+
+      )}
 
     </div>
 
