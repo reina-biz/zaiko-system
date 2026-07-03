@@ -33,6 +33,9 @@ const [startMonth, setStartMonth] =
 const [endMonth, setEndMonth] =
   useState("");
 
+  const [targetAmount, setTargetAmount] =
+  useState("");
+
   // =========================
   // groupedRows
   // =========================
@@ -958,13 +961,19 @@ Object.values(sites)
 
   };
 
+  const adjustInventory = () => {
+
+  alert("OK");
+
+};
+
   return (
 
     <div className="bg-white rounded-3xl shadow-sm p-6">
 
       {/* 上部 */}
 
-      <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
+      <div className="grid md:grid-cols-5 gap-4 mb-6 items-end">
 
         {/* 会社 */}
 
@@ -1075,60 +1084,49 @@ Object.values(sites)
 
         </div>
 
+        <div>
+
+  <label className="block text-sm font-medium mb-2">
+    目標金額
+  </label>
+
+  <input
+    type="number"
+    value={targetAmount}
+    onChange={(e) =>
+      setTargetAmount(e.target.value)
+    }
+    placeholder="例：5000000"
+    className="w-full border rounded-2xl px-4 py-3"
+  />
+
+</div>
+
      <div>
 
-  <div className="text-sm font-medium mb-2">
+  <div>
 
-    出力
+  <label className="block text-sm font-medium mb-2">
+    自動調整
+  </label>
 
-  </div>
+  <button
+    onClick={adjustInventory}
+    className="
+      w-full
+      bg-blue-600
+      hover:bg-blue-700
+      text-white
+      px-4
+      py-3
+      rounded-2xl
+      font-semibold
+    "
+  >
+    自動調整
+  </button>
 
-    <div className="flex gap-2">
-  
-
-    <button
-
-      onClick={exportExcel}
-
-      className="
-        bg-emerald-500
-        hover:bg-emerald-600
-        text-white
-        px-4
-        py-3
-        rounded-2xl
-        font-semibold
-        whitespace-nowrap
-      "
-
-    >
-
-      Excel
-
-    </button>
-
-    <button
-
-      onClick={exportPDF}
-
-      className="
-        bg-rose-500
-        hover:bg-rose-600
-        text-white
-        px-4
-        py-3
-        rounded-2xl
-        font-semibold
-        whitespace-nowrap
-      "
-
-    >
-
-      PDF
-
-    </button>
-
-  </div>
+</div>
 
 </div>
 
