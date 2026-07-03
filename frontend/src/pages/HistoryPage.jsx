@@ -90,9 +90,15 @@ const siteList = [
 
 const siteMatch =
 
-  !selectedSite ||
+  row.siteName
 
-  row.siteName === selectedSite;
+    ?.toLowerCase()
+
+    .includes(
+
+      selectedSite.toLowerCase()
+
+    );
 
 const rowMonth =
 
@@ -220,20 +226,13 @@ console.log("groupedRows", groupedRows);
 
   </select>
 
-  <select
-    value={selectedSite}
-    onChange={(e)=>setSelectedSite(e.target.value)}
-    className="border rounded-xl px-4 py-2"
-  >
-    <option value="">現場名</option>
-
-    {siteList.map(site=>(
-      <option key={site} value={site}>
-        {site}
-      </option>
-    ))}
-
-  </select>
+  <input
+  type="text"
+  placeholder="現場名検索"
+  value={selectedSite}
+  onChange={(e)=>setSelectedSite(e.target.value)}
+  className="border rounded-xl px-4 py-2"
+/>
 
   <input
     type="text"
