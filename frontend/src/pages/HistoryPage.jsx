@@ -14,6 +14,17 @@ export default function HistoryPage({
   const [search, setSearch] =
     useState("");
 
+  const currentYear = new Date().getFullYear();
+
+const [startMonth, setStartMonth] =
+  useState(`${currentYear}-01`);
+
+const [endMonth, setEndMonth] =
+  useState(`${currentYear}-12`);
+
+const [selectedSite, setSelectedSite] =
+  useState("");
+
   
   const [openIndex, setOpenIndex] =
 
@@ -32,6 +43,33 @@ export default function HistoryPage({
 
   }, [rows]);
 
+const siteList = [
+
+  ...new Set(
+
+    rows
+
+      .filter(
+
+        row =>
+
+          !selectedCompany ||
+
+          selectedCompany === "全て" ||
+
+          row.companyName === selectedCompany
+
+      )
+
+      .map(row => row.siteName)
+
+      .filter(Boolean)
+
+  )
+
+];
+
+
   const filteredRows =
 
   
@@ -44,15 +82,27 @@ export default function HistoryPage({
 
       const companyMatch =
 
-  selectedCompany === ""
+  !selectedCompany ||
 
-    ? false
+  selectedCompany === "全て" ||
 
-    : selectedCompany === "全て"
+  row.companyName === selectedCompany;
 
-      ? true
+const siteMatch =
 
-      : row.companyName === selectedCompany;
+  !selectedSite ||
+
+  row.siteName === selectedSite;
+
+const rowMonth =
+
+  row.orderDate?.slice(0, 7);
+
+const monthMatch =
+
+  rowMonth >= startMonth &&
+
+  rowMonth <= endMonth;
 
       const keyword =
         search.toLowerCase();
@@ -70,10 +120,16 @@ export default function HistoryPage({
           .includes(keyword);
 
       return (
-        companyMatch
-        &&
-        searchMatch
-      );
+
+  companyMatch &&
+
+  siteMatch &&
+
+  monthMatch &&
+
+  searchMatch
+
+);
 
     });
 
@@ -128,53 +184,67 @@ console.log("groupedRows", groupedRows);
         <div className="flex items-center justify-between">
 
           
+       <div className="grid md:grid-cols-5 gap-4 w-full">
 
-          <div className="flex gap-3">
+  <input
+    type="month"
+    value={startMonth}
+    onChange={(e)=>setStartMonth(e.target.value)}
+    className="border rounded-xl px-4 py-2"
+  />
 
-            <select
-              value={selectedCompany}
-              onChange={(e) =>
-                setSelectedCompany(
-                  e.target.value
-                )
-              }
-              className="border rounded-xl px-4 py-2"
-            >
+  <input
+    type="month"
+    value={endMonth}
+    onChange={(e)=>setEndMonth(e.target.value)}
+    className="border rounded-xl px-4 py-2"
+  />
 
-              <option value="">
-                会社を選択
-              </option>
+  <select
+    value={selectedCompany}
+    onChange={(e)=>{
+      setSelectedCompany(e.target.value);
+      setSelectedSite("");
+    }}
+    className="border rounded-xl px-4 py-2"
+  >
+    <option value="">会社を選択</option>
 
-              <option value="全て">
-                全て
-              </option>
+    <option value="全て">全て</option>
 
-              {companyList?.map((company) => (
+    {companyList.map(company=>(
+      <option key={company} value={company}>
+        {company}
+      </option>
+    ))}
 
-                <option
-                  key={company}
-                  value={company}
-                >
-                  {company}
-                </option>
+  </select>
 
-              ))}
+  <select
+    value={selectedSite}
+    onChange={(e)=>setSelectedSite(e.target.value)}
+    className="border rounded-xl px-4 py-2"
+  >
+    <option value="">現場名</option>
 
-            </select>
+    {siteList.map(site=>(
+      <option key={site} value={site}>
+        {site}
+      </option>
+    ))}
 
-            <input
-              type="text"
-              placeholder="検索"
-              value={search}
-              onChange={(e) =>
-                setSearch(
-                  e.target.value
-                )
-              }
-              className="border rounded-xl px-4 py-2"
-            />
+  </select>
 
-          </div>
+  <input
+    type="text"
+    placeholder="材料名検索"
+    value={search}
+    onChange={(e)=>setSearch(e.target.value)}
+    className="border rounded-xl px-4 py-2"
+  />
+
+</div>
+          
 
         </div>
 
