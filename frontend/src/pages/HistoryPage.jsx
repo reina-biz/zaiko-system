@@ -9,7 +9,7 @@ export default function HistoryPage({
 }) {
 
   const [selectedCompany, setSelectedCompany] =
-    useState("全て");
+  useState("");
 
   const [search, setSearch] =
     useState("");
@@ -44,12 +44,15 @@ export default function HistoryPage({
 
       const companyMatch =
 
-        selectedCompany === "全て"
+  selectedCompany === ""
 
-        ||
+    ? false
 
-        row.companyName ===
-        selectedCompany;
+    : selectedCompany === "全て"
+
+      ? true
+
+      : row.companyName === selectedCompany;
 
       const keyword =
         search.toLowerCase();
@@ -137,6 +140,10 @@ console.log("groupedRows", groupedRows);
               }
               className="border rounded-xl px-4 py-2"
             >
+
+              <option value="">
+                会社を選択
+              </option>
 
               <option value="全て">
                 全て
