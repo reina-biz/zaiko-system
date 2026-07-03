@@ -19,6 +19,7 @@ import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
 import HistoryPage from "./pages/HistoryPage";
 import SiteMaterialsPage from "./pages/SiteMaterialsPage";
+import SettlementAdjustPage from "./SettlementAdjustPage";
 import CreatePage from "./pages/CreatePage";
 
 export default function App() {
@@ -475,6 +476,7 @@ useEffect(() => {
               "単価比較",
               "在庫管理",
               "決算在庫",
+              "決算調整",
               "設定",
             ].map((item) => (
 
@@ -639,6 +641,24 @@ useEffect(() => {
           />
 
         )}
+
+{/* 決算調整 */}
+
+{tab === "決算調整" && (
+
+  <SettlementAdjustPage
+
+    rows={historyRows}
+
+    companyName={companyName}
+    setCompanyName={setCompanyName}
+
+    companyList={companyList}
+
+  />
+
+)}
+
 
         {/* 設定 */}
 
