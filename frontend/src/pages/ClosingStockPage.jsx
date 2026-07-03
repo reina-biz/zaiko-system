@@ -27,11 +27,11 @@ export default function ClosingStockPage({
   // 月選択
   // =========================
 
-  const [startMonth, setStartMonth] =
-    useState(`${currentYear}-01`);
+const [startMonth, setStartMonth] =
+  useState("");
 
-  const [endMonth, setEndMonth] =
-    useState(`${currentYear}-12`);
+const [endMonth, setEndMonth] =
+  useState("");
 
   // =========================
   // groupedRows
