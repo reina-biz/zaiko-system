@@ -61,6 +61,12 @@ export default function PricePage({
   const months =
     generateMonths();
 
+    const hasSearch =
+  startMonth ||
+  endMonth ||
+  companyName ||
+  search;
+
     
 
   const groupedCompanies = {};
