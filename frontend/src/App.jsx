@@ -19,7 +19,7 @@ import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
 import HistoryPage from "./pages/HistoryPage";
 import SiteMaterialsPage from "./pages/SiteMaterialsPage";
-import SettlementAdjustPage from "./SettlementAdjustPage";
+import SettlementAdjustPage from "./pages/SettlementAdjustPage";
 import CreatePage from "./pages/CreatePage";
 
 export default function App() {
