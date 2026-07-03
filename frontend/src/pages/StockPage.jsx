@@ -19,10 +19,20 @@ export default function StockPage({
     new Date().getFullYear();
 
   const [startMonth, setStartMonth] =
-    useState(`${currentYear}-01`);
+  useState("");
 
   const [endMonth, setEndMonth] =
-    useState(`${currentYear}-12`);
+  useState("");
+
+  const hasSearch =
+
+  startMonth ||
+
+  endMonth ||
+
+  companyName ||
+
+  search;
 
   const groupedCompanies = {};
 
@@ -205,11 +215,16 @@ if (
 
 </div>
 
+{hasSearch && (
+
 <div className="text-2xl font-bold text-black mb-6 ml-1">
 
   {companyName || "全会社"}
 
 </div>
+
+)}
+      {hasSearch && (
 
       <div className="overflow-auto rounded-2xl border bg-white">
 
@@ -355,7 +370,20 @@ if (
 
       </div>
 
+      )}
+
+{!hasSearch && (
+
+<div className="bg-white rounded-2xl border p-20 text-center text-slate-400">
+
+検索条件を入力してください
+
+</div>
+
+)}
+
     </div>
+    
 
   );
 }
