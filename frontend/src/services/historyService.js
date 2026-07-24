@@ -13,9 +13,10 @@ console.log("1件目のid", data?.[0]?.id);
   console.log("getHistory error", error);
 
   if (error) {
-    console.error(error);
-    return [];
-  }
+  console.error(error);
+  return [];
+}
+
 
   return data;
 }
@@ -34,7 +35,10 @@ export async function saveHistory(rows) {
 
   if (error) {
     console.error(error);
+    return [];
   }
+
+  return data;
 }
 
 // 履歴削除

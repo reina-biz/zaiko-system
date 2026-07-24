@@ -251,12 +251,13 @@ const materialSuggestions = [
           row.materialName?.trim()
       );
 
-    setHistoryRows([
-      ...historyRows,
-      ...savedRows
-    ]);
+    const insertedRows =
+  await saveHistory(savedRows);
 
-    await saveHistory(savedRows);
+setHistoryRows([
+  ...historyRows,
+  ...insertedRows,
+]);
     
     setRows(
       Array.from(
