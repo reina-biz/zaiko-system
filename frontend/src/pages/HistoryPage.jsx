@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { deleteHistory } from "../services/historyService";
 
 export default function HistoryPage({
 
@@ -431,21 +432,35 @@ console.log("groupedRows", groupedRows);
 
   <button
 
-    onClick={() => {
+  onClick={async () => {
+  console.log("★★★★★ 削除ボタンが押されました ★★★★★");
 
-      const updatedRows =
+  const ids = group.rows.map((r) => r.id);
 
-        editedRows.filter(
+  await deleteHistory(ids);
 
-          r => !group.rows.includes(r)
+  const updatedRows =
+    editedRows.filter(
+      r => !group.rows.includes(r)
+    );
 
-        );
+  setEditedRows(updatedRows);
+  setHistoryRows(updatedRows);
+}}
 
-      setEditedRows(updatedRows);
+   onClick={async () => {
+  const ids = group.rows.map((r) => r.id);
 
-      setHistoryRows(updatedRows);
+  await deleteHistory(ids);
 
-    }}
+  const updatedRows =
+    editedRows.filter(
+      r => !group.rows.includes(r)
+    );
+
+  setEditedRows(updatedRows);
+  setHistoryRows(updatedRows);
+}}
 
     className="bg-red-500 text-white px-4 py-2 rounded-xl"
 

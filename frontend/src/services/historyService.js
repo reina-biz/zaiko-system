@@ -34,3 +34,21 @@ export async function saveHistory(rows) {
     console.error(error);
   }
 }
+
+// 履歴削除
+export async function deleteHistory(ids) {
+  const { error } = await supabase
+    .from("history")
+    .delete()
+    .in("id", ids);
+
+  console.log("削除するID:", ids);
+  console.log("delete error:", error);
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  console.log("削除成功");
+}
