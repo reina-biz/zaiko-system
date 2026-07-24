@@ -2,6 +2,8 @@ import {
   useState
 } from "react";
 
+import { saveHistory } from "../services/historyService";
+
 export default function InputPage({
   rows,
   setRows,
@@ -241,7 +243,7 @@ const materialSuggestions = [
  
 
   <button
-  onClick={() => {
+  onClick={async () => {
 
     const savedRows =
       rows.filter(
@@ -254,6 +256,8 @@ const materialSuggestions = [
       ...savedRows
     ]);
 
+    await saveHistory(savedRows);
+    
     setRows(
       Array.from(
         { length: 30 },

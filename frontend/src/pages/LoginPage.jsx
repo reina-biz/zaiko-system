@@ -1,95 +1,144 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
+import { getLoginSettings } from "../services/userService";
+
 
 export default function LoginPage({
-
   setIsLoggedIn,
-
-  loginId,
-  loginPassword,
-
 }) {
 
-  const [id, setId] =
-    useState("");
 
-  const [password, setPassword] =
-    useState("");
+ 
 
   const [error, setError] =
     useState("");
 
-  const login = () => {
+  const [googleVerified, setGoogleVerified] =
+  useState(false);
 
-    if (
-      id === loginId
-      &&
-      password === loginPassword
-    ) {
+  const [id, setId] =
+  useState("");
 
-      setIsLoggedIn(true);
+  const [password, setPassword] =
+  useState("");
 
-      return;
+  useEffect(() => {
+  const checkGoogleLogin = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-    }
+    if (!session) return;
 
-    setError(
-      "IDまたはパスワードが違います"
+    const email = session.user.email;
+
+    const { data: users, error } = await supabase
+      .from("userList")
+      .select("email");
+
+    if (error) return;
+
+    const allowed = users.some(
+      (user) => user.email === email
     );
 
+    if (allowed) {
+      setGoogleVerified(true);
+    } else {
+      await supabase.auth.signOut();
+      setError("このGoogleアe?カウントは利用できません。");
+    }
   };
 
-  return (
+  checkGoogleLogin();
+}, []);
 
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
+ const login = async () => {
+  setError("");
 
-      <div className="bg-white rounded-3xl shadow-sm p-10 w-full max-w-md">
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin,
+    },
+  });
+}; 
 
-        <h1 className="text-3xl font-bold mb-8 text-center">
-          ログイン
-        </h1>
+const checkIdPassword = async () => {
+  const settings = await getLoginSettings();
 
-        <div className="space-y-5">
+ 
 
-          <input
-            type="text"
-            placeholder="ID"
-            value={id}
-            onChange={(e) =>
-              setId(e.target.value)
-            }
-            className="w-full border rounded-2xl px-4 py-4"
-          />
+  if (
+    id === settings.login_id &&
+    password === settings.login_password
+  ) {
+    setIsLoggedIn(true);
+  } else {
+    setError("IDまたはパスワードが違います。");
+  }
+};
 
-          <input
-            type="password"
-            placeholder="パスワード"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-            className="w-full border rounded-2xl px-4 py-4"
-          />
+return (
+  <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
+    <div className="bg-white rounded-3xl shadow-sm p-10 w-full max-w-md">
 
-          {error && (
+      <h1 className="text-3xl font-bold text-center mb-3">
+        在庫管理システム
+      </h1>
 
-            <p className="text-red-500 text-sm">
-              {error}
-            </p>
+      {!googleVerified ? (
+  <>
+    <p className="text-center text-slate-500 mb-8">
+      Googleアカウントでログインしてください
+    </p>
 
-          )}
+    <button
+      onClick={login}
+      className="w-full bg-sky-600 hover:bg-sky-700 text-white py-4 rounded-2xl font-semibold"
+    >
+      Googleでログイン
+    </button>
+  </>
+) : (
+  <>
+    <input
+      type="text"
+      placeholder="ID"
+      value={id}
+      onChange={(e) => setId(e.target.value)}
+      className="w-full border rounded-2xl px-4 py-4 mb-4"
+    />
 
-          <button
-            onClick={login}
-            className="w-full bg-sky-600 hover:bg-sky-700 text-white py-4 rounded-2xl font-semibold"
-          >
-            ログイン
-          </button>
+    <input
+  type="password"
+  placeholder="パスワード"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      checkIdPassword();
+    }
+  }}
+  className="w-full border rounded-2xl px-4 py-4 mb-4"
+/>
 
-        </div>
+    <button
+      onClick={checkIdPassword}
+      className="w-full bg-sky-600 hover:bg-sky-700 text-white py-4 rounded-2xl font-semibold"
+    >
+      ログイン
+    </button>
+  </>
+)}
 
-      </div>
+      {error && (
+        <p className="text-red-500 text-sm mt-4 text-center">
+          {error}
+        </p>
+      )}
 
     </div>
-
-  );
+  </div>
+);
 }

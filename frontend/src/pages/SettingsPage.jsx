@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { saveCompany } from "../services/companyService";
+
+import { useState, useEffect } from "react";
+import {
+  saveUser,
+  deleteUser,
+  getLoginSettings,
+  updateLoginSettings,
+} from "../services/userService";
+
 export default function SettingsPage({
-
-  loginId,
-  setLoginId,
-
-  loginPassword,
-  setLoginPassword,
 
   companyList,
   setCompanyList,
@@ -18,6 +21,27 @@ const [newCompany, setNewCompany] =
   useState("");
 const [newUser, setNewUser]
   = useState("");
+
+const [newEmail, setNewEmail] = useState("");
+
+
+
+const [loginId, setLoginId] = useState("");
+const [loginPassword, setLoginPassword] = useState("");
+
+
+
+useEffect(() => {
+  async function loadLoginSettings() {
+    const data = await getLoginSettings();
+
+    setLoginId(data.login_id);
+    setLoginPassword(data.login_password);
+  }
+
+  loadLoginSettings();
+}, []);
+  
   return (
 
     <div className="space-y-6">
@@ -39,18 +63,11 @@ const [newUser, setNewUser]
             <input
               type="text"
               value={loginId}
+              
               onChange={(e) => {
+  setLoginId(e.target.value);
+}}
 
-                setLoginId(
-                  e.target.value
-                );
-
-                localStorage.setItem(
-                  "loginId",
-                  e.target.value
-                );
-
-              }}
               className="w-full border rounded-2xl px-4 py-3"
             />
 
@@ -65,18 +82,11 @@ const [newUser, setNewUser]
             <input
               type="text"
               value={loginPassword}
-              onChange={(e) => {
+              
+onChange={(e) => {
+  setLoginPassword(e.target.value);
+}}
 
-                setLoginPassword(
-                  e.target.value
-                );
-
-                localStorage.setItem(
-                  "loginPassword",
-                  e.target.value
-                );
-
-              }}
               className="w-full border rounded-2xl px-4 py-3"
             />
 
@@ -85,6 +95,18 @@ const [newUser, setNewUser]
         </div>
 
       </div>
+
+      <div className="mt-4">
+  <button
+    onClick={async () => {
+      await updateLoginSettings(loginId, loginPassword);
+      alert("ログイン情報を保存しました。");
+    }}
+    className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl"
+  >
+    保存
+  </button>
+</div>
 
       <div className="bg-white rounded-3xl shadow-sm p-6">
 
@@ -106,7 +128,7 @@ const [newUser, setNewUser]
   />
 
   <button
-    onClick={() => {
+    onClick={async () => {
 
       if (
         newCompany &&
@@ -119,6 +141,8 @@ const [newUser, setNewUser]
           ...companyList,
           newCompany,
         ]);
+
+        await saveCompany(newCompany);
 
         setNewCompany("");
 
@@ -181,6 +205,9 @@ const [newUser, setNewUser]
     <input
       type="text"
       placeholder="担当者名"
+
+      
+
       value={newUser}
       onChange={(e) =>
         setNewUser(
@@ -190,23 +217,43 @@ const [newUser, setNewUser]
       className="flex-1 border rounded-2xl px-4 py-3"
     />
 
+    <input
+  type="email"
+  placeholder="Googleメールアドレス"
+  value={newEmail}
+  onChange={(e) => setNewEmail(e.target.value)}
+  className="flex-1 border rounded-2xl px-4 py-3"
+/>
+
     <button
 
-      onClick={() => {
+      onClick={async () => {
 
-        if (
-          newUser &&
-          !userList.includes(
-            newUser
-          )
-        ) {
+      if (
+  newUser &&
+  newEmail &&
+  !userList.some(
+    (user) => user.email === newEmail
+  )
+)
+
+         {
 
           setUserList([
-            ...userList,
-            newUser
-          ]);
+  ...userList,
+  {
+    userName: newUser,
+    email: newEmail,
+  },
+]);
+
+          await saveUser({
+          userName: newUser,
+          email: newEmail,
+          });
 
           setNewUser("");
+          setNewEmail("");
 
         }
 
@@ -232,7 +279,7 @@ const [newUser, setNewUser]
     {userList.map((user) => (
 
       <div
-        key={user}
+        key={user.id}
         className="
           flex
           justify-between
@@ -244,24 +291,31 @@ const [newUser, setNewUser]
         "
       >
 
-        <span>
-          {user}
-        </span>
+        <div>
+  <div className="font-semibold">
+    {user.userName}
+  </div>
+
+  <div className="text-sm text-slate-500">
+    {user.email}
+  </div>
+</div>
 
         <button
 
-          onClick={() => {
+         onClick={async () => {
 
-            setUserList(
+  await deleteUser(user.id);
 
-              userList.filter(
-                (item) =>
-                  item !== user
-              )
+  setUserList(
+    userList.filter(
+      (item) =>
+        item.id !== user.id
+    )
+  );
 
-            );
-
-          }}
+}} 
+        
 
           className="
             bg-red-500

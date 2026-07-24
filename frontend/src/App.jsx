@@ -1,7 +1,24 @@
 import {
+  getUsers,
+  saveUser,
+} from "./services/userService";
+
+import {
+  getCompanies,
+  saveCompany,
+} from "./services/companyService.js";
+
+import {
   useState,
   useEffect,
 } from "react";
+
+import { supabase } from "./lib/supabase";
+
+import {
+  getHistory,
+  saveHistory,
+} from "./services/historyService";
 
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
@@ -31,27 +48,54 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] =
     useState(false);
 
-  const [loginId, setLoginId] =
-    useState(() => {
+  
 
-      return (
-        localStorage.getItem(
-          "loginId"
-        ) || "admin"
-      );
+const [userEmail, setUserEmail] =
+  useState("");
 
-    });
+ useEffect(() => {
+  async function checkSession() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-  const [loginPassword, setLoginPassword] =
-    useState(() => {
+    if (session) {
+  const email = session.user.email;
 
-      return (
-        localStorage.getItem(
-          "loginPassword"
-        ) || "1234"
-      );
+  console.log("Google Email:", email);
 
-    });
+  setUserEmail(email);
+  // setIsLoggedIn(true);
+}
+    else {
+      setUserEmail("");
+      setIsLoggedIn(false);
+    }
+  }
+
+  checkSession();
+
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    if (session) {
+  const email = session.user.email;
+
+  console.log("Google Email:", email);
+
+  setUserEmail(email);
+  // setIsLoggedIn(true);
+}
+ else {
+      setUserEmail("");
+      setIsLoggedIn(false);
+    }
+  });
+
+  return () => subscription.unsubscribe();
+}, []); 
+
+  
 
   // =========================
   // タブ
@@ -70,37 +114,36 @@ export default function App() {
    const [siteName, setSiteName] =
     useState("");
 
-  const [companyList, setCompanyList] =
-    useState(() => {
+   const [companyList, setCompanyList] = useState([]);
+    
 
-      const saved =
-        localStorage.getItem(
-          "companyList"
-        );
+    useEffect(() => {
+  async function loadCompanies() {
+    const data = await getCompanies();
 
-        
+    if (data.length > 0) {
+      setCompanyList(data.map((row) => row.companyName));
+    }
+  }
 
-      return saved
-        ? JSON.parse(saved)
-        : [];
+  loadCompanies();
+}, []);
 
-    });
+const [userList, setUserList] = useState([]); 
 
-    const [
-  userList,
-  setUserList
-] = useState(() => {
+const [isAuthorized, setIsAuthorized] = useState(false);
 
-  const saved =
-    localStorage.getItem(
-      "userList"
-    );
+useEffect(() => {
+  async function loadUsers() {
+    const data = await getUsers();
 
-  return saved
-    ? JSON.parse(saved)
-    : [];
+    if (data.length > 0) {
+      setUserList(data);
+    }
+  }
 
-});
+  loadUsers();
+}, []);
 
   // =========================
   // 日付
@@ -137,20 +180,7 @@ const [rows, setRows] =
 
   );
 
-const [historyRows, setHistoryRows] =
-
-  useState(() => {
-
-    const saved =
-      localStorage.getItem(
-        "historyRows"
-      );
-
-    return saved
-      ? JSON.parse(saved)
-      : [];
-
-  });
+const [historyRows, setHistoryRows] = useState([]);
 
   const [
 
@@ -159,16 +189,21 @@ const [historyRows, setHistoryRows] =
   setMaterialReports
 
 ] = useState([]);
-  
 
 useEffect(() => {
+  async function loadHistory() {
+    const data = await getHistory();
 
-  localStorage.setItem(
-    "historyRows",
-    JSON.stringify(historyRows)
-  );
+    if (data.length > 0) {
+      setHistoryRows(data);
+    }
+  }
 
-}, [historyRows]);
+  loadHistory();
+}, []);
+  
+
+
 
  
 
@@ -178,23 +213,7 @@ useEffect(() => {
 
   
 
-  useEffect(() => {
 
-    localStorage.setItem(
-      "companyList",
-      JSON.stringify(companyList)
-    );
-
-  }, [companyList]);
-
-  useEffect(() => {
-
-  localStorage.setItem(
-    "userList",
-    JSON.stringify(userList)
-  );
-
-}, [userList]);
 
   // =========================
   // CSV出力
@@ -407,18 +426,8 @@ useEffect(() => {
     return (
 
       <LoginPage
-
-        setIsLoggedIn={
-          setIsLoggedIn
-        }
-
-        loginId={loginId}
-
-        loginPassword={
-          loginPassword
-        }
-
-      />
+  setIsLoggedIn={setIsLoggedIn}
+/>
 
     );
 
@@ -452,14 +461,17 @@ useEffect(() => {
           </div>
 
           <button
-            onClick={() =>
-              setIsLoggedIn(false)
-            }
-            className="bg-slate-700 hover:bg-slate-800 hover:bg-red-600 text-white px-6 py-3 rounded-2xl font-semibold"
-          >
-            ログアウト
-          </button>
+  onClick={async () => {
 
+    await supabase.auth.signOut();
+
+    setIsLoggedIn(false);
+
+  }}
+  className="bg-slate-700 hover:bg-slate-800 hover:bg-red-600 text-white px-6 py-3 rounded-2xl font-semibold"
+>
+  ログアウト
+</button>
         </div>
 
         {/* タブ */}
@@ -665,23 +677,17 @@ useEffect(() => {
         {tab === "設定" && (
 
           <SettingsPage
+    companyList={companyList}
+    setCompanyList={setCompanyList}
 
-  companyList={companyList}
-  setCompanyList={setCompanyList}
+    userList={userList}
+    setUserList={setUserList}
+  />
 
-  userList={userList}
-  setUserList={setUserList}
+)}
 
-  loginId={loginId}
-  setLoginId={setLoginId}
-
-  loginPassword={loginPassword}
-  setLoginPassword={setLoginPassword}
-
-/>
           
-
-        )}
+        
 
       </div>
 
