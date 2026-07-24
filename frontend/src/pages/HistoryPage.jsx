@@ -432,24 +432,13 @@ console.log("groupedRows", groupedRows);
 
   <button
 
-  onClick={async () => {
-  console.log("★★★★★ 削除ボタンが押されました ★★★★★");
-
-  const ids = group.rows.map((r) => r.id);
-
-  await deleteHistory(ids);
-
-  const updatedRows =
-    editedRows.filter(
-      r => !group.rows.includes(r)
-    );
-
-  setEditedRows(updatedRows);
-  setHistoryRows(updatedRows);
-}}
+  
 
    onClick={async () => {
-  const ids = group.rows.map((r) => r.id);
+  const ids = group.rows.map((r) => {
+  console.log("row =", r);
+  return r.id;
+});
 
   await deleteHistory(ids);
 
