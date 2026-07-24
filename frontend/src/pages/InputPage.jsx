@@ -254,6 +254,8 @@ const materialSuggestions = [
     const insertedRows =
   await saveHistory(savedRows);
 
+  console.log("insertedRows =", insertedRows);
+
 setHistoryRows([
   ...historyRows,
   ...insertedRows,
