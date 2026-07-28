@@ -1013,16 +1013,14 @@ tableLineWidth: 0.1,
 
   {userList.map((user) => (
 
-    <option
-      key={user}
-      value={user}
-    >
+  <option
+    key={user.id}
+    value={user.userName}
+  >
+    {user.userName}
+  </option>
 
-      {user}
-
-    </option>
-
-  ))}
+))}
 
 </select>
 
@@ -1672,18 +1670,16 @@ tableLineWidth: 0.1,
         全担当者
       </option>
 
-      {userList.map((user) => (
+     {userList.map((user) => (
 
-        <option
-          key={user}
-          value={user}
-        >
+  <option
+    key={user.id}
+    value={user.userName}
+  >
+    {user.userName}
+  </option>
 
-          {user}
-
-        </option>
-
-      ))}
+))}
 
     </select>
 
