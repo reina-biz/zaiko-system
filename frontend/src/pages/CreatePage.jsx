@@ -163,12 +163,13 @@ const [
 
         );
 
-    if (matchedRow) {
-
-      currentRow.price =
-        matchedRow.price || "";
-
-    }
+    if (
+  matchedRow &&
+  (field === "materialName" || field === "size")
+) {
+  currentRow.price =
+    matchedRow.price || "";
+}
 
     setCompanySections(
       updatedSections
