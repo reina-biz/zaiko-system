@@ -121,7 +121,7 @@ const [userEmail, setUserEmail] =
     const data = await getCompanies();
 
     if (data.length > 0) {
-      setCompanyList(data.map((row) => row.companyName));
+      setCompanyList(data);
     }
   }
 

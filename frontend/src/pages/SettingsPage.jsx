@@ -1,8 +1,11 @@
 import { saveCompany } from "../services/companyService";
 
 import { useState, useEffect } from "react";
+
 import {
+  getUsers,
   saveUser,
+  updateUser,
   deleteUser,
   getLoginSettings,
   updateLoginSettings,
@@ -23,7 +26,8 @@ const [newUser, setNewUser]
   = useState("");
 
 const [newEmail, setNewEmail] = useState("");
-
+const [editCompanyId, setEditCompanyId] = useState(null);
+const [editUserId, setEditUserId] = useState(null);
 
 
 const [loginId, setLoginId] = useState("");
@@ -128,71 +132,94 @@ onChange={(e) => {
   />
 
   <button
-    onClick={async () => {
+    
+onClick={async () => {
 
-      if (
-        newCompany &&
-        !companyList.includes(
-          newCompany
-        )
-      ) {
+  if (!newCompany) return;
 
-        setCompanyList([
-          ...companyList,
-          newCompany,
-        ]);
+  if (editCompanyId) {
 
-        await saveCompany(newCompany);
+    await updateCompany(
+      editCompanyId,
+      newCompany
+    );
 
-        setNewCompany("");
+  } else {
 
-      }
+    await saveCompany(newCompany);
 
-    }}
+  }
+
+  const data = await getCompanies();
+  setCompanyList(data);
+
+  setNewCompany("");
+  setEditCompanyId(null);
+
+}}
+
     className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl"
   >
-    登録
+    {editCompanyId ? "更新" : "登録"}
   </button>
 
 </div>
 
         <div className="space-y-3">
 
-          {companyList.map((company) => (
+  {companyList.map((company) => (
 
-            <div
-              key={company}
-              className="flex justify-between items-center border rounded-2xl px-4 py-3"
-            >
+    <div
+      key={company.id}
+      className="flex justify-between items-center border rounded-2xl px-4 py-3"
+    >
 
-              <span>
-                {company}
-              </span>
+      <span>{company.companyName}</span>
 
-              <button
-                onClick={() => {
+      <div className="flex gap-2">
 
-                  const updated =
-                    companyList.filter(
-                      (item) =>
-                        item !== company
-                    );
+        <div className="flex gap-2">
 
-                  setCompanyList(
-                    updated
-                  );
+  <button
+    onClick={() => {
+      setNewCompany(company.companyName);
+      setEditCompanyId(company.id);
+    }}
+    className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl"
+  >
+    編集
+  </button>
 
-                }}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
-              >
-                削除
-              </button>
+  <button
+    onClick={async () => {
 
-            </div>
+      if (!window.confirm("この会社を削除しますか？")) return;
 
-          ))}
+      await deleteCompany(company.id);
 
-        </div>
+      const data = await getCompanies();
+
+      setCompanyList(data);
+
+    }}
+    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
+  >
+    削除
+  </button>
+
+</div>
+
+      </div>
+
+    </div>
+
+  ))}
+
+</div>  
+
+              
+
+          
 
       <div className="bg-white rounded-3xl shadow-sm p-6">
 
@@ -229,35 +256,37 @@ onChange={(e) => {
 
       onClick={async () => {
 
-      if (
-  newUser &&
-  newEmail &&
-  !userList.some(
-    (user) => user.email === newEmail
-  )
-)
+  if (!newUser || !newEmail) return;
 
-         {
+  if (editUserId) {
 
-          setUserList([
-  ...userList,
-  {
-    userName: newUser,
-    email: newEmail,
-  },
-]);
+    await updateUser(editUserId, {
+      userName: newUser,
+      email: newEmail,
+    });
 
-          await saveUser({
-          userName: newUser,
-          email: newEmail,
-          });
+  } else {
 
-          setNewUser("");
-          setNewEmail("");
+    if (userList.some(user => user.email === newEmail)) {
+      alert("このメールアドレスは既に登録されています。");
+      return;
+    }
 
-        }
+    await saveUser({
+      userName: newUser,
+      email: newEmail,
+    });
 
-      }}
+  }
+
+  const data = await getUsers();
+  setUserList(data);
+
+  setNewUser("");
+  setNewEmail("");
+  setEditUserId(null);
+
+}}
 
       className="
         bg-sky-600
@@ -268,7 +297,7 @@ onChange={(e) => {
       "
     >
 
-      登録
+      {editUserId ? "更新" : "登録"}
 
     </button>
 
@@ -276,63 +305,58 @@ onChange={(e) => {
 
   <div className="space-y-3">
 
-    {userList.map((user) => (
+  {userList.map((user) => (
 
-      <div
-        key={user.id}
-        className="
-          flex
-          justify-between
-          items-center
-          border
-          rounded-2xl
-          px-4
-          py-3
-        "
-      >
+  <div
+    key={user.id}
+    className="flex justify-between items-center border rounded-2xl px-4 py-3"
+  >
 
-        <div>
-  <div className="font-semibold">
-    {user.userName}
-  </div>
-
-  <div className="text-sm text-slate-500">
-    {user.email}
-  </div>
-</div>
-
-        <button
-
-         onClick={async () => {
-
-  await deleteUser(user.id);
-
-  setUserList(
-    userList.filter(
-      (item) =>
-        item.id !== user.id
-    )
-  );
-
-}} 
-        
-
-          className="
-            bg-red-500
-            text-white
-            px-4
-            py-2
-            rounded-xl
-          "
-        >
-
-          削除
-
-        </button>
-
+    <div>
+      <div className="font-semibold">
+        {user.userName}
       </div>
 
-    ))}
+      <div className="text-sm text-slate-500">
+        {user.email}
+      </div>
+    </div>
+
+    <div className="flex gap-2">
+
+      <button
+        onClick={() => {
+          setNewUser(user.userName);
+          setNewEmail(user.email);
+          setEditUserId(user.id);
+        }}
+        className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl"
+      >
+        編集
+      </button>
+
+      <button
+        onClick={async () => {
+
+          if (!window.confirm("この担当者を削除しますか？")) return;
+
+          await deleteUser(user.id);
+
+          const data = await getUsers();
+
+          setUserList(data);
+
+        }}
+        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
+      >
+        削除
+      </button>
+
+    </div>
+
+  </div>
+
+))}  
 
   </div>
 

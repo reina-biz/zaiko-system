@@ -68,3 +68,18 @@ export const updateLoginSettings = async (loginId, loginPassword) => {
   throw error;
 }
 };
+
+// 担当者更新
+export async function updateUser(id, { userName, email }) {
+  const { error } = await supabase
+    .from("userList")
+    .update({
+      userName,
+      email,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+  }
+}

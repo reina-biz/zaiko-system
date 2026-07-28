@@ -1,4 +1,9 @@
-import { supabase } from "../lib/supabase";
+import {
+  getCompanies,
+  saveCompany,
+  updateCompany,
+  deleteCompany,
+} from "../services/companyService";
 
 // 会社一覧取得
 export async function getCompanies() {
@@ -24,6 +29,30 @@ export async function saveCompany(companyName) {
         companyName,
       },
     ]);
+
+  if (error) {
+    console.error(error);
+  }
+}
+
+// 会社更新
+export async function updateCompany(id, companyName) {
+  const { error } = await supabase
+    .from("companyList")
+    .update({ companyName })
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+  }
+}
+
+// 会社削除
+export async function deleteCompany(id) {
+  const { error } = await supabase
+    .from("companyList")
+    .delete()
+    .eq("id", id);
 
   if (error) {
     console.error(error);
