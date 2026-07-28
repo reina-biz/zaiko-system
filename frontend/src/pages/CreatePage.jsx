@@ -32,19 +32,19 @@ export default function CreatePage({
     useState("");
 
   const [
-  startMonth,
-  setStartMonth
-] = useState("");
+    startMonth,
+    setStartMonth
+  ] = useState("");
 
-const [
-  endMonth,
-  setEndMonth
-] = useState("");
+  const [
+    endMonth,
+    setEndMonth
+  ] = useState("");
 
-const [
-  reportDate,
-  setReportDate
-] = useState("");
+  const [
+    reportDate,
+    setReportDate
+  ] = useState("");
 
   const [
     siteName,
@@ -68,22 +68,22 @@ const [
   ] = useState(null);
 
   const [
-  selectedUser,
-  setSelectedUser
-] = useState("");
+    selectedUser,
+    setSelectedUser
+  ] = useState("");
 
-const [
+  const [
 
-  searchSiteName,
+    searchSiteName,
 
-  setSearchSiteName
+    setSearchSiteName
 
-] = useState("");
+  ] = useState("");
 
 
-   const [
-   editIndex,
-   setEditIndex
+  const [
+    editIndex,
+    setEditIndex
   ] = useState(null);
 
 
@@ -171,12 +171,12 @@ const [
         );
 
     if (
-  matchedRow &&
-  (field === "materialName" || field === "size")
-) {
-  currentRow.price =
-    matchedRow.price || "";
-}
+      matchedRow &&
+      (field === "materialName" || field === "size")
+    ) {
+      currentRow.price =
+        matchedRow.price || "";
+    }
 
     setCompanySections(
       updatedSections
@@ -184,484 +184,512 @@ const [
 
   };
 
-const getMaterialSuggestions = (
-
-  companyName
-
-) => [
-
-  ...new Set(
-
-    historyRows
-
-      .filter(
-
-  (history) =>
-
-    history.companyName
-
-      ?.trim()
-
-      ===
+  const getMaterialSuggestions = (
 
     companyName
 
-      ?.trim()
+  ) => [
 
-    &&
+      ...new Set(
 
-    history.materialName
+        historyRows
 
-)
+          .filter(
 
-      .map(
+            (history) =>
 
-        (history) =>
+              history.companyName
 
-          history.materialName
+                ?.trim()
+
+              ===
+
+              companyName
+
+                ?.trim()
+
+              &&
+
+              history.materialName
+
+          )
+
+          .map(
+
+            (history) =>
+
+              history.materialName
+
+          )
 
       )
 
-  )
+    ];
 
-];
+  const exportExcel = (
 
-const exportExcel = (
+    report
 
-  report
+  ) => {
 
-) => {
+    const data = [];
 
-  const data = [];
+    let grandTotal = 0;
 
-  let grandTotal = 0;
+    report.sections.forEach(
 
-  report.sections.forEach(
+      (section) => {
 
-    (section) => {
+        const companyTotal =
 
-      const companyTotal =
+          section.rows.reduce(
 
-  section.rows.reduce(
+            (total, row) =>
 
-    (total, row) =>
+              total +
 
-      total +
+              (
 
-      (
+                Number(
 
-        Number(
+                  row.quantity || 0
 
-          row.quantity || 0
+                )
 
-        )
+                *
 
-        *
+                Number(
 
-        Number(
+                  row.price || 0
 
-          row.price || 0
+                )
 
-        )
+              ),
 
-      ),
+            0
 
-    0
-
-  );
+          );
 
 
-  grandTotal +=
+        grandTotal +=
 
-  companyTotal;
+          companyTotal;
 
-data.push([
+        data.push([
 
-  section.companyName
+          section.companyName
 
-]);
+        ]);
 
-data.push([
+        data.push([
 
-  "材料名",
+          "材料名",
 
-  "型番",
+          "型番",
 
-  "数量",
+          "数量",
 
-  "単価",
+          "単価",
 
-  "合計"
+          "合計"
 
-]);
+        ]);
 
-section.rows.forEach(
+        section.rows.forEach(
 
-  (row) => {
+          (row) => {
+
+            data.push([
+
+              row.materialName,
+
+              row.size,
+
+              row.quantity,
+
+              row.price,
+
+              Number(
+
+                row.quantity || 0
+
+              )
+
+              *
+
+              Number(
+
+                row.price || 0
+
+              )
+
+            ]);
+
+          }
+
+        );
+
+        data.push([]);
+
+        data.push([
+
+          "会社合計",
+
+          "",
+
+          "",
+
+          "",
+
+          companyTotal
+
+        ]);
+
+        data.push([]);
+      }
+
+    );
+
+    data.push([]);
 
     data.push([
 
-      row.materialName,
+      "総合計",
 
-      row.size,
+      "",
 
-      row.quantity,
+      "",
 
-      row.price,
+      "",
 
-      Number(
-
-        row.quantity || 0
-
-      )
-
-      *
-
-      Number(
-
-        row.price || 0
-
-      )
+      grandTotal
 
     ]);
 
-  }
+    const ws =
 
-);
+      XLSX.utils
 
-data.push([]);
+        .aoa_to_sheet(
 
-data.push([
+          data
 
-  "会社合計",
+        );
 
-  "",
+    const wb =
 
-  "",
+      XLSX.utils
 
-  "",
-
-  companyTotal
-
-]);
-
-data.push([]);
-    }
-
-  );
-
-  data.push([]);
-
-data.push([
-
-  "総合計",
-
-  "",
-
-  "",
-
-  "",
-
-  grandTotal
-
-]);
-
-  const ws =
+        .book_new();
 
     XLSX.utils
 
-      .aoa_to_sheet(
+      .book_append_sheet(
 
-        data
+        wb,
+
+        ws,
+
+        "現場材料"
 
       );
 
-  const wb =
-
-    XLSX.utils
-
-      .book_new();
-
-  XLSX.utils
-
-    .book_append_sheet(
+    XLSX.writeFile(
 
       wb,
 
-      ws,
-
-      "現場材料"
+      `${report.siteName}.xlsx`
 
     );
 
-  XLSX.writeFile(
-
-    wb,
-
-    `${report.siteName}.xlsx`
-
-  );
-
-};
+  };
 
 
 
-const exportPDF = async (
+  const exportPDF = async (
 
-  report
+    report
 
-) => {
+  ) => {
 
-  const doc =
+    const doc =
 
-    new jsPDF({
+      new jsPDF({
 
-      orientation:
+        orientation:
 
-        "portrait",
+          "portrait",
 
-    });
-
-
-
-  const response =
-
-    await fetch(
-
-      "/fonts/NotoSansJP-Regular.ttf"
-
-    );
+      });
 
 
 
-  const font =
+    const response =
 
-    await response
+      await fetch(
 
-      .arrayBuffer();
-
-
-
-  let binary = "";
-
-
-
-  const bytes =
-
-    new Uint8Array(
-
-      font
-
-    );
-
-
-
-  const chunkSize =
-
-    8192;
-
-
-
-  for (
-
-    let i = 0;
-
-    i < bytes.length;
-
-    i += chunkSize
-
-  ) {
-
-    binary +=
-
-      String.fromCharCode(
-
-        ...bytes.subarray(
-
-          i,
-
-          i + chunkSize
-
-        )
+        "/fonts/NotoSansJP-Regular.ttf"
 
       );
 
-  }
+
+
+    const font =
+
+      await response
+
+        .arrayBuffer();
 
 
 
-  const base64Font =
+    let binary = "";
 
-    window.btoa(
 
-      binary
+
+    const bytes =
+
+      new Uint8Array(
+
+        font
+
+      );
+
+
+
+    const chunkSize =
+
+      8192;
+
+
+
+    for (
+
+      let i = 0;
+
+      i < bytes.length;
+
+      i += chunkSize
+
+    ) {
+
+      binary +=
+
+        String.fromCharCode(
+
+          ...bytes.subarray(
+
+            i,
+
+            i + chunkSize
+
+          )
+
+        );
+
+    }
+
+
+
+    const base64Font =
+
+      window.btoa(
+
+        binary
+
+      );
+
+
+
+    doc.addFileToVFS(
+
+      "NotoSansJP-Regular.ttf",
+
+      base64Font
 
     );
 
 
 
-  doc.addFileToVFS(
+    doc.addFont(
 
-    "NotoSansJP-Regular.ttf",
+      "NotoSansJP-Regular.ttf",
 
-    base64Font
+      "NotoSansJP",
 
-  );
+      "normal"
 
+    );
 
 
-  doc.addFont(
 
-    "NotoSansJP-Regular.ttf",
+    doc.setFont(
 
-    "NotoSansJP",
+      "NotoSansJP",
 
-    "normal"
+      "normal"
 
-  );
+    );
 
+    doc.setFontSize(18);
 
+    doc.text(
 
-  doc.setFont(
+      report.siteName,
 
-  "NotoSansJP",
+      20,
 
-  "normal"
+      20
 
-);
+    );
 
-doc.setFontSize(18);
 
-doc.text(
+    let grandTotal = 0;
 
-  report.siteName,
+    const body = [];
 
-  20,
+    report.sections.forEach(
 
-  20
+      (section) => {
 
-);
+        const companyTotal =
 
+          section.rows.reduce(
 
-  let grandTotal = 0;
+            (sum, row) =>
 
-const body = [];
+              sum +
 
-report.sections.forEach(
+              (
 
-  (section) => {
+                Number(
 
-    const companyTotal =
+                  row.quantity || 0
 
-      section.rows.reduce(
+                )
 
-        (sum, row) =>
+                *
 
-          sum +
+                Number(
 
-          (
+                  row.price || 0
 
-            Number(
+                )
 
-              row.quantity || 0
+              ),
 
-            )
+            0
 
-            *
+          );
 
-            Number(
+        grandTotal +=
 
-              row.price || 0
+          companyTotal;
 
-            )
 
-          ),
-
-        0
-
-      );
-
-    grandTotal +=
-
-      companyTotal;
-
-
-
-    body.push([
-
-  {
-
-    content:
-
-      section.companyName,
-
-    colSpan: 5,
-
-    styles: {
-
-      font:
-
-        "NotoSansJP",
-
-      fontStyle:
-
-        "normal",
-
-      fillColor:
-
-        [255,255,255],
-
-      textColor:
-
-        [0,0,0],
-
-      fontSize:
-
-        13,
-
-    },
-
-  },
-
-]);
-
-
-
-    section.rows.forEach(
-
-      (row) => {
 
         body.push([
 
-          row.materialName,
+          {
 
-          row.size,
+            content:
 
-          row.quantity,
+              section.companyName,
 
-          `${Number(
+            colSpan: 5,
 
-            row.price || 0
+            styles: {
 
-          ).toLocaleString()}円`,
+              font:
 
-          `${(
+                "NotoSansJP",
 
-            Number(
+              fontStyle:
 
-              row.quantity || 0
+                "normal",
 
-            )
+              fillColor:
 
-            *
+                [255, 255, 255],
 
-            Number(
+              textColor:
 
-              row.price || 0
+                [0, 0, 0],
 
-            )
+              fontSize:
 
-          ).toLocaleString()}円`
+                13,
+
+            },
+
+          },
+
+        ]);
+
+
+
+        section.rows.forEach(
+
+          (row) => {
+
+            body.push([
+
+              row.materialName,
+
+              row.size,
+
+              row.quantity,
+
+              `${Number(
+
+                row.price || 0
+
+              ).toLocaleString()}円`,
+
+              `${(
+
+                Number(
+
+                  row.quantity || 0
+
+                )
+
+                *
+
+                Number(
+
+                  row.price || 0
+
+                )
+
+              ).toLocaleString()}円`
+
+            ]);
+
+          }
+
+        );
+
+
+
+        body.push([
+
+          {
+
+            content:
+
+              `会社合計 : ¥${companyTotal.toLocaleString()}`,
+
+            colSpan: 5,
+
+            styles: {
+
+              halign:
+
+                "right",
+
+            },
+
+          },
 
         ]);
 
@@ -677,7 +705,7 @@ report.sections.forEach(
 
         content:
 
-          `会社合計 : ¥${companyTotal.toLocaleString()}`,
+          `総合計 : ¥${grandTotal.toLocaleString()}`,
 
         colSpan: 5,
 
@@ -687,157 +715,129 @@ report.sections.forEach(
 
             "right",
 
+          fontSize:
+
+            14,
+
         },
 
       },
 
     ]);
 
-  }
 
-);
 
+    autoTable(
 
+      doc,
 
-body.push([
+      {
 
-  {
+        startY: 30,
 
-    content:
+        margin: {
 
-      `総合計 : ¥${grandTotal.toLocaleString()}`,
+          left: 5,
 
-    colSpan: 5,
+          right: 5,
 
-    styles: {
+        },
 
-      halign:
+        tableWidth: "auto",
 
-        "right",
+        styles: {
 
-      fontSize:
+          font:
 
-        14,
+            "NotoSansJP",
 
-    },
+          fontStyle:
 
-  },
+            "normal",
 
-]);
+        },
 
+        headStyles: {
 
+          font:
 
-autoTable(
+            "NotoSansJP",
 
-  doc,
+          fillColor:
 
-  {
+            [255, 255, 255],
 
-    startY: 30,
+          textColor:
 
-    margin: {
+            [0, 0, 0],
 
-  left: 5,
+        },
 
-  right: 5,
+        bodyStyles: {
 
-},
+          font:
 
-tableWidth: "auto",
+            "NotoSansJP",
 
-    styles: {
+          fontStyle:
 
-  font:
+            "normal",
 
-    "NotoSansJP",
+        },
 
-  fontStyle:
 
-    "normal",
+        head: [[
 
-},
+          "材料名",
 
-    headStyles: {
+          "型番",
 
-  font:
+          "数量",
 
-    "NotoSansJP",
+          "単価",
 
-  fillColor:
+          "合計",
 
-    [255,255,255],
+        ]],
 
-  textColor:
 
-    [0,0,0],
 
-},
+        body,
 
-bodyStyles: {
+        didParseCell: (data) => {
 
-  font:
+          data.cell.styles.font =
 
-    "NotoSansJP",
+            "NotoSansJP";
 
-  fontStyle:
+          data.cell.styles.fontStyle =
 
-    "normal",
+            "normal";
 
-},
+        },
 
+        theme:
 
-    head: [[
+          "grid",
 
-      "材料名",
+        tableLineColor: [0, 0, 0],
 
-      "型番",
+        tableLineWidth: 0.1,
 
-      "数量",
 
-      "単価",
 
-      "合計",
+      }
 
-    ]],
+    );
 
 
+    doc.save(
 
-    body,
+      `${report.siteName}.pdf`
 
-didParseCell:(data)=>{
+    );
 
-  data.cell.styles.font=
-
-    "NotoSansJP";
-
-  data.cell.styles.fontStyle=
-
-    "normal";
-
-},
-
-    theme:
-
-      "grid",
-
-      tableLineColor: [0,0,0],
-
-tableLineWidth: 0.1,
-
-      
-
-  }
-
-);
-
-
-  doc.save(
-
-    `${report.siteName}.pdf`
-
-  );
-
-};
+  };
 
   return (
 
@@ -998,39 +998,39 @@ tableLineWidth: 0.1,
 
             <select
 
-  value={userName}
+              value={userName}
 
-  onChange={(e) =>
-    setUserName(
-      e.target.value
-    )
-  }
+              onChange={(e) =>
+                setUserName(
+                  e.target.value
+                )
+              }
 
-  className="
+              className="
     border
     rounded-2xl
     px-4
     py-3
     w-[200px]
   "
->
+            >
 
-  <option value="">
-    入力者選択
-  </option>
+              <option value="">
+                入力者選択
+              </option>
 
-  {userList.map((user) => (
+              {userList.map((user) => (
 
-  <option
-    key={user.id}
-    value={user.userName}
-  >
-    {user.userName}
-  </option>
+                <option
+                  key={user.id}
+                  value={user.userName}
+                >
+                  {user.userName}
+                </option>
 
-))}
+              ))}
 
-</select>
+            </select>
 
 
             <button
@@ -1118,20 +1118,20 @@ tableLineWidth: 0.1,
 
                 if (editIndex !== null) {
 
-  await updateMaterialReport(
-    materialReports[editIndex].id,
-    report
-  );
+                  await updateMaterialReport(
+                    materialReports[editIndex].id,
+                    report
+                  );
 
-} else {
+                } else {
 
-  await saveMaterialReport(
-    report
-  );
+                  await saveMaterialReport(
+                    report
+                  );
 
-}
+                }
 
-await loadMaterialReports();
+                await loadMaterialReports();
 
                 // リセット
 
@@ -1246,12 +1246,10 @@ await loadMaterialReports();
                     {companyList.map((company) => (
 
                       <option
-                        key={company}
-                        value={company}
+                        key={company.id}
+                        value={company.companyName}
                       >
-
-                        {company}
-
+                        {company.companyName}
                       </option>
 
                     ))}
@@ -1381,28 +1379,28 @@ await loadMaterialReports();
                           />
 
                           <datalist
-  id={`material-list-${sectionIndex}-${index}`}
->
+                            id={`material-list-${sectionIndex}-${index}`}
+                          >
 
                             {getMaterialSuggestions(
 
-  section.companyName
+                              section.companyName
 
-).map(
+                            ).map(
 
-  (name) => (
+                              (name) => (
 
-    <option
+                                <option
 
-      key={name}
+                                  key={name}
 
-      value={name}
+                                  value={name}
 
-    />
+                                />
 
-  )
+                              )
 
-)}
+                            )}
 
                           </datalist>
 
@@ -1411,7 +1409,7 @@ await loadMaterialReports();
                         <div className="p-2">
 
                           <input
-  list={`size-list-${sectionIndex}-${index}`}
+                            list={`size-list-${sectionIndex}-${index}`}
                             type="text"
 
                             value={row.size}
@@ -1442,41 +1440,41 @@ await loadMaterialReports();
 
                             {[
 
-  ...new Set(
+                              ...new Set(
 
-    historyRows
+                                historyRows
 
-      .filter(
+                                  .filter(
 
-        (history) =>
+                                    (history) =>
 
-          history.materialName ===
+                                      history.materialName ===
 
-          row.materialName
+                                      row.materialName
 
-      )
+                                  )
 
-      .map(
+                                  .map(
 
-        (history) =>
+                                    (history) =>
 
-          history.size
+                                      history.size
 
-      )
+                                  )
 
-  )
+                              )
 
-].map((size) => (
+                            ].map((size) => (
 
-  <option
+                              <option
 
-    key={size}
+                                key={size}
 
-    value={size}
+                                value={size}
 
-  />
+                              />
 
-))}
+                            ))}
 
                           </datalist>
 
@@ -1486,11 +1484,11 @@ await loadMaterialReports();
 
                           <input
 
-  type="text"
+                            type="text"
 
-  inputMode="numeric"
+                            inputMode="numeric"
 
-  value={row.quantity}
+                            value={row.quantity}
 
                             onChange={(e) =>
 
@@ -1504,8 +1502,8 @@ await loadMaterialReports();
                             }
 
                             onWheel={(e) =>
-  e.target.blur()
-}
+                              e.target.blur()
+                            }
 
                             className="
       w-full
@@ -1527,14 +1525,14 @@ await loadMaterialReports();
                             value={row.price}
 
                             onChange={(e) =>
-    updateRow(
-      sectionIndex,
-      index,
-      "price",
-      e.target.value
-    )
-  }
-  className="
+                              updateRow(
+                                sectionIndex,
+                                index,
+                                "price",
+                                e.target.value
+                              )
+                            }
+                            className="
     w-full
     border
     rounded-xl
@@ -1638,145 +1636,145 @@ await loadMaterialReports();
   space-y-6
 ">
 
-  <div className="
+          <div className="
   flex
   gap-4
   flex-wrap
   items-end
 ">
 
-  <div>
+            <div>
 
-    <div className="
+              <div className="
       text-sm
       font-medium
       mb-1
     ">
-      担当者
-    </div>
+                担当者
+              </div>
 
-    <select
+              <select
 
-      value={selectedUser}
+                value={selectedUser}
 
-      onChange={(e) =>
-        setSelectedUser(
-          e.target.value
-        )
-      }
+                onChange={(e) =>
+                  setSelectedUser(
+                    e.target.value
+                  )
+                }
 
-      className="
+                className="
         border
         rounded-2xl
         px-4
         py-3
         w-[200px]
       "
-    >
+              >
 
-      <option value="">
-        全担当者
-      </option>
+                <option value="">
+                  全担当者
+                </option>
 
-     {userList.map((user) => (
+                {userList.map((user) => (
 
-  <option
-    key={user.id}
-    value={user.userName}
-  >
-    {user.userName}
-  </option>
+                  <option
+                    key={user.id}
+                    value={user.userName}
+                  >
+                    {user.userName}
+                  </option>
 
-))}
+                ))}
 
-    </select>
+              </select>
 
-  </div>
+            </div>
 
-  <div>
+            <div>
 
-    <div className="
+              <div className="
       text-sm
       font-medium
       mb-1
     ">
-      開始年月
-    </div>
+                開始年月
+              </div>
 
-    <input
-      type="month"
+              <input
+                type="month"
 
-      value={startMonth}
+                value={startMonth}
 
-      onChange={(e) =>
-        setStartMonth(
-          e.target.value
-        )
-      }
+                onChange={(e) =>
+                  setStartMonth(
+                    e.target.value
+                  )
+                }
 
-      className="
+                className="
         border
         rounded-2xl
         px-4
         py-3
       "
-    />
+              />
 
-  </div>
+            </div>
 
-  <div>
+            <div>
 
-    <div className="
+              <div className="
       text-sm
       font-medium
       mb-1
     ">
-      終了年月
-    </div>
+                終了年月
+              </div>
 
-    <input
-      type="month"
+              <input
+                type="month"
 
-      value={endMonth}
+                value={endMonth}
 
-      onChange={(e) =>
-        setEndMonth(
-          e.target.value
-        )
-      }
+                onChange={(e) =>
+                  setEndMonth(
+                    e.target.value
+                  )
+                }
 
-      className="
+                className="
         border
         rounded-2xl
         px-4
         py-3
       "
-    />
+              />
 
-  </div>
+            </div>
 
-</div>        
-          
-          
-<input
+          </div>
 
-  type="text"
 
-  placeholder="現場名検索"
+          <input
 
-  value={searchSiteName}
+            type="text"
 
-  onChange={(e)=>
+            placeholder="現場名検索"
 
-    setSearchSiteName(
+            value={searchSiteName}
 
-      e.target.value
+            onChange={(e) =>
 
-    )
+              setSearchSiteName(
 
-  }
+                e.target.value
 
-  className="
+              )
+
+            }
+
+            className="
     w-full
     border
     rounded-2xl
@@ -1784,9 +1782,9 @@ await loadMaterialReports();
     py-3
   "
 
-/>
+          />
 
-          
+
 
           <div className="
     space-y-4
@@ -1794,147 +1792,147 @@ await loadMaterialReports();
 
             {materialReports
 
-  .filter((report) => {
+              .filter((report) => {
 
-  const reportMonth =
-    report.reportDate?.slice(0, 7);
+                const reportMonth =
+                  report.reportDate?.slice(0, 7);
 
-  if (
+                if (
 
-  !selectedUser
+                  !selectedUser
 
-  &&
+                  &&
 
-  !startMonth
+                  !startMonth
 
-  &&
+                  &&
 
-  !endMonth
+                  !endMonth
 
-  &&
+                  &&
 
-  !searchSiteName
+                  !searchSiteName
 
-) {
+                ) {
 
-  return false;
+                  return false;
 
-}
-
-return (
-
-  (
-
-    !selectedUser ||
-
-    report.userName ===
-
-    selectedUser
-
-  )
-
-  &&
-
-  (
-
-    !startMonth ||
-
-    reportMonth >=
-
-    startMonth
-
-  )
-
-  &&
-
-  (
-
-    !endMonth ||
-
-    reportMonth <=
-
-    endMonth
-
-  )
-
-  &&
-
-  (
-
-    !searchSiteName ||
-
-    report.siteName
-
-      ?.includes(
-
-        searchSiteName
-
-      )
-
-  )
-
-);
-
-})
-
-  .map(
-
-              (report, index) => {
-
-                const total =
-
-                  report.sections.reduce(
-
-                    (sectionTotal, section) =>
-
-                      sectionTotal +
-
-                      section.rows.reduce(
-
-                        (rowTotal, row) =>
-
-                          rowTotal +
-
-                          (
-                            Number(
-                              row.quantity || 0
-                            )
-
-                            *
-
-                            Number(
-                              row.price || 0
-                            )
-
-                          ),
-
-                        0
-
-                      ),
-
-                    0
-
-                  );
+                }
 
                 return (
 
-                 <div
-  key={index}
-  className="
+                  (
+
+                    !selectedUser ||
+
+                    report.userName ===
+
+                    selectedUser
+
+                  )
+
+                  &&
+
+                  (
+
+                    !startMonth ||
+
+                    reportMonth >=
+
+                    startMonth
+
+                  )
+
+                  &&
+
+                  (
+
+                    !endMonth ||
+
+                    reportMonth <=
+
+                    endMonth
+
+                  )
+
+                  &&
+
+                  (
+
+                    !searchSiteName ||
+
+                    report.siteName
+
+                      ?.includes(
+
+                        searchSiteName
+
+                      )
+
+                  )
+
+                );
+
+              })
+
+              .map(
+
+                (report, index) => {
+
+                  const total =
+
+                    report.sections.reduce(
+
+                      (sectionTotal, section) =>
+
+                        sectionTotal +
+
+                        section.rows.reduce(
+
+                          (rowTotal, row) =>
+
+                            rowTotal +
+
+                            (
+                              Number(
+                                row.quantity || 0
+                              )
+
+                              *
+
+                              Number(
+                                row.price || 0
+                              )
+
+                            ),
+
+                          0
+
+                        ),
+
+                      0
+
+                    );
+
+                  return (
+
+                    <div
+                      key={index}
+                      className="
     border
     rounded-2xl
     p-4
   "
->
+                    >
 
-  <div className="
+                      <div className="
   flex
   items-center
   justify-between
   gap-4
 ">
 
- <div className="
+                        <div className="
   flex
   flex-wrap
   items-center
@@ -1943,124 +1941,124 @@ return (
   font-medium
 ">
 
-                      <div className="w-[120px]">
-                        {report.reportDate || "-"}
-                      </div>
+                          <div className="w-[120px]">
+                            {report.reportDate || "-"}
+                          </div>
 
-                      <div className="w-[220px]">
-                        {report.siteName || "-"}
-                      </div>
+                          <div className="w-[220px]">
+                            {report.siteName || "-"}
+                          </div>
 
-                      <div className="w-[120px]">
-                        {report.userName || "-"}
-                      </div>
+                          <div className="w-[120px]">
+                            {report.userName || "-"}
+                          </div>
 
-                      <div className="w-[120px]">
+                          <div className="w-[120px]">
 
-                        会社
-                        {report.sections.length}
-                        件
+                            会社
+                            {report.sections.length}
+                            件
 
-                      </div>
+                          </div>
 
-                      <div className="
+                          <div className="
     w-[140px]
     font-bold
     text-right
   ">
 
-                        ¥
-                        {total.toLocaleString()}
+                            ¥
+                            {total.toLocaleString()}
 
-                      </div>
+                          </div>
 
-                    </div>
+                        </div>
 
 
-                    <div className="
+                        <div className="
   flex
   gap-2
 ">
 
-                      <button
+                          <button
 
-                        onClick={() =>
+                            onClick={() =>
 
-                          setSelectedReport(
+                              setSelectedReport(
 
-                            selectedReport === report
-                              ? null
-                              : report
+                                selectedReport === report
+                                  ? null
+                                  : report
 
-                          )
+                              )
 
-                        }
+                            }
 
-                        className="
+                            className="
       bg-sky-500
       text-white
       px-4
       py-2
       rounded-xl
     "
-                      >
+                          >
 
-                        詳細
+                            詳細
 
-                      </button>
+                          </button>
 
-                      <button
+                          <button
 
-                      onClick={() => {
+                            onClick={() => {
 
-  setReportDate(
-    report.reportDate
-  );
+                              setReportDate(
+                                report.reportDate
+                              );
 
-  setSiteName(
-    report.siteName
-  );
+                              setSiteName(
+                                report.siteName
+                              );
 
-  setUserName(
-    report.userName
-  );
+                              setUserName(
+                                report.userName
+                              );
 
-  setCompanySections(
-    report.sections
-  );
+                              setCompanySections(
+                                report.sections
+                              );
 
-  setEditIndex(index);
+                              setEditIndex(index);
 
-  setPage(
-    "現場材料作成"
-  );
+                              setPage(
+                                "現場材料作成"
+                              );
 
-}}
+                            }}
 
-                        className="
+                            className="
                         bg-amber-500
                         text-white
                         px-4
                         py-2
                         rounded-xl
                         "
-                      >
+                          >
 
-                        編集
+                            編集
 
-                       </button>
+                          </button>
 
-                       <button
+                          <button
 
-  onClick={() =>
+                            onClick={() =>
 
-    exportPDF(
-      report
-    )
+                              exportPDF(
+                                report
+                              )
 
-  }
+                            }
 
-  className="
+                            className="
     bg-rose-500
     text-white
     px-4
@@ -2068,23 +2066,23 @@ return (
     rounded-xl
   "
 
->
+                          >
 
-  PDF
+                            PDF
 
-</button>
+                          </button>
 
-<button
+                          <button
 
-  onClick={() =>
+                            onClick={() =>
 
-    exportExcel(
-      report
-    )
+                              exportExcel(
+                                report
+                              )
 
-  }
+                            }
 
-  className="
+                            className="
     bg-emerald-500
     text-white
     px-4
@@ -2092,83 +2090,83 @@ return (
     rounded-xl
   "
 
->
+                          >
 
-  Excel
+                            Excel
 
-</button>
+                          </button>
 
-                      <button
+                          <button
 
-                        onClick={async () => {
+                            onClick={async () => {
 
-  
 
- if (
-  !window.confirm(
-    "本当に削除しますか？"
-  )
-) {
-  return;
-}
 
-await deleteMaterialReport(report.id);
+                              if (
+                                !window.confirm(
+                                  "本当に削除しますか？"
+                                )
+                              ) {
+                                return;
+                              }
 
-await loadMaterialReports();
+                              await deleteMaterialReport(report.id);
 
-if (selectedReport === report) {
-  setSelectedReport(null);
-} 
+                              await loadMaterialReports();
 
-}}
+                              if (selectedReport === report) {
+                                setSelectedReport(null);
+                              }
 
-                        className="
+                            }}
+
+                            className="
       bg-red-500
       text-white
       px-4
       py-2
       rounded-xl
     "
-                      >
+                          >
 
-                        削除
+                            削除
 
-                      </button>
+                          </button>
 
-                    </div>
+                        </div>
 
-</div>
+                      </div>
 
-{selectedReport === report && (
-  <div className="
+                      {selectedReport === report && (
+                        <div className="
     mt-4
     border-t
     pt-4
     space-y-4
   ">
 
-    {report.sections.map(
-      (section, sectionIndex) => (
+                          {report.sections.map(
+                            (section, sectionIndex) => (
 
-        <div
-          key={sectionIndex}
-          className="
+                              <div
+                                key={sectionIndex}
+                                className="
             border
             rounded-2xl
             p-4
           "
-        >
+                              >
 
-          <div className="
+                                <div className="
             font-bold
             text-lg
             mb-3
           ">
-            {section.companyName}
-          </div>
+                                  {section.companyName}
+                                </div>
 
-<div
-  className="
+                                <div
+                                  className="
     grid
     grid-cols-5
     gap-4
@@ -2177,93 +2175,93 @@ if (selectedReport === report) {
     p-2
     rounded-xl
   "
->
+                                >
 
-  <div>材料名</div>
+                                  <div>材料名</div>
 
-  <div>型番</div>
+                                  <div>型番</div>
 
-  <div>数量</div>
+                                  <div>数量</div>
 
-  <div>単価</div>
+                                  <div>単価</div>
 
-  <div>合計</div>
+                                  <div>合計</div>
 
-</div>
-<div className="
+                                </div>
+                                <div className="
   text-right
   font-bold
   mt-3
 ">
 
-  会社合計：
+                                  会社合計：
 
-  ¥
+                                  ¥
 
-  {section.rows
-    .reduce(
-      (total, row) =>
-        total +
-        (
-          Number(row.quantity || 0)
-          *
-          Number(row.price || 0)
-        ),
-      0
-    )
-    .toLocaleString()
-  }
+                                  {section.rows
+                                    .reduce(
+                                      (total, row) =>
+                                        total +
+                                        (
+                                          Number(row.quantity || 0)
+                                          *
+                                          Number(row.price || 0)
+                                        ),
+                                      0
+                                    )
+                                    .toLocaleString()
+                                  }
 
-</div>
-          {section.rows.map(
-            (row, rowIndex) => (
+                                </div>
+                                {section.rows.map(
+                                  (row, rowIndex) => (
 
-              <div
-                key={rowIndex}
-                className="
+                                    <div
+                                      key={rowIndex}
+                                      className="
                   grid
                   grid-cols-5
                   gap-4
                   py-1
                   border-b
                 "
-              >
+                                    >
 
-                <div>
-                  {row.materialName}
-                </div>
+                                      <div>
+                                        {row.materialName}
+                                      </div>
 
-                <div>
-                  {row.size}
-                </div>
+                                      <div>
+                                        {row.size}
+                                      </div>
 
-                <div>
-                  {row.quantity}
-                </div>
+                                      <div>
+                                        {row.quantity}
+                                      </div>
 
-                <div>
-                  ¥{Number(row.price).toLocaleString()}
-                </div>
+                                      <div>
+                                        ¥{Number(row.price).toLocaleString()}
+                                      </div>
 
-                <div>
-                  ¥{(
-                    Number(row.quantity || 0)
-                    *
-                    Number(row.price || 0)
-                  ).toLocaleString()}
-                </div>
+                                      <div>
+                                        ¥{(
+                                          Number(row.quantity || 0)
+                                          *
+                                          Number(row.price || 0)
+                                        ).toLocaleString()}
+                                      </div>
 
-              </div>
+                                    </div>
 
-            )
-          )}
+                                  )
+                                )}
 
-        </div>
+                              </div>
 
-      )
-    )}
+                            )
+                          )}
 
-<div className="
+                          <div className="
   text-right
   text-xl
   font-bold
@@ -2271,48 +2269,48 @@ if (selectedReport === report) {
   pt-3
 ">
 
-  総額：
+                            総額：
 
-  ¥
+                            ¥
 
-  {report.sections
-    .reduce(
-      (grandTotal, section) =>
-        grandTotal +
-        section.rows.reduce(
-          (sectionTotal, row) =>
-            sectionTotal +
-            (
-              Number(row.quantity || 0)
-              *
-              Number(row.price || 0)
-            ),
-          0
-        ),
-      0
-    )
-    .toLocaleString()
-  }
+                            {report.sections
+                              .reduce(
+                                (grandTotal, section) =>
+                                  grandTotal +
+                                  section.rows.reduce(
+                                    (sectionTotal, row) =>
+                                      sectionTotal +
+                                      (
+                                        Number(row.quantity || 0)
+                                        *
+                                        Number(row.price || 0)
+                                      ),
+                                    0
+                                  ),
+                                0
+                              )
+                              .toLocaleString()
+                            }
 
-</div>
+                          </div>
 
-  </div>
+                        </div>
 
-)}
+                      )}
 
-                  </div>
+                    </div>
 
 
-                );
-              }
+                  );
+                }
 
-            )}
+              )}
 
           </div>
 
         </div>
 
-            )}
+      )}
 
     </div>
 

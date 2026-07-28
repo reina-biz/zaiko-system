@@ -16,10 +16,10 @@ export default function PricePage({
     new Date().getFullYear();
 
   const [startMonth, setStartMonth] =
-  useState("");
+    useState("");
 
   const [endMonth, setEndMonth] =
-  useState("");
+    useState("");
 
   const generateMonths = () => {
 
@@ -61,354 +61,354 @@ export default function PricePage({
   const months =
     generateMonths();
 
-    const hasSearch =
-  startMonth ||
-  endMonth ||
-  companyName ||
-  search;
+  const hasSearch =
+    startMonth ||
+    endMonth ||
+    companyName ||
+    search;
 
-    
+
 
   const groupedCompanies = {};
 
-rows
+  rows
 
-  .filter((row) => {
+    .filter((row) => {
 
-    if (!row.materialName) {
-      return false;
-    }
+      if (!row.materialName) {
+        return false;
+      }
 
-    if (
-  companyName &&
-  row.companyName !==
-    companyName
-) {
+      if (
+        companyName &&
+        row.companyName !==
+        companyName
+      ) {
 
-  return false;
+        return false;
 
-}
+      }
 
-    const rowMonth =
-      row.orderDate
-        ?.slice(0, 7)
-        .replaceAll("/", "-");
+      const rowMonth =
+        row.orderDate
+          ?.slice(0, 7)
+          .replaceAll("/", "-");
 
-    if (
-      rowMonth < startMonth ||
-      rowMonth > endMonth
-    ) {
-      return false;
-    }
+      if (
+        rowMonth < startMonth ||
+        rowMonth > endMonth
+      ) {
+        return false;
+      }
 
-    return true;
+      return true;
 
-  })
+    })
 
-  .forEach((row) => {
+    .forEach((row) => {
 
-    const company =
-      row.companyName || "未設定";
+      const company =
+        row.companyName || "未設定";
 
-    const key =
+      const key =
 
-      `${row.materialName}_${row.size}`;
+        `${row.materialName}_${row.size}`;
 
-    const month =
-      row.orderDate
-        ?.slice(0, 7)
-        .replace("-", "/");
+      const month =
+        row.orderDate
+          ?.slice(0, 7)
+          .replace("-", "/");
 
-    if (!groupedCompanies[company]) {
+      if (!groupedCompanies[company]) {
 
-      groupedCompanies[company] = {};
+        groupedCompanies[company] = {};
 
-    }
+      }
 
-    if (
+      if (
 
-      !groupedCompanies[company][key]
+        !groupedCompanies[company][key]
 
-    ) {
+      ) {
 
-      groupedCompanies[company][key] = {
+        groupedCompanies[company][key] = {
 
-        name:
-          row.materialName,
+          name:
+            row.materialName,
 
-        size:
-          row.size,
+          size:
+            row.size,
 
-        prices: {},
+          prices: {},
 
-      };
+        };
 
-    }
+      }
 
-    groupedCompanies[company][key]
+      groupedCompanies[company][key]
 
-      .prices[month] = row.price;
+        .prices[month] = row.price;
 
-  });
+    });
 
   return (
 
     <div className="bg-white rounded-3xl shadow-sm p-6">
 
-    <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
+      <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
 
-  <div>
+        <div>
 
-    <label className="block text-sm font-medium mb-2">
-      開始年月
-    </label>
+          <label className="block text-sm font-medium mb-2">
+            開始年月
+          </label>
 
-    <input
-      type="month"
-      value={startMonth}
-      onChange={(e) =>
-        setStartMonth(e.target.value)
-      }
-      className="w-full border rounded-2xl px-4 py-3"
-    />
+          <input
+            type="month"
+            value={startMonth}
+            onChange={(e) =>
+              setStartMonth(e.target.value)
+            }
+            className="w-full border rounded-2xl px-4 py-3"
+          />
 
-  </div>
+        </div>
 
-  <div>
+        <div>
 
-    <label className="block text-sm font-medium mb-2">
-      終了年月
-    </label>
+          <label className="block text-sm font-medium mb-2">
+            終了年月
+          </label>
 
-    <input
-      type="month"
-      value={endMonth}
-      onChange={(e) =>
-        setEndMonth(e.target.value)
-      }
-      className="w-full border rounded-2xl px-4 py-3"
-    />
+          <input
+            type="month"
+            value={endMonth}
+            onChange={(e) =>
+              setEndMonth(e.target.value)
+            }
+            className="w-full border rounded-2xl px-4 py-3"
+          />
 
-  </div>
+        </div>
 
-  <div>
+        <div>
 
-    <label className="block text-sm font-medium mb-2">
-      会社名
-    </label>
+          <label className="block text-sm font-medium mb-2">
+            会社名
+          </label>
 
-    <select
-      value={companyName}
-      onChange={(e) =>
-        setCompanyName(
-          e.target.value
-        )
-      }
-      className="w-full border rounded-2xl px-4 py-3 bg-white"
-    >
+          <select
+            value={companyName}
+            onChange={(e) =>
+              setCompanyName(
+                e.target.value
+              )
+            }
+            className="w-full border rounded-2xl px-4 py-3 bg-white"
+          >
 
-      <option value="">
-        会社選択
-      </option>
+            <option value="">
+              会社選択
+            </option>
 
-      {companyList.map((company) => (
+            {companyList.map((company) => (
 
-  <option
-    key={company.id}
-    value={company.companyName}
-  >
-    {company.companyName}
-  </option>
+              <option
+                key={company.id}
+                value={company.companyName}
+              >
+                {company.companyName}
+              </option>
 
-))}
+            ))}
 
-    </select>
+          </select>
 
-  </div>
+        </div>
 
-  <div>
+        <div>
 
-    <label className="block text-sm font-medium mb-2">
-      材料名検索
-    </label>
+          <label className="block text-sm font-medium mb-2">
+            材料名検索
+          </label>
 
-    <input
-      type="text"
-      placeholder="材料名検索"
-      value={search}
-      onChange={(e) =>
-        setSearch(e.target.value)
-      }
-      className="
+          <input
+            type="text"
+            placeholder="材料名検索"
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+            className="
         w-full
         border
         rounded-2xl
         px-4
         py-3
       "
-    />
+          />
 
-  </div>
+        </div>
 
-</div>  
-      
+      </div>
+
 
       {hasSearch && (
-  <div className="text-2xl font-bold text-black mb-6 ml-1">
-    {companyName || "全会社"}
-  </div>
-)}
-        {hasSearch && (
+        <div className="text-2xl font-bold text-black mb-6 ml-1">
+          {companyName || "全会社"}
+        </div>
+      )}
+      {hasSearch && (
         <div className="overflow-auto rounded-2xl border bg-white">
 
-        <table className="w-full text-sm min-w-[1400px]">
+          <table className="w-full text-sm min-w-[1400px]">
 
-          <thead className="bg-slate-100">
+            <thead className="bg-slate-100">
 
-            <tr>
+              <tr>
 
-              <th className="p-4 text-left whitespace-nowrap">
-                材料名
-              </th>
-
-              <th className="p-4 text-left whitespace-nowrap">
-                型番・サイズ
-              </th>
-
-              {months.map((month) => (
-
-                <th
-                  key={month}
-                  className="px-2 py-3 text-right whitespace-nowrap"
-                >
-                  {month}
+                <th className="p-4 text-left whitespace-nowrap">
+                  材料名
                 </th>
 
-              ))}
+                <th className="p-4 text-left whitespace-nowrap">
+                  型番・サイズ
+                </th>
 
-            </tr>
+                {months.map((month) => (
 
-          </thead>
+                  <th
+                    key={month}
+                    className="px-2 py-3 text-right whitespace-nowrap"
+                  >
+                    {month}
+                  </th>
 
-<tbody>
+                ))}
 
-  {Object.entries(groupedCompanies)
+              </tr>
 
-    .map(([company, materials]) => (
+            </thead>
 
-      
+            <tbody>
 
-    <>
+              {Object.entries(groupedCompanies)
 
-      <tr className="bg-slate-200">
+                .map(([company, materials]) => (
 
-        <td
 
-          colSpan={
-            months.length + 2
-          }
 
-          className="
+                  <>
+
+                    <tr className="bg-slate-200">
+
+                      <td
+
+                        colSpan={
+                          months.length + 2
+                        }
+
+                        className="
             p-4
             font-bold
             text-lg
           "
-        >
+                      >
 
-          {company}
+                        {company}
 
-        </td>
+                      </td>
 
-      </tr>
+                    </tr>
 
-      {Object.values(materials)
+                    {Object.values(materials)
 
-        .filter((item) => {
+                      .filter((item) => {
 
-          const keywords =
-            search
-              .toLowerCase()
-              .split(" ")
-              .filter(Boolean);
+                        const keywords =
+                          search
+                            .toLowerCase()
+                            .split(" ")
+                            .filter(Boolean);
 
-          return keywords.every(
+                        return keywords.every(
 
-            (keyword) =>
+                          (keyword) =>
 
-              item.name
+                            item.name
 
-                .toLowerCase()
+                              .toLowerCase()
 
-                .includes(keyword)
+                              .includes(keyword)
 
-          );
+                        );
 
-        })
+                      })
 
-        .map((item, index) => (
+                      .map((item, index) => (
 
-          <tr
-            key={index}
-            className="
+                        <tr
+                          key={index}
+                          className="
               border-t
               hover:bg-slate-50
             "
-          >
+                        >
 
-            <td className="p-4 whitespace-nowrap">
+                          <td className="p-4 whitespace-nowrap">
 
-              {item.name}
+                            {item.name}
 
-            </td>
+                          </td>
 
-            <td className="p-4 whitespace-nowrap">
+                          <td className="p-4 whitespace-nowrap">
 
-              {item.size}
+                            {item.size}
 
-            </td>
+                          </td>
 
-            {months.map((month) => (
+                          {months.map((month) => (
 
-              <td
-                key={month}
-                className="
+                            <td
+                              key={month}
+                              className="
                   px-2
                   py-3
                   text-right
                   whitespace-nowrap
                 "
-              >
+                            >
 
-                {item.prices[month]
+                              {item.prices[month]
 
-                  ? `¥${Number(
-                      item.prices[month]
-                    ).toLocaleString()}`
+                                ? `¥${Number(
+                                  item.prices[month]
+                                ).toLocaleString()}`
 
-                  : "-"
+                                : "-"
 
-                }
+                              }
 
-              </td>
+                            </td>
 
-            ))}
-
-            
-
-          </tr>
-
-        ))}
-
-    </>
-
-))}
-
-</tbody>
+                          ))}
 
 
-        </table>
 
-      </div>
+                        </tr>
+
+                      ))}
+
+                  </>
+
+                ))}
+
+            </tbody>
+
+
+          </table>
+
+        </div>
 
       )}
 

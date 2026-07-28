@@ -27,17 +27,17 @@ export default function SettlementAdjustPage({
   // 月選択
   // =========================
 
-const [startMonth, setStartMonth] =
-  useState("");
+  const [startMonth, setStartMonth] =
+    useState("");
 
-const [endMonth, setEndMonth] =
-  useState("");
+  const [endMonth, setEndMonth] =
+    useState("");
 
   const [targetAmount, setTargetAmount] =
-  useState("");
+    useState("");
 
-const [adjustedRows, setAdjustedRows] =
-  useState(null);
+  const [adjustedRows, setAdjustedRows] =
+    useState(null);
 
   // =========================
   // groupedRows
@@ -62,7 +62,7 @@ const [adjustedRows, setAdjustedRows] =
         companyName &&
 
         row.companyName !==
-          companyName
+        companyName
 
       ) {
 
@@ -140,77 +140,77 @@ const [adjustedRows, setAdjustedRows] =
 
     });
 
-const groupedCompanies =
+  const groupedCompanies =
 
-  rows
+    rows
 
-    .filter((row) => {
+      .filter((row) => {
 
-      if (!row.materialName) {
+        if (!row.materialName) {
 
-        return false;
+          return false;
 
-      }
+        }
 
-      if (
+        if (
 
-        companyName &&
+          companyName &&
 
-        row.companyName !==
+          row.companyName !==
           companyName
 
-      ) {
+        ) {
 
-        return false;
+          return false;
 
-      }
+        }
 
-      const rowMonth =
-        row.orderDate?.slice(0, 7);
+        const rowMonth =
+          row.orderDate?.slice(0, 7);
 
-      return (
+        return (
 
-        rowMonth >= startMonth
+          rowMonth >= startMonth
 
-        &&
+          &&
 
-        rowMonth <= endMonth
+          rowMonth <= endMonth
 
-      );
+        );
 
-    })
+      })
 
-    .reduce((acc, row) => {
+      .reduce((acc, row) => {
 
-      const company =
+        const company =
 
-        row.companyName ||
+          row.companyName ||
 
-        "未設定";
+          "未設定";
 
-      const site =
+        const site =
 
-        row.siteName ||
+          row.siteName ||
 
-        "未設定";
+          "未設定";
 
-      if (!acc[company]) {
+        if (!acc[company]) {
 
-        acc[company] = {};
+          acc[company] = {};
 
-      }
+        }
 
-      if (!acc[company][site]) {
+        if (!acc[company][site]) {
 
-        acc[company][site] = [];
+          acc[company][site] = [];
 
-      }
+        }
 
-      acc[company][site].push(row);
+        acc[company][site].push(row);
 
-      return acc;
+        return acc;
 
-    }, {});
+      }, {});
 
   // =========================
   // 合計
@@ -230,9 +230,9 @@ const groupedCompanies =
 
         const estimatedStock =
 
-  Math.round(
-    used20 + stock20
-  );
+          Math.round(
+            used20 + stock20
+          );
 
         const amount =
 
@@ -254,99 +254,43 @@ const groupedCompanies =
 
     const companyRows = {};
 
-rows
+    rows
 
-  .filter((row) => {
+      .filter((row) => {
 
-    if (!row.materialName) {
+        if (!row.materialName) {
 
-      return false;
+          return false;
 
-    }
+        }
 
-    if (
+        if (
 
-      companyName &&
+          companyName &&
 
-      row.companyName !==
-        companyName
+          row.companyName !==
+          companyName
 
-    ) {
+        ) {
 
-      return false;
+          return false;
 
-    }
+        }
 
-    const rowMonth =
-      row.orderDate?.slice(0, 7);
+        const rowMonth =
+          row.orderDate?.slice(0, 7);
 
-    return (
+        return (
 
-      rowMonth >= startMonth
+          rowMonth >= startMonth
 
-      &&
+          &&
 
-      rowMonth <= endMonth
+          rowMonth <= endMonth
 
-    );
+        );
 
-  })
-
-  .forEach((row) => {
-
-    const key =
-
-      `${row.materialName}_${row.size}`;
-
-    if (!companyRows[key]) {
-
-      companyRows[key] = {
-
-        materialName:
-          row.materialName,
-
-        size:
-          row.size,
-
-        used: 0,
-
-        stock: 0,
-
-        latestPrice:
-          row.price,
-
-      };
-
-    }
-
-    companyRows[key].used +=
-
-      Number(row.used || 0);
-
-    companyRows[key].stock +=
-
-      Number(row.quantity || 0)
-
-      -
-
-      Number(row.used || 0);
-
-    companyRows[key].latestPrice =
-      row.price;
-
-  });
-
-    const excelData = [];
-
-Object.entries(groupedCompanies)
-
-  .forEach(([company, sites]) => {
-
-    const companyRows = {};
-
-    Object.values(sites)
-
-      .flat()
+      })
 
       .forEach((row) => {
 
@@ -392,135 +336,191 @@ Object.entries(groupedCompanies)
 
       });
 
-    // 会社名行
-    excelData.push({
+    const excelData = [];
 
-      "材料名": company,
+    Object.entries(groupedCompanies)
 
-      "型番・サイズ": "",
+      .forEach(([company, sites]) => {
 
-      "最新単価": "",
+        const companyRows = {};
 
-      "在庫": "",
+        Object.values(sites)
 
-      "在庫金額": "",
+          .flat()
 
-    });
+          .forEach((row) => {
 
-    // 材料一覧
-    Object.values(companyRows)
+            const key =
 
-      .forEach((item) => {
+              `${row.materialName}_${row.size}`;
 
-        const used20 =
-          item.used * 0.2;
+            if (!companyRows[key]) {
 
-        const stock20 =
-          item.stock * 0.2;
+              companyRows[key] = {
 
-        const estimatedStock =
+                materialName:
+                  row.materialName,
 
-          Math.round(
-            used20 + stock20
-          );
+                size:
+                  row.size,
 
-        const amount =
+                used: 0,
 
-          Math.round(
+                stock: 0,
 
-            estimatedStock *
+                latestPrice:
+                  row.price,
 
-            Number(
-              item.latestPrice || 0
-            )
+              };
 
-          );
+            }
+
+            companyRows[key].used +=
+
+              Number(row.used || 0);
+
+            companyRows[key].stock +=
+
+              Number(row.quantity || 0)
+
+              -
+
+              Number(row.used || 0);
+
+            companyRows[key].latestPrice =
+              row.price;
+
+          });
+
+        // 会社名行
+        excelData.push({
+
+          "材料名": company,
+
+          "型番・サイズ": "",
+
+          "最新単価": "",
+
+          "在庫": "",
+
+          "在庫金額": "",
+
+        });
+
+        // 材料一覧
+        Object.values(companyRows)
+
+          .forEach((item) => {
+
+            const used20 =
+              item.used * 0.2;
+
+            const stock20 =
+              item.stock * 0.2;
+
+            const estimatedStock =
+
+              Math.round(
+                used20 + stock20
+              );
+
+            const amount =
+
+              Math.round(
+
+                estimatedStock *
+
+                Number(
+                  item.latestPrice || 0
+                )
+
+              );
+
+            excelData.push({
+
+              "材料名":
+                item.materialName,
+
+              "型番・サイズ":
+                item.size,
+
+              "最新単価":
+                Number(
+                  item.latestPrice || 0
+                ),
+
+              "在庫":
+                estimatedStock,
+
+              "在庫金額":
+                amount,
+
+            });
+
+          });
+
+        // 会社合計
+        const companyTotal =
+
+          Object.values(companyRows)
+
+            .reduce((sum, item) => {
+
+              const used20 =
+                item.used * 0.2;
+
+              const stock20 =
+                item.stock * 0.2;
+
+              const estimatedStock =
+
+                Math.round(
+                  used20 + stock20
+                );
+
+              const amount =
+
+                estimatedStock *
+
+                Number(
+                  item.latestPrice || 0
+                );
+
+              return sum + amount;
+
+            }, 0);
 
         excelData.push({
 
           "材料名":
-            item.materialName,
+            `会社合計 : ¥${companyTotal.toLocaleString()}`,
 
-          "型番・サイズ":
-            item.size,
+          "型番・サイズ": "",
 
-          "最新単価":
-            Number(
-              item.latestPrice || 0
-            ),
+          "最新単価": "",
 
-          "在庫":
-            estimatedStock,
+          "在庫": "",
 
-          "在庫金額":
-            amount,
+          "在庫金額": "",
+
+        });
+
+        // 空行
+        excelData.push({
+
+          "材料名": "",
+
+          "型番・サイズ": "",
+
+          "最新単価": "",
+
+          "在庫": "",
+
+          "在庫金額": "",
 
         });
 
       });
-
-    // 会社合計
-    const companyTotal =
-
-      Object.values(companyRows)
-
-        .reduce((sum, item) => {
-
-          const used20 =
-            item.used * 0.2;
-
-          const stock20 =
-            item.stock * 0.2;
-
-          const estimatedStock =
-
-            Math.round(
-              used20 + stock20
-            );
-
-          const amount =
-
-            estimatedStock *
-
-            Number(
-              item.latestPrice || 0
-            );
-
-          return sum + amount;
-
-        }, 0);
-
-    excelData.push({
-
-      "材料名":
-        `会社合計 : ¥${companyTotal.toLocaleString()}`,
-
-      "型番・サイズ": "",
-
-      "最新単価": "",
-
-      "在庫": "",
-
-      "在庫金額": "",
-
-    });
-
-    // 空行
-    excelData.push({
-
-      "材料名": "",
-
-      "型番・サイズ": "",
-
-      "最新単価": "",
-
-      "在庫": "",
-
-      "在庫金額": "",
-
-    });
-
-  });
 
     const worksheet =
 
@@ -533,21 +533,21 @@ Object.entries(groupedCompanies)
 
     XLSX.utils.book_append_sheet(
 
-  workbook,
+      workbook,
 
-  worksheet,
+      worksheet,
 
-  `${companyName || "全会社"}`
+      `${companyName || "全会社"}`
 
-);
+    );
 
     XLSX.writeFile(
 
-  workbook,
+      workbook,
 
-  `決算在庫_${startMonth}-${endMonth}_${companyName || "全会社"}.xlsx`
+      `決算在庫_${startMonth}-${endMonth}_${companyName || "全会社"}.xlsx`
 
-);
+    );
 
   };
 
@@ -645,15 +645,15 @@ Object.entries(groupedCompanies)
 
     doc.setFontSize(18);
 
-doc.text(
+    doc.text(
 
-  `決算在庫一覧  ${startMonth}〜${endMonth}  ${companyName || "全会社"}`,
+      `決算在庫一覧  ${startMonth}〜${endMonth}  ${companyName || "全会社"}`,
 
-  14,
+      14,
 
-  20
+      20
 
-);
+    );
 
     // =====================
     // 表
@@ -665,17 +665,17 @@ doc.text(
 
       styles: {
 
-  font:
-    "NotoSansJP",
+        font:
+          "NotoSansJP",
 
-  fontStyle:
-    "normal",
+        fontStyle:
+          "normal",
 
-  fontSize: 8,
+        fontSize: 8,
 
-  cellPadding: 2,
+        cellPadding: 2,
 
-},
+      },
 
       headStyles: {
 
@@ -687,270 +687,270 @@ doc.text(
 
       },
 
-     margin: {
+      margin: {
 
-  left: 6,
-  right: 6,
+        left: 6,
+        right: 6,
 
-  top: 10,
+        top: 10,
 
-},
+      },
 
 
 
-     bodyStyles: {
+      bodyStyles: {
 
-  font:
-    "NotoSansJP",
+        font:
+          "NotoSansJP",
 
-  fontStyle:
-    "normal",
+        fontStyle:
+          "normal",
 
-},
+      },
 
-columnStyles: {
+      columnStyles: {
 
-  0: {
-    cellWidth: 62,
-  },
-
-  1: {
-    cellWidth: 38,
-  },
-
-  2: {
-    cellWidth: 32,
-    halign: "right",
-  },
-
-  3: {
-    cellWidth: 24,
-    halign: "right",
-  },
-
-  4: {
-    cellWidth: 38,
-    halign: "right",
-  },
-
-},
-
-
-
-theme: "grid",
-
-head: [[
-
-  "材料名",
-
-  "型番サイズ",
-
-  "最新単価",
-
-  "在庫",
-
-  "在庫金額",
-
-]],
-
-body:
-
-  Object.entries(groupedCompanies)
-
-    .flatMap(([company, sites]) => {
-
-      const pdfRows = [];
-
-      const companyRows = {};
-
-Object.values(sites)
-
-  .flat()
-
-  .forEach((row) => {
-
-    const key =
-
-      `${row.materialName}_${row.size}`;
-
-    if (!companyRows[key]) {
-
-      companyRows[key] = {
-
-        materialName:
-          row.materialName,
-
-        size:
-          row.size,
-
-        used: 0,
-
-        stock: 0,
-
-        latestPrice:
-          row.price,
-
-      };
-
-    }
-
-    companyRows[key].used +=
-
-      Number(row.used || 0);
-
-    companyRows[key].stock +=
-
-      Number(row.quantity || 0)
-
-      -
-
-      Number(row.used || 0);
-
-    companyRows[key].latestPrice =
-      row.price;
-
-  });
-
-      // 会社名
-      pdfRows.push([
-
-        {
-
-          content: company,
-
-          colSpan: 5,
-
-          styles: {
-
-            font: "NotoSansJP",
-
-            fontStyle: "normal",
-
-            fillColor: [226, 232, 240],
-
-            fontSize: 13,
-
-          },
-
+        0: {
+          cellWidth: 62,
         },
 
-      ]);
-
-      // 材料一覧
-      
-
-    Object.values(companyRows)
-
-  .forEach((item) => {
-
-    const used20 =
-      item.used * 0.2;
-
-    const stock20 =
-      item.stock * 0.2;
-
-    const estimatedStock =
-
-  Math.round(
-    used20 + stock20
-  );
-
-    const amount =
-
-      estimatedStock *
-
-      Number(
-        item.latestPrice || 0
-      );
-
-    pdfRows.push([
-
-      item.materialName,
-
-      item.size,
-
-      `¥${Number(
-        item.latestPrice || 0
-      ).toLocaleString()}`,
-
-      estimatedStock.toLocaleString(),
-
-      `¥${Math.round(
-        amount
-      ).toLocaleString()}`,
-
-    ]);
-
-  });
-
- 
-
-      // 会社合計
-      const companyTotal =
-
- Object.values(companyRows)
-
-  .reduce((sum, item) => {
-
-      const used20 =
-        item.used * 0.2;
-
-      const stock20 =
-        item.stock * 0.2;
-
-      const estimatedStock =
-
-  Math.round(
-    used20 + stock20
-  );
-
-      const amount =
-
-        estimatedStock *
-
-        Number(
-          item.latestPrice || 0
-        );
-
-      return sum + amount;
-
-    }, 0);
-
-
-
-      pdfRows.push([
-
-        {
-
-          content:
-
-            `会社合計 : ¥${companyTotal.toLocaleString()}`,
-
-          colSpan: 5,
-
-          styles: {
-
-            font: "NotoSansJP",
-
-            fontStyle: "normal",
-
-            halign: "right",
-
-            fillColor: [241, 245, 249],
-
-            fontSize: 11,
-
-          },
-
+        1: {
+          cellWidth: 38,
         },
 
-      ]);
+        2: {
+          cellWidth: 32,
+          halign: "right",
+        },
+
+        3: {
+          cellWidth: 24,
+          halign: "right",
+        },
+
+        4: {
+          cellWidth: 38,
+          halign: "right",
+        },
+
+      },
 
 
-      return pdfRows;
+
+      theme: "grid",
+
+      head: [[
+
+        "材料名",
+
+        "型番サイズ",
+
+        "最新単価",
+
+        "在庫",
+
+        "在庫金額",
+
+      ]],
+
+      body:
+
+        Object.entries(groupedCompanies)
+
+          .flatMap(([company, sites]) => {
+
+            const pdfRows = [];
+
+            const companyRows = {};
+
+            Object.values(sites)
+
+              .flat()
+
+              .forEach((row) => {
+
+                const key =
+
+                  `${row.materialName}_${row.size}`;
+
+                if (!companyRows[key]) {
+
+                  companyRows[key] = {
+
+                    materialName:
+                      row.materialName,
+
+                    size:
+                      row.size,
+
+                    used: 0,
+
+                    stock: 0,
+
+                    latestPrice:
+                      row.price,
+
+                  };
+
+                }
+
+                companyRows[key].used +=
+
+                  Number(row.used || 0);
+
+                companyRows[key].stock +=
+
+                  Number(row.quantity || 0)
+
+                  -
+
+                  Number(row.used || 0);
+
+                companyRows[key].latestPrice =
+                  row.price;
+
+              });
+
+            // 会社名
+            pdfRows.push([
+
+              {
+
+                content: company,
+
+                colSpan: 5,
+
+                styles: {
+
+                  font: "NotoSansJP",
+
+                  fontStyle: "normal",
+
+                  fillColor: [226, 232, 240],
+
+                  fontSize: 13,
+
+                },
+
+              },
+
+            ]);
+
+            // 材料一覧
 
 
-    }),
+            Object.values(companyRows)
+
+              .forEach((item) => {
+
+                const used20 =
+                  item.used * 0.2;
+
+                const stock20 =
+                  item.stock * 0.2;
+
+                const estimatedStock =
+
+                  Math.round(
+                    used20 + stock20
+                  );
+
+                const amount =
+
+                  estimatedStock *
+
+                  Number(
+                    item.latestPrice || 0
+                  );
+
+                pdfRows.push([
+
+                  item.materialName,
+
+                  item.size,
+
+                  `¥${Number(
+                    item.latestPrice || 0
+                  ).toLocaleString()}`,
+
+                  estimatedStock.toLocaleString(),
+
+                  `¥${Math.round(
+                    amount
+                  ).toLocaleString()}`,
+
+                ]);
+
+              });
+
+
+
+            // 会社合計
+            const companyTotal =
+
+              Object.values(companyRows)
+
+                .reduce((sum, item) => {
+
+                  const used20 =
+                    item.used * 0.2;
+
+                  const stock20 =
+                    item.stock * 0.2;
+
+                  const estimatedStock =
+
+                    Math.round(
+                      used20 + stock20
+                    );
+
+                  const amount =
+
+                    estimatedStock *
+
+                    Number(
+                      item.latestPrice || 0
+                    );
+
+                  return sum + amount;
+
+                }, 0);
+
+
+
+            pdfRows.push([
+
+              {
+
+                content:
+
+                  `会社合計 : ¥${companyTotal.toLocaleString()}`,
+
+                colSpan: 5,
+
+                styles: {
+
+                  font: "NotoSansJP",
+
+                  fontStyle: "normal",
+
+                  halign: "right",
+
+                  fillColor: [241, 245, 249],
+
+                  fontSize: 11,
+
+                },
+
+              },
+
+            ]);
+
+
+            return pdfRows;
+
+
+          }),
 
     });
 
@@ -966,63 +966,63 @@ Object.values(sites)
 
   const adjustInventory = () => {
 
-  const baseRows = Object.values(groupedRows).map((item) => {
+    const baseRows = Object.values(groupedRows).map((item) => {
 
-    const used20 = item.used * 0.2;
+      const used20 = item.used * 0.2;
 
-    const stock20 = item.stock * 0.2;
+      const stock20 = item.stock * 0.2;
 
-    const estimatedStock =
-      Math.round(used20 + stock20);
+      const estimatedStock =
+        Math.round(used20 + stock20);
 
-    const amount =
-      estimatedStock *
-      Number(item.latestPrice || 0);
-
-    return {
-      ...item,
-      estimatedStock,
-      amount,
-    };
-
-  });
-
-  const currentTotal =
-    baseRows.reduce(
-      (sum, item) => sum + item.amount,
-      0
-    );
-
-  const ratio =
-    Number(targetAmount) / currentTotal;
-
-  const adjusted =
-    baseRows.map((item) => {
-
-      const newStock =
-        Math.round(
-          item.estimatedStock * ratio
-        );
+      const amount =
+        estimatedStock *
+        Number(item.latestPrice || 0);
 
       return {
-
         ...item,
-
-        estimatedStock: newStock,
-
-        amount:
-          newStock *
-          Number(item.latestPrice || 0),
-
+        estimatedStock,
+        amount,
       };
 
     });
 
-  setAdjustedRows(adjusted);
+    const currentTotal =
+      baseRows.reduce(
+        (sum, item) => sum + item.amount,
+        0
+      );
 
-};
+    const ratio =
+      Number(targetAmount) / currentTotal;
 
-  
+    const adjusted =
+      baseRows.map((item) => {
+
+        const newStock =
+          Math.round(
+            item.estimatedStock * ratio
+          );
+
+        return {
+
+          ...item,
+
+          estimatedStock: newStock,
+
+          amount:
+            newStock *
+            Number(item.latestPrice || 0),
+
+        };
+
+      });
+
+    setAdjustedRows(adjusted);
+
+  };
+
+
 
   return (
 
@@ -1034,7 +1034,7 @@ Object.values(sites)
 
         {/* 会社 */}
 
-        
+
 
         {/* 開始年月 */}
 
@@ -1126,14 +1126,14 @@ Object.values(sites)
 
             {companyList.map((company) => (
 
-  <option
-    key={company.id}
-    value={company.companyName}
-  >
-    {company.companyName}
-  </option>
+              <option
+                key={company.id}
+                value={company.companyName}
+              >
+                {company.companyName}
+              </option>
 
-))}
+            ))}
 
           </select>
 
@@ -1141,33 +1141,33 @@ Object.values(sites)
 
         <div>
 
-  <label className="block text-sm font-medium mb-2">
-    目標金額
-  </label>
+          <label className="block text-sm font-medium mb-2">
+            目標金額
+          </label>
 
-  <input
-    type="number"
-    value={targetAmount}
-    onChange={(e) =>
-      setTargetAmount(e.target.value)
-    }
-    placeholder="例：5000000"
-    className="w-full border rounded-2xl px-4 py-3"
-  />
+          <input
+            type="number"
+            value={targetAmount}
+            onChange={(e) =>
+              setTargetAmount(e.target.value)
+            }
+            placeholder="例：5000000"
+            className="w-full border rounded-2xl px-4 py-3"
+          />
 
-</div>
+        </div>
 
-     <div>
+        <div>
 
-  <div>
+          <div>
 
-  <label className="block text-sm font-medium mb-2">
-    自動調整
-  </label>
+            <label className="block text-sm font-medium mb-2">
+              自動調整
+            </label>
 
-  <button
-    onClick={adjustInventory}
-    className="
+            <button
+              onClick={adjustInventory}
+              className="
       w-full
       bg-blue-600
       hover:bg-blue-700
@@ -1177,308 +1177,308 @@ Object.values(sites)
       rounded-2xl
       font-semibold
     "
-  >
-    自動調整
-  </button>
+            >
+              自動調整
+            </button>
 
-</div>
+          </div>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-      
+
       {/* 表 */}
 
-{Object.entries(
-  groupedCompanies
- ).map(([company, sites]) => {
+      {Object.entries(
+        groupedCompanies
+      ).map(([company, sites]) => {
 
-  const companyRows = {};
+        const companyRows = {};
 
- Object.values(sites)
+        Object.values(sites)
 
-  .flat()
+          .flat()
 
-  .forEach((row) => {
+          .forEach((row) => {
 
-    const key =
+            const key =
 
-      `${row.materialName}_${row.size}`;
+              `${row.materialName}_${row.size}`;
 
-    if (!companyRows[key]) {
+            if (!companyRows[key]) {
 
-      companyRows[key] = {
+              companyRows[key] = {
 
-        materialName:
-          row.materialName,
+                materialName:
+                  row.materialName,
 
-        size:
-          row.size,
+                size:
+                  row.size,
 
-        used: 0,
+                used: 0,
 
-        stock: 0,
+                stock: 0,
 
-        latestPrice:
-          row.price,
+                latestPrice:
+                  row.price,
 
-      };
+              };
 
-    }
+            }
 
-    companyRows[key].used +=
+            companyRows[key].used +=
 
-      Number(row.used || 0);
+              Number(row.used || 0);
 
-    companyRows[key].stock +=
+            companyRows[key].stock +=
 
-      Number(row.quantity || 0)
+              Number(row.quantity || 0)
 
-      -
+              -
 
-      Number(row.used || 0);
+              Number(row.used || 0);
 
-    companyRows[key].latestPrice =
-      row.price;
+            companyRows[key].latestPrice =
+              row.price;
 
-  });
+          });
 
-  return ( 
+        return (
 
-  <div
-    key={company}
-    className="
+          <div
+            key={company}
+            className="
       bg-white
       rounded-3xl
       shadow-sm
       p-6
       mb-6
     "
-  >
+          >
 
-    {/* 会社名 */}
+            {/* 会社名 */}
 
-    <div className="text-2xl font-bold text-black mb-4 ml-1">
+            <div className="text-2xl font-bold text-black mb-4 ml-1">
 
-      {company}
+              {company}
 
-    </div>
+            </div>
 
-    {/* テーブル */}
+            {/* テーブル */}
 
-    <div className="overflow-hidden rounded-2xl border">
+            <div className="overflow-hidden rounded-2xl border">
 
-      {/* ヘッダー */}
+              {/* ヘッダー */}
 
-      <div className="grid grid-cols-[2fr_1fr_120px_120px_140px] bg-slate-100 font-semibold text-sm">
+              <div className="grid grid-cols-[2fr_1fr_120px_120px_140px] bg-slate-100 font-semibold text-sm">
 
-        <div className="p-3">
-          材料名
-        </div>
+                <div className="p-3">
+                  材料名
+                </div>
 
-        <div className="p-3">
-          型番・サイズ
-        </div>
+                <div className="p-3">
+                  型番・サイズ
+                </div>
 
-        <div className="p-3 text-right">
-          最新単価
-        </div>
+                <div className="p-3 text-right">
+                  最新単価
+                </div>
 
-        <div className="p-3 text-right">
-          推定決算在庫
-        </div>
+                <div className="p-3 text-right">
+                  推定決算在庫
+                </div>
 
-        <div className="p-3 text-right">
-          決算在庫金額
-        </div>
+                <div className="p-3 text-right">
+                  決算在庫金額
+                </div>
 
-      </div>
+              </div>
 
-      {/* データ */}
+              {/* データ */}
 
-   {(adjustedRows ?? Object.values(companyRows))
+              {(adjustedRows ?? Object.values(companyRows))
 
-   .map((item, index) => {
+                .map((item, index) => {
 
 
-    const used20 =
-      item.used * 0.2;
+                  const used20 =
+                    item.used * 0.2;
 
-    const stock20 =
-      item.stock * 0.2;
+                  const stock20 =
+                    item.stock * 0.2;
 
-    const estimatedStock =
+                  const estimatedStock =
 
-  Math.round(
-    used20 + stock20
-  );
+                    Math.round(
+                      used20 + stock20
+                    );
 
-    const amount =
+                  const amount =
 
-      estimatedStock *
+                    estimatedStock *
 
-      Number(
-        item.latestPrice || 0
-      );
+                    Number(
+                      item.latestPrice || 0
+                    );
 
-    return (
+                  return (
 
-      <div
+                    <div
 
-        key={index}
+                      key={index}
 
-        className="
+                      className="
           grid
           grid-cols-[2fr_1fr_120px_120px_140px]
           border-t
           text-sm
         "
 
-      >
+                    >
 
-        <div className="p-3">
+                      <div className="p-3">
 
-          {item.materialName}
+                        {item.materialName}
 
-        </div>
+                      </div>
 
-        <div className="p-3">
+                      <div className="p-3">
 
-          {item.size}
+                        {item.size}
 
-        </div>
+                      </div>
 
-        <div className="p-3 text-right">
+                      <div className="p-3 text-right">
 
-          ¥{Number(
-            item.latestPrice || 0
-          ).toLocaleString()}
+                        ¥{Number(
+                          item.latestPrice || 0
+                        ).toLocaleString()}
 
-        </div>
+                      </div>
 
-        <div className="p-3 text-right font-semibold">
+                      <div className="p-3 text-right font-semibold">
 
-          {(
-           item.estimatedStock ??
-           estimatedStock
-           ).toLocaleString()}
+                        {(
+                          item.estimatedStock ??
+                          estimatedStock
+                        ).toLocaleString()}
 
-        </div>
+                      </div>
 
-        <div className="p-3 text-right font-semibold">
+                      <div className="p-3 text-right font-semibold">
 
-         ¥{Math.round(
-         item.amount ?? amount
-         ).toLocaleString()}
+                        ¥{Math.round(
+                          item.amount ?? amount
+                        ).toLocaleString()}
 
-        </div>
+                      </div>
 
-      </div>
+                    </div>
 
-    );
+                  );
 
-  })}
+                })}
 
 
 
-      {/* 会社合計 */}
+              {/* 会社合計 */}
 
-      <div className="p-4 flex justify-end font-bold text-lg border-t bg-slate-50">
+              <div className="p-4 flex justify-end font-bold text-lg border-t bg-slate-50">
 
-        会社合計：
+                会社合計：
 
-        ¥{
-  
-  (adjustedRows ?? Object.values(companyRows)).reduce(
-  (sum, item) => {
+                ¥{
 
-      const used20 =
-        item.used * 0.2;
+                  (adjustedRows ?? Object.values(companyRows)).reduce(
+                    (sum, item) => {
 
-      const stock20 =
-        item.stock * 0.2;
+                      const used20 =
+                        item.used * 0.2;
 
-      const estimatedStock =
+                      const stock20 =
+                        item.stock * 0.2;
 
-  Math.round(
-    used20 + stock20
-  );
+                      const estimatedStock =
 
-      const amount =
+                        Math.round(
+                          used20 + stock20
+                        );
 
-        estimatedStock *
+                      const amount =
 
-        Number(
-          item.latestPrice || 0
+                        estimatedStock *
+
+                        Number(
+                          item.latestPrice || 0
+                        );
+
+                      return sum + (item.amount ?? amount);
+
+                    }, 0)
+
+                    .toLocaleString()
+
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
         );
 
-      return sum + (item.amount ?? amount);
+      })}
 
-    }, 0)
+      <div className="bg-slate-100 rounded-2xl p-6 mt-6">
 
-    .toLocaleString()
+        <div className="text-xl font-bold">
 
-}
+          目標金額：
+          ¥{Number(targetAmount || 0).toLocaleString()}
+
+        </div>
+
+        <div className="text-xl font-bold mt-2">
+
+          調整後金額：
+          ¥{
+            adjustedRows
+              ? adjustedRows
+                .reduce(
+                  (sum, item) =>
+                    sum + item.amount,
+                  0
+                )
+                .toLocaleString()
+              : "0"
+          }
+
+        </div>
+
+        <div className="text-xl font-bold mt-2 text-blue-600">
+
+          差額：
+          ¥{
+            adjustedRows
+              ? (
+                adjustedRows.reduce(
+                  (sum, item) =>
+                    sum + item.amount,
+                  0
+                ) -
+                Number(targetAmount || 0)
+              ).toLocaleString()
+              : "0"
+          }
+
+        </div>
 
       </div>
 
     </div>
 
-  </div>
-
   );
-
-})}
-
-<div className="bg-slate-100 rounded-2xl p-6 mt-6">
-
-  <div className="text-xl font-bold">
-
-    目標金額：
-    ¥{Number(targetAmount || 0).toLocaleString()}
-
-  </div>
-
-  <div className="text-xl font-bold mt-2">
-
-    調整後金額：
-    ¥{
-      adjustedRows
-        ? adjustedRows
-            .reduce(
-              (sum, item) =>
-                sum + item.amount,
-              0
-            )
-            .toLocaleString()
-        : "0"
-    }
-
-  </div>
-
-  <div className="text-xl font-bold mt-2 text-blue-600">
-
-    差額：
-    ¥{
-      adjustedRows
-        ? (
-            adjustedRows.reduce(
-              (sum, item) =>
-                sum + item.amount,
-              0
-            ) -
-            Number(targetAmount || 0)
-          ).toLocaleString()
-        : "0"
-    }
-
-  </div>
-
-</div>
-
-</div>
-
-);
 
 }

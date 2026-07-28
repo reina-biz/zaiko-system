@@ -19,20 +19,20 @@ export default function StockPage({
     new Date().getFullYear();
 
   const [startMonth, setStartMonth] =
-  useState("");
+    useState("");
 
   const [endMonth, setEndMonth] =
-  useState("");
+    useState("");
 
   const hasSearch =
 
-  startMonth ||
+    startMonth ||
 
-  endMonth ||
+    endMonth ||
 
-  companyName ||
+    companyName ||
 
-  search;
+    search;
 
   const groupedCompanies = {};
 
@@ -71,26 +71,26 @@ export default function StockPage({
 
       const key =
 
-  `${row.materialName}_${row.size}`;
+        `${row.materialName}_${row.size}`;
 
-const company =
-  row.companyName || "未設定";
+      const company =
+        row.companyName || "未設定";
 
-if (!groupedCompanies[company]) {
+      if (!groupedCompanies[company]) {
 
-  groupedCompanies[company] = {};
+        groupedCompanies[company] = {};
 
-}
+      }
 
-if (
+      if (
 
-  !groupedCompanies[company][key]
+        !groupedCompanies[company][key]
 
-) {
+      ) {
 
-  groupedCompanies[company][key] = {
-            materialName:
-  row.materialName,
+        groupedCompanies[company][key] = {
+          materialName:
+            row.materialName,
           size: row.size,
           quantity: 0,
           orderQuantity: 0,
@@ -100,16 +100,16 @@ if (
       }
 
       groupedCompanies[company][key]
-  .orderQuantity +=
+        .orderQuantity +=
         Number(row.quantity || 0);
 
       groupedCompanies[company][key]
-  .quantity +=
+        .quantity +=
         Number(row.quantity || 0)
         - Number(row.used || 0);
 
       groupedCompanies[company][key]
-  .latestPrice =
+        .latestPrice =
         row.price;
 
     });
@@ -120,8 +120,8 @@ if (
 
       <div className="grid md:grid-cols-4 gap-4 mb-6 items-end">
 
-    <div>
-        
+        <div>
+
           <label className="block text-sm font-medium mb-2">
             開始年月
           </label>
@@ -135,11 +135,11 @@ if (
             className="w-full border rounded-2xl px-4 py-3"
           />
 
-</div>
+        </div>
 
-<div>
+        <div>
 
-<label className="block text-sm font-medium mb-2">
+          <label className="block text-sm font-medium mb-2">
             終了年月
           </label>
 
@@ -151,11 +151,11 @@ if (
             }
             className="w-full border rounded-2xl px-4 py-3"
           />
-          </div>
+        </div>
 
 
-<div>
-<label className="block text-sm font-medium mb-2">
+        <div>
+          <label className="block text-sm font-medium mb-2">
             会社名
           </label>
 
@@ -175,215 +175,215 @@ if (
 
             {companyList.map((company) => (
 
-  <option
-    key={company.id}
-    value={company.companyName}
-  >
-    {company.companyName}
-  </option>
+              <option
+                key={company.id}
+                value={company.companyName}
+              >
+                {company.companyName}
+              </option>
 
-))}
+            ))}
 
           </select>
 
         </div>
 
 
-<div>
+        <div>
 
-  <label className="block text-sm font-medium mb-2">
-    材料名検索
-  </label>
+          <label className="block text-sm font-medium mb-2">
+            材料名検索
+          </label>
 
-  <input
-    type="text"
-    placeholder="材料名検索"
-    value={search}
-    onChange={(e) =>
-      setSearch(e.target.value)
-    }
-    className="
+          <input
+            type="text"
+            placeholder="材料名検索"
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+            className="
       w-full
       border
       rounded-2xl
       px-4
       py-3
     "
-/>
+          />
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-{hasSearch && (
-
-<div className="text-2xl font-bold text-black mb-6 ml-1">
-
-  {companyName || "全会社"}
-
-</div>
-
-)}
       {hasSearch && (
 
-      <div className="overflow-auto rounded-2xl border bg-white">
+        <div className="text-2xl font-bold text-black mb-6 ml-1">
 
-        <table className="w-full text-sm min-w-[1200px]">
+          {companyName || "全会社"}
 
-          <thead className="bg-slate-100">
+        </div>
 
-            <tr>
+      )}
+      {hasSearch && (
 
-              <th className="p-4 text-left">
-                材料名
-              </th>
+        <div className="overflow-auto rounded-2xl border bg-white">
 
-              <th className="p-4 text-left">
-                型番・サイズ
-              </th>
+          <table className="w-full text-sm min-w-[1200px]">
 
-              <th className="p-4 text-right">
-                最新単価
-              </th>
+            <thead className="bg-slate-100">
 
-              <th className="p-4 text-right">
-                注文数
-              </th>
+              <tr>
 
-              <th className="p-4 text-right">
-                使用数
-              </th>
+                <th className="p-4 text-left">
+                  材料名
+                </th>
 
-              <th className="p-4 text-right">
-                現在在庫
-              </th>
+                <th className="p-4 text-left">
+                  型番・サイズ
+                </th>
 
-            </tr>
+                <th className="p-4 text-right">
+                  最新単価
+                </th>
 
-          </thead>
+                <th className="p-4 text-right">
+                  注文数
+                </th>
 
-          <tbody>
+                <th className="p-4 text-right">
+                  使用数
+                </th>
 
-            {Object.entries(groupedCompanies)
+                <th className="p-4 text-right">
+                  現在在庫
+                </th>
 
-  .map(([company, materials]) => (
+              </tr>
 
-    <>
+            </thead>
 
-      <tr className="bg-slate-200">
+            <tbody>
 
-        <td
-          colSpan={6}
-          className="
+              {Object.entries(groupedCompanies)
+
+                .map(([company, materials]) => (
+
+                  <>
+
+                    <tr className="bg-slate-200">
+
+                      <td
+                        colSpan={6}
+                        className="
             p-4
             font-bold
             text-lg
           "
-        >
+                      >
 
-          {company}
+                        {company}
 
-        </td>
+                      </td>
 
-      </tr>
+                    </tr>
 
-      {Object.entries(materials)
+                    {Object.entries(materials)
 
-        .filter(([name]) => {
+                      .filter(([name]) => {
 
-          const keywords =
-            search
-              .toLowerCase()
-              .split(" ")
-              .filter(Boolean);
+                        const keywords =
+                          search
+                            .toLowerCase()
+                            .split(" ")
+                            .filter(Boolean);
 
-          return keywords.every(
+                        return keywords.every(
 
-            (keyword) =>
+                          (keyword) =>
 
-              name
-                .toLowerCase()
-                .includes(keyword)
+                            name
+                              .toLowerCase()
+                              .includes(keyword)
 
-          );
+                        );
 
-        })
+                      })
 
-        .map(([key, item]) => (
+                      .map(([key, item]) => (
 
-          <tr
-            key={key}
-            className="
+                        <tr
+                          key={key}
+                          className="
               border-t
               hover:bg-slate-50
             "
-          >
+                        >
 
-            <td className="p-4 whitespace-nowrap">
-              {item.materialName}
-            </td>
+                          <td className="p-4 whitespace-nowrap">
+                            {item.materialName}
+                          </td>
 
-            <td className="p-4 whitespace-nowrap">
-              {item.size}
-            </td>
+                          <td className="p-4 whitespace-nowrap">
+                            {item.size}
+                          </td>
 
-            <td className="p-4 text-right whitespace-nowrap">
+                          <td className="p-4 text-right whitespace-nowrap">
 
-              ¥{Number(
-                item.latestPrice || 0
-              ).toLocaleString()}
+                            ¥{Number(
+                              item.latestPrice || 0
+                            ).toLocaleString()}
 
-            </td>
+                          </td>
 
-            <td className="p-4 text-right">
+                          <td className="p-4 text-right">
 
-              {item.orderQuantity.toLocaleString()}
+                            {item.orderQuantity.toLocaleString()}
 
-            </td>
+                          </td>
 
-            <td className="p-4 text-right">
+                          <td className="p-4 text-right">
 
-              {(
-                item.orderQuantity -
-                item.quantity
-              ).toLocaleString()}
+                            {(
+                              item.orderQuantity -
+                              item.quantity
+                            ).toLocaleString()}
 
-            </td>
+                          </td>
 
-            <td className="p-4 text-right font-semibold">
+                          <td className="p-4 text-right font-semibold">
 
-              {item.quantity.toLocaleString()}
+                            {item.quantity.toLocaleString()}
 
-            </td>
+                          </td>
 
-          </tr>
+                        </tr>
 
-        ))}
+                      ))}
 
-    </>
+                  </>
 
-))}
+                ))}
 
-          </tbody>
+            </tbody>
 
-        </table>
+          </table>
 
-      </div>
+        </div>
 
       )}
 
-{!hasSearch && (
+      {!hasSearch && (
 
-<div className="bg-white rounded-2xl border p-20 text-center text-slate-400">
+        <div className="bg-white rounded-2xl border p-20 text-center text-slate-400">
 
-検索条件を入力してください
+          検索条件を入力してください
 
-</div>
+        </div>
 
-)}
+      )}
 
     </div>
-    
+
 
   );
 }
