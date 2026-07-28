@@ -1523,17 +1523,22 @@ tableLineWidth: 0.1,
 
                             value={row.price}
 
-                            readOnly
-
-                            className="
-      w-full
-      border
-      rounded-xl
-      px-3
-      py-2
-      text-right
-      bg-slate-100
-    "
+                            onChange={(e) =>
+    updateRow(
+      sectionIndex,
+      index,
+      "price",
+      e.target.value
+    )
+  }
+  className="
+    w-full
+    border
+    rounded-xl
+    px-3
+    py-2
+    text-right
+  "
                           />
 
                         </div>
