@@ -185,13 +185,13 @@ const materialSuggestions = [
       </option>
 
       {companyList.map((company) => (
-        <option
-          key={company}
-          value={company}
-        >
-          {company}
-        </option>
-      ))}
+  <option
+    key={company.id}
+    value={company.companyName}
+  >
+    {company.companyName}
+  </option>
+))}
 
     </select>
   </div>

@@ -1126,16 +1126,14 @@ Object.values(sites)
 
             {companyList.map((company) => (
 
-              <option
-                key={company}
-                value={company}
-              >
+  <option
+    key={company.id}
+    value={company.companyName}
+  >
+    {company.companyName}
+  </option>
 
-                {company}
-
-              </option>
-
-            ))}
+))}
 
           </select>
 

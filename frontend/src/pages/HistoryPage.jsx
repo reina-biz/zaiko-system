@@ -219,11 +219,14 @@ console.log("groupedRows", groupedRows);
 
     <option value="全て">全て</option>
 
-    {companyList.map(company=>(
-      <option key={company} value={company}>
-        {company}
-      </option>
-    ))}
+    {companyList.map((company) => (
+  <option
+    key={company.id}
+    value={company.companyName}
+  >
+    {company.companyName}
+  </option>
+))}
 
   </select>
 

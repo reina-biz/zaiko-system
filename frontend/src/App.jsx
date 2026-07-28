@@ -1,3 +1,5 @@
+import { getHistory } from "./services/historyService";
+
 import {
   getUsers,
   saveUser,
