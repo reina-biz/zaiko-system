@@ -9,6 +9,12 @@ import autoTable from "jspdf-autotable";
 
 import InputPage from "./InputPage";
 
+import {
+  saveMaterialReport,
+  updateMaterialReport,
+  deleteMaterialReport,
+} from "../services/reportService";
+
 export default function CreatePage({
 
   companyList,
@@ -16,6 +22,7 @@ export default function CreatePage({
 
   materialReports,
   setMaterialReports,
+  loadMaterialReports,
 
   userList
 
@@ -1065,7 +1072,7 @@ tableLineWidth: 0.1,
 
             <button
 
-              onClick={() => {
+              onClick={async () => {
 
                 const report = {
 
@@ -1111,25 +1118,20 @@ tableLineWidth: 0.1,
 
                 if (editIndex !== null) {
 
-  const updated = [
-    ...materialReports
-  ];
-
-  updated[editIndex] =
-    report;
-
-  setMaterialReports(
-    updated
+  await updateMaterialReport(
+    materialReports[editIndex].id,
+    report
   );
 
 } else {
 
-  setMaterialReports([
-    ...materialReports,
+  await saveMaterialReport(
     report
-  ]);
+  );
 
 }
+
+await loadMaterialReports();
 
                 // リセット
 
@@ -2098,37 +2100,25 @@ return (
 
                       <button
 
-                        onClick={() => {
+                        onClick={async () => {
 
-  if (
-    !window.confirm(
-      "本当に削除しますか？"
-    )
-  ) {
-    return;
-  }
+  
 
-  const updated =
+ if (
+  !window.confirm(
+    "本当に削除しますか？"
+  )
+) {
+  return;
+}
 
-    materialReports.filter(
+await deleteMaterialReport(report.id);
 
-      (_, i) => i !== index
+await loadMaterialReports();
 
-    );
-
-  setMaterialReports(
-    updated
-  );
-
-  if (
-    selectedReport === report
-  ) {
-
-    setSelectedReport(
-      null
-    );
-
-  }
+if (selectedReport === report) {
+  setSelectedReport(null);
+} 
 
 }}
 

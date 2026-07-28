@@ -16,9 +16,8 @@ import {
 import { supabase } from "./lib/supabase";
 
 import {
-  getHistory,
-  saveHistory,
-} from "./services/historyService";
+  getMaterialReports,
+} from "./services/reportService";
 
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
@@ -202,7 +201,20 @@ useEffect(() => {
   loadHistory();
 }, []);
   
+const loadMaterialReports = async () => {
+  const data = await getMaterialReports();
 
+  setMaterialReports(
+    data.map((item) => ({
+      id: item.id,
+      ...item.report,
+    }))
+  );
+};
+
+useEffect(() => {
+  loadMaterialReports();
+}, []);
 
 
  
@@ -580,23 +592,12 @@ useEffect(() => {
   
 
   <CreatePage
-
   companyList={companyList}
-
   historyRows={historyRows}
-
-  materialReports={
-    materialReports
-  }
-
-  setMaterialReports={
-    setMaterialReports
-  }
-
+  materialReports={materialReports}
+  setMaterialReports={setMaterialReports}
+  loadMaterialReports={loadMaterialReports}
   userList={userList}
-
-
-
 />
 
 
