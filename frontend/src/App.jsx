@@ -49,54 +49,54 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] =
     useState(false);
 
-  
 
-const [userEmail, setUserEmail] =
-  useState("");
 
- useEffect(() => {
-  async function checkSession() {
+  const [userEmail, setUserEmail] =
+    useState("");
+
+  useEffect(() => {
+    async function checkSession() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        const email = session.user.email;
+
+        console.log("Google Email:", email);
+
+        setUserEmail(email);
+        // setIsLoggedIn(true);
+      }
+      else {
+        setUserEmail("");
+        setIsLoggedIn(false);
+      }
+    }
+
+    checkSession();
+
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        const email = session.user.email;
 
-    if (session) {
-  const email = session.user.email;
+        console.log("Google Email:", email);
 
-  console.log("Google Email:", email);
+        setUserEmail(email);
+        // setIsLoggedIn(true);
+      }
+      else {
+        setUserEmail("");
+        setIsLoggedIn(false);
+      }
+    });
 
-  setUserEmail(email);
-  // setIsLoggedIn(true);
-}
-    else {
-      setUserEmail("");
-      setIsLoggedIn(false);
-    }
-  }
+    return () => subscription.unsubscribe();
+  }, []);
 
-  checkSession();
 
-  const {
-    data: { subscription },
-  } = supabase.auth.onAuthStateChange((_event, session) => {
-    if (session) {
-  const email = session.user.email;
-
-  console.log("Google Email:", email);
-
-  setUserEmail(email);
-  // setIsLoggedIn(true);
-}
- else {
-      setUserEmail("");
-      setIsLoggedIn(false);
-    }
-  });
-
-  return () => subscription.unsubscribe();
-}, []); 
-
-  
 
   // =========================
   // タブ
@@ -112,39 +112,39 @@ const [userEmail, setUserEmail] =
   const [companyName, setCompanyName] =
     useState("");
 
-   const [siteName, setSiteName] =
+  const [siteName, setSiteName] =
     useState("");
 
-   const [companyList, setCompanyList] = useState([]);
-    
+  const [companyList, setCompanyList] = useState([]);
 
-    useEffect(() => {
-  async function loadCompanies() {
-    const data = await getCompanies();
 
-    if (data.length > 0) {
-      setCompanyList(data);
+  useEffect(() => {
+    async function loadCompanies() {
+      const data = await getCompanies();
+
+      if (data.length > 0) {
+        setCompanyList(data);
+      }
     }
-  }
 
-  loadCompanies();
-}, []);
+    loadCompanies();
+  }, []);
 
-const [userList, setUserList] = useState([]); 
+  const [userList, setUserList] = useState([]);
 
-const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
-useEffect(() => {
-  async function loadUsers() {
-    const data = await getUsers();
+  useEffect(() => {
+    async function loadUsers() {
+      const data = await getUsers();
 
-    if (data.length > 0) {
-      setUserList(data);
+      if (data.length > 0) {
+        setUserList(data);
+      }
     }
-  }
 
-  loadUsers();
-}, []);
+    loadUsers();
+  }, []);
 
   // =========================
   // 日付
@@ -169,63 +169,63 @@ useEffect(() => {
     note: "",
   };
 
-const [rows, setRows] =
-  useState(
+  const [rows, setRows] =
+    useState(
 
-    Array.from(
-      { length: 30 },
-      () => ({
-        ...EMPTY_ROW
-      })
-    )
+      Array.from(
+        { length: 30 },
+        () => ({
+          ...EMPTY_ROW
+        })
+      )
 
-  );
+    );
 
-const [historyRows, setHistoryRows] = useState([]);
+  const [historyRows, setHistoryRows] = useState([]);
 
   const [
 
-  materialReports,
+    materialReports,
 
-  setMaterialReports
+    setMaterialReports
 
-] = useState([]);
+  ] = useState([]);
 
-useEffect(() => {
-  async function loadHistory() {
-    const data = await getHistory();
+  useEffect(() => {
+    async function loadHistory() {
+      const data = await getHistory();
 
-    if (data.length > 0) {
-      setHistoryRows(data);
+      if (data.length > 0) {
+        setHistoryRows(data);
+      }
     }
-  }
 
-  loadHistory();
-}, []);
-  
-const loadMaterialReports = async () => {
-  const data = await getMaterialReports();
+    loadHistory();
+  }, []);
 
-  setMaterialReports(
-    data.map((item) => ({
-      id: item.id,
-      ...item.report,
-    }))
-  );
-};
+  const loadMaterialReports = async () => {
+    const data = await getMaterialReports();
 
-useEffect(() => {
-  loadMaterialReports();
-}, []);
+    setMaterialReports(
+      data.map((item) => ({
+        id: item.id,
+        ...item.report,
+      }))
+    );
+  };
+
+  useEffect(() => {
+    loadMaterialReports();
+  }, []);
 
 
- 
+
 
   // =========================
   // 保存
   // =========================
 
-  
+
 
 
 
@@ -440,8 +440,8 @@ useEffect(() => {
     return (
 
       <LoginPage
-  setIsLoggedIn={setIsLoggedIn}
-/>
+        setIsLoggedIn={setIsLoggedIn}
+      />
 
     );
 
@@ -470,22 +470,22 @@ useEffect(() => {
             <p className="text-slate-500 mt-2">
               ※入力・入力履歴・設定この3ページは触らないでください！
             </p>
-            
+
 
           </div>
 
           <button
-  onClick={async () => {
+            onClick={async () => {
 
-    await supabase.auth.signOut();
+              await supabase.auth.signOut();
 
-    setIsLoggedIn(false);
+              setIsLoggedIn(false);
 
-  }}
-  className="bg-slate-700 hover:bg-slate-800 hover:bg-red-600 text-white px-6 py-3 rounded-2xl font-semibold"
->
-  ログアウト
-</button>
+            }}
+            className="bg-slate-700 hover:bg-slate-800 hover:bg-red-600 text-white px-6 py-3 rounded-2xl font-semibold"
+          >
+            ログアウト
+          </button>
         </div>
 
         {/* タブ */}
@@ -515,11 +515,11 @@ useEffect(() => {
 
                 ${tab === item
 
-                  ? "bg-sky-600 text-white"
+                    ? "bg-sky-600 text-white"
 
-                  : "bg-slate-100 hover:bg-slate-200"
+                    : "bg-slate-100 hover:bg-slate-200"
 
-                }
+                  }
                 `}
               >
                 {item}
@@ -531,31 +531,31 @@ useEffect(() => {
 
         </div>
 
-        
+
         {/* 入力 */}
 
         {tab === "入力" && (
 
-<InputPage
+          <InputPage
 
-  rows={rows}
-  setRows={setRows}
+            rows={rows}
+            setRows={setRows}
 
-  historyRows={historyRows}
-  setHistoryRows={setHistoryRows}
+            historyRows={historyRows}
+            setHistoryRows={setHistoryRows}
 
-  companyName={companyName}
-  setCompanyName={setCompanyName}
+            companyName={companyName}
+            setCompanyName={setCompanyName}
 
-  siteName={siteName}
-  setSiteName={setSiteName}
+            siteName={siteName}
+            setSiteName={setSiteName}
 
-  companyList={companyList}
-  setCompanyList={setCompanyList}
+            companyList={companyList}
+            setCompanyList={setCompanyList}
 
-  orderDate={orderDate}
-  setOrderDate={setOrderDate}
-/>
+            orderDate={orderDate}
+            setOrderDate={setOrderDate}
+          />
 
         )}
 
@@ -565,46 +565,46 @@ useEffect(() => {
 
           <HistoryPage
 
-  rows={historyRows}
-  setHistoryRows={setHistoryRows}
+            rows={historyRows}
+            setHistoryRows={setHistoryRows}
 
-  companyList={companyList}
+            companyList={companyList}
 
-/>
+          />
 
         )}
 
-{/* 各現場材料 */}
+        {/* 各現場材料 */}
 
-{tab === "各現場材料" && (
+        {tab === "各現場材料" && (
 
-  <SiteMaterialsPage
+          <SiteMaterialsPage
 
-    rows={historyRows}
-    companyList={companyList}
+            rows={historyRows}
+            companyList={companyList}
 
-  />
+          />
 
-)}
-
-
-{/* 作成 */}
-
-{tab === "作成" && (
-  
-
-  <CreatePage
-  companyList={companyList}
-  historyRows={historyRows}
-  materialReports={materialReports}
-  setMaterialReports={setMaterialReports}
-  loadMaterialReports={loadMaterialReports}
-  userList={userList}
-/>
+        )}
 
 
+        {/* 作成 */}
 
-)}
+        {tab === "作成" && (
+
+
+          <CreatePage
+            companyList={companyList}
+            historyRows={historyRows}
+            materialReports={materialReports}
+            setMaterialReports={setMaterialReports}
+            loadMaterialReports={loadMaterialReports}
+            userList={userList}
+          />
+
+
+
+        )}
 
         {/* 単価比較 */}
 
@@ -657,22 +657,22 @@ useEffect(() => {
 
         )}
 
-{/* 決算調整 */}
+        {/* 決算調整 */}
 
-{tab === "決算調整" && (
+        {tab === "決算調整" && (
 
-  <SettlementAdjustPage
+          <SettlementAdjustPage
 
-    rows={historyRows}
+            rows={historyRows}
 
-    companyName={companyName}
-    setCompanyName={setCompanyName}
+            companyName={companyName}
+            setCompanyName={setCompanyName}
 
-    companyList={companyList}
+            companyList={companyList}
 
-  />
+          />
 
-)}
+        )}
 
 
         {/* 設定 */}
@@ -680,17 +680,17 @@ useEffect(() => {
         {tab === "設定" && (
 
           <SettingsPage
-    companyList={companyList}
-    setCompanyList={setCompanyList}
+            companyList={companyList}
+            setCompanyList={setCompanyList}
 
-    userList={userList}
-    setUserList={setUserList}
-  />
+            userList={userList}
+            setUserList={setUserList}
+          />
 
-)}
+        )}
 
-          
-        
+
+
 
       </div>
 

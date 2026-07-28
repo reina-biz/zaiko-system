@@ -8,14 +8,14 @@ export async function getHistory() {
     .order("created_at", { ascending: true });
 
   console.log("getHistory data", data);
-console.log("1件目", data?.[0]);
-console.log("1件目のid", data?.[0]?.id);
+  console.log("1件目", data?.[0]);
+  console.log("1件目のid", data?.[0]?.id);
   console.log("getHistory error", error);
 
   if (error) {
-  console.error(error);
-  return [];
-}
+    console.error(error);
+    return [];
+  }
 
 
   return data;
