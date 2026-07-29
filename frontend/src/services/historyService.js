@@ -65,7 +65,7 @@ export async function deleteHistory(ids) {
 // 履歴更新
 export async function updateHistory(row) {
   console.log("row.id =", row.id, "型 =", typeof row.id);
-  console.log("更新するused", row.id, row.used);
+  
   const { data, error } = await supabase
     .from("history")
     .update({
@@ -82,9 +82,7 @@ export async function updateHistory(row) {
     .eq("id", row.id)
     .select();
 
-  console.log("更新結果", data);
-  console.log("更新エラー", error);
-  console.log("Supabase更新データ", data);
+  
 
   if (error) {
     console.error(error);
