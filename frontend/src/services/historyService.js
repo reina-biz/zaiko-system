@@ -32,6 +32,9 @@ export async function saveHistory(rows) {
 
   console.log("saveHistory data", data);
   console.log("saveHistory error", error);
+  console.log("error message", error?.message);
+  console.log("error details", error?.details);
+  console.log("error hint", error?.hint);
 
   if (error) {
     console.error(error);
@@ -57,4 +60,30 @@ export async function deleteHistory(ids) {
   }
 
   console.log("削除成功");
+}
+
+// 履歴更新
+export async function updateHistory(row) {
+  const { data, error } = await supabase
+    .from("history")
+    .update({
+      orderDate: row.orderDate,
+      companyName: row.companyName,
+      siteName: row.siteName,
+      materialName: row.materialName,
+      size: row.size,
+      price: row.price,
+      quantity: row.quantity,
+      used: row.used,
+      note: row.note,
+    })
+    .eq("id", row.id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw error;
+  }
+
+  return data;
 }

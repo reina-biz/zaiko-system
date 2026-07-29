@@ -111,19 +111,28 @@ export default function InputPage({
   const duplicateRow = (index) => {
     const updatedRows = [...rows];
 
-    updatedRows.splice(index + 1, 0, {
+    let lastFilledIndex = -1;
+
+    for (let i = 0; i < updatedRows.length; i++) {
+      if (
+        updatedRows[i].materialName ||
+        updatedRows[i].size ||
+        updatedRows[i].price ||
+        updatedRows[i].quantity ||
+        updatedRows[i].used ||
+        updatedRows[i].note
+      ) {
+        lastFilledIndex = i;
+      }
+    }
+
+    const insertIndex = Math.min(lastFilledIndex + 1, 29);
+
+    updatedRows[insertIndex] = {
       ...updatedRows[index],
       quantity: "",
       used: "",
-    });
-
-    while (updatedRows.length > 30) {
-      updatedRows.pop();
-    }
-
-    while (updatedRows.length < 30) {
-      updatedRows.push({ ...EMPTY_ROW });
-    }
+    };
 
     setRows(updatedRows);
   };

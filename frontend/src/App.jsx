@@ -191,15 +191,15 @@ export default function App() {
 
   ] = useState([]);
 
-  useEffect(() => {
-    async function loadHistory() {
-      const data = await getHistory();
+  const loadHistory = async () => {
+    const data = await getHistory();
 
-      if (data.length > 0) {
-        setHistoryRows(data);
-      }
+    if (data.length > 0) {
+      setHistoryRows(data);
     }
+  };
 
+  useEffect(() => {
     loadHistory();
   }, []);
 
@@ -564,12 +564,10 @@ export default function App() {
         {tab === "入力履歴" && (
 
           <HistoryPage
-
             rows={historyRows}
             setHistoryRows={setHistoryRows}
-
+            loadHistory={loadHistory}
             companyList={companyList}
-
           />
 
         )}

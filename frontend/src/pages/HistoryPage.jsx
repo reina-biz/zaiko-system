@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
-import { deleteHistory } from "../services/historyService";
+import {
+  deleteHistory,
+  saveHistory,
+  updateHistory,
+} from "../services/historyService";
 
 export default function HistoryPage({
 
   rows,
   setHistoryRows,
+  loadHistory,
   companyList,
 
 }) {
@@ -44,6 +49,36 @@ export default function HistoryPage({
 
   }, [rows]);
 
+  const duplicateHistoryRow = (row) => {
+    const updated = [...editedRows];
+
+    // 同じ伝票（同じ日付・会社・現場）の最後を探す
+    const lastIndex = updated.reduce((last, r, index) => {
+      if (
+        r.orderDate === row.orderDate &&
+        r.companyName === row.companyName &&
+        r.siteName === row.siteName
+      ) {
+        return index;
+      }
+      return last;
+    }, -1);
+
+    const newRow = { ...row };
+
+    delete newRow.id;
+    delete newRow.created_at;
+
+    newRow.quantity = "";
+    newRow.used = "";
+
+    updated.splice(lastIndex + 1, 0, newRow);
+
+    console.log("複製後", updated);
+
+    setEditedRows(updated);
+  };
+
   const siteList = [
 
     ...new Set(
@@ -73,72 +108,66 @@ export default function HistoryPage({
 
   const filteredRows =
 
+    editedRows.filter((row) => {
 
+      const companyMatch =
 
-    [...editedRows]
+        !selectedCompany ||
 
-      .reverse()
+        selectedCompany === "全て" ||
 
-      .filter((row) => {
+        row.companyName === selectedCompany;
 
-        const companyMatch =
+      const siteMatch =
 
-          !selectedCompany ||
+        row.siteName
 
-          selectedCompany === "全て" ||
+          ?.toLowerCase()
 
-          row.companyName === selectedCompany;
+          .includes(
 
-        const siteMatch =
+            selectedSite.toLowerCase()
 
-          row.siteName
+          );
 
-            ?.toLowerCase()
+      const rowMonth =
 
-            .includes(
+        row.orderDate?.slice(0, 7);
 
-              selectedSite.toLowerCase()
+      const monthMatch =
 
-            );
+        rowMonth >= startMonth &&
 
-        const rowMonth =
+        rowMonth <= endMonth;
 
-          row.orderDate?.slice(0, 7);
+      const keyword =
+        search.toLowerCase();
 
-        const monthMatch =
+      const searchMatch =
 
-          rowMonth >= startMonth &&
+        row.materialName
+          ?.toLowerCase()
+          .includes(keyword)
 
-          rowMonth <= endMonth;
+        ||
 
-        const keyword =
-          search.toLowerCase();
+        row.size
+          ?.toLowerCase()
+          .includes(keyword);
 
-        const searchMatch =
+      return (
 
-          row.materialName
-            ?.toLowerCase()
-            .includes(keyword)
+        companyMatch &&
 
-          ||
+        siteMatch &&
 
-          row.size
-            ?.toLowerCase()
-            .includes(keyword);
+        monthMatch &&
 
-        return (
+        searchMatch
 
-          companyMatch &&
+      );
 
-          siteMatch &&
-
-          monthMatch &&
-
-          searchMatch
-
-        );
-
-      });
+    });
 
   const groupedRows = Object.values(
 
@@ -401,11 +430,31 @@ export default function HistoryPage({
 
                   <button
 
-                    onClick={() => {
+                    onClick={async () => {
 
                       if (isEditing) {
 
-                        setHistoryRows(editedRows);
+                        for (const row of editedRows) {
+
+                          console.log("保存するrow", row);
+
+                          if (row.id) {
+
+                            await updateHistory(row);
+
+                          } else {
+
+                            console.log("新規保存", row);
+
+                            const result = await saveHistory([row]);
+
+                            console.log("保存結果", result);
+
+                          }
+
+                        }
+
+                        await loadHistory();
 
                         setEditingGroup(null);
 
@@ -471,19 +520,16 @@ export default function HistoryPage({
 
                   <div className="mt-6 space-y-2">
 
-                    <div className="grid grid-cols-[2fr_1.5fr_100px_100px_100px_2fr] gap-3 px-2 text-sm font-bold text-slate-500">
+                    <div className="grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 px-2 text-sm font-bold text-slate-500">
+
+                      <div className="text-center">📋</div>
 
                       <div>材料名</div>
-
                       <div>型番・サイズ</div>
-
                       <div>単価</div>
                       <div>注文数</div>
                       <div>使用数</div>
-
-                      <div>
-                        備考
-                      </div>
+                      <div>備考</div>
 
                     </div>
 
@@ -491,8 +537,19 @@ export default function HistoryPage({
 
                       <div
                         key={i}
-                        className="grid grid-cols-[2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm"
+                        className="grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm"
                       >
+
+                        <div className="flex items-center justify-center">
+                          <button
+                            disabled={!isEditing}
+                            onClick={() => duplicateHistoryRow(row)}
+                            className="hover:scale-110 disabled:opacity-40"
+                            title="この行を複製"
+                          >
+                            📋
+                          </button>
+                        </div>
 
                         <input
                           value={row.materialName || ""}
