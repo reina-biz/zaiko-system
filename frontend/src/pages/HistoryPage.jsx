@@ -531,7 +531,7 @@ export default function HistoryPage({
                     {group.rows.map((row, i) => (
 
                       <div
-                        key={i}
+                        key={row.id ?? `new-${i}`}
                         className="grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm"
                       >
 
