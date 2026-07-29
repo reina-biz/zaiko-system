@@ -434,24 +434,19 @@ export default function HistoryPage({
 
                       if (isEditing) {
 
-                        for (const row of editedRows) {
+                        const targetRows = editedRows.filter(
+                          (r) =>
+                            r.orderDate === group.orderDate &&
+                            r.companyName === group.companyName &&
+                            r.siteName === group.siteName
+                        );
 
-                          console.log("保存するrow", row);
-
+                        for (const row of targetRows) {
                           if (row.id) {
-
                             await updateHistory(row);
-
                           } else {
-
-                            console.log("新規保存", row);
-
-                            const result = await saveHistory([row]);
-
-                            console.log("保存結果", result);
-
+                            await saveHistory([row]);
                           }
-
                         }
 
                         await loadHistory();
