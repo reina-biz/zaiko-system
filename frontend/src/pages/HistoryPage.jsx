@@ -552,6 +552,7 @@ export default function HistoryPage({
                           onChange={(e) => {
 
                             const updated = [...editedRows];
+                            
 
                             const targetIndex =
                               editedRows.indexOf(row);
