@@ -107,6 +107,27 @@ export default function InputPage({
     setRows(updatedRows);
 
   };
+
+  const duplicateRow = (index) => {
+    const updatedRows = [...rows];
+
+    updatedRows.splice(index + 1, 0, {
+      ...updatedRows[index],
+      quantity: "",
+      used: "",
+    });
+
+    while (updatedRows.length > 30) {
+      updatedRows.pop();
+    }
+
+    while (updatedRows.length < 30) {
+      updatedRows.push({ ...EMPTY_ROW });
+    }
+
+    setRows(updatedRows);
+  };
+
   const materialSuggestions = [
 
     ...new Set(
@@ -289,8 +310,9 @@ export default function InputPage({
 
       <div className="rounded-2xl border bg-white overflow-hidden">
 
-        <div className="grid grid-cols-[4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
+        <div className="grid grid-cols-[40px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
 
+          <div className="p-4 text-center">📋</div>
 
           <div className="p-4">材料名</div>
 
@@ -349,10 +371,20 @@ export default function InputPage({
 
               <div
                 key={index}
-                className="grid grid-cols-[4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t"
+                className="grid grid-cols-[40px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t"
+
+
 
               >
-
+                <div className="p-2 flex items-center justify-center">
+                  <button
+                    onClick={() => duplicateRow(index)}
+                    className="hover:scale-110"
+                    title="この行を複製"
+                  >
+                    📋
+                  </button>
+                </div>
 
 
                 <div className="p-2">
