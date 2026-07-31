@@ -253,22 +253,40 @@ export default function InputPage({
         </div>
 
         <button
-          onClick={() => {
+  onClick={() => {
+    const updatedRows = [...rows];
 
-            setRows([
-              ...rows,
-              {
-                ...EMPTY_ROW,
-                companyName,
-                orderDate,
-              },
-            ]);
+    while (updatedRows.length < 30) {
+      updatedRows.push({
+        ...EMPTY_ROW,
+      });
+    }
 
-          }}
-          className="bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-2xl font-semibold transition"
-        >
-          + 行追加
-        </button>
+    const emptyIndex = updatedRows.findIndex(
+      (row) =>
+        !row.materialName &&
+        !row.size &&
+        !row.price &&
+        !row.quantity &&
+        !row.used &&
+        !row.note
+    );
+
+    if (emptyIndex !== -1) {
+      updatedRows[emptyIndex] = {
+        ...EMPTY_ROW,
+        companyName,
+        siteName,
+        orderDate,
+      };
+    }
+
+    setRows(updatedRows);
+  }}
+  className="bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-2xl font-semibold transition"
+>
+  + 行追加
+</button>
 
 
 
