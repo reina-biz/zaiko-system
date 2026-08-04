@@ -369,9 +369,11 @@ export default function InputPage({
 
       <div className="rounded-2xl border bg-white overflow-hidden">
 
-        <div className="grid grid-cols-[40px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
+        <div className="grid grid-cols-[50px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
 
-          <div className="p-4 text-center">📋</div>
+          <div className="p-2 text-center">
+            📋 ❌
+          </div>
 
           <div className="p-4">材料名</div>
 
@@ -429,10 +431,11 @@ export default function InputPage({
 
               <div
                 key={index}
-                className={`grid grid-cols-[40px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t ${row.isReturn ? "bg-red-100" : ""
+                className={`grid grid-cols-[50px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t ${row.isReturn ? "bg-red-100" : ""
                   }`}
               >
-                <div className="p-2 flex items-center justify-center">
+                <div className="p-1 flex items-center justify-center gap-1">
+
                   <button
                     onClick={() => duplicateRow(index)}
                     className="hover:scale-110"
@@ -440,10 +443,27 @@ export default function InputPage({
                   >
                     📋
                   </button>
+
+                  <button
+                    onClick={() => {
+                      const updatedRows = [...rows];
+
+                      updatedRows[index] = {
+                        ...EMPTY_ROW,
+                      };
+
+                      setRows(updatedRows);
+                    }}
+                    className="text-red-600 hover:scale-110"
+                    title="この行を削除"
+                  >
+                    ❌
+                  </button>
+
                 </div>
 
 
-                <div className="p-2">
+                <div className="p-1">
 
                   <input
                     list={`material-list-${index}`}
@@ -456,7 +476,7 @@ export default function InputPage({
                         e.target.value
                       )
                     }
-                    className="w-full border rounded-xl px-3 py-3"
+                    className="w-full border rounded-xl px-2 py-2"
 
                   />
 
@@ -498,7 +518,7 @@ export default function InputPage({
 
                 </div>
 
-                <div className="p-2">
+                <div className="p-1">
 
                   <input
                     list={`size-list-${index}`}
@@ -511,7 +531,7 @@ export default function InputPage({
                         e.target.value
                       )
                     }
-                    className="w-full border rounded-xl px-3 py-3"
+                    className="w-full border rounded-xl px-2 py-2"
                   />
 
                   {row.materialName && (
@@ -543,9 +563,9 @@ export default function InputPage({
 
                 </div>
 
-                <div className="p-2">
+                <div className="p-1">
 
-                  <div className="w-full border rounded-xl px-3 py-3 bg-slate-50">
+                  <div className="w-full border rounded-xl px-2 py-2 bg-slate-50">
 
                     {
 
@@ -582,7 +602,7 @@ export default function InputPage({
                 </div>
 
 
-                <div className="p-2">
+                <div className="p-1">
                   <input
                     type="text"
                     value={row.price || ""}
@@ -593,11 +613,11 @@ export default function InputPage({
                         e.target.value
                       )
                     }
-                    className="w-full border rounded-xl px-3 py-3"
+                    className="w-full border rounded-xl px-2 py-2"
                   />
                 </div>
 
-                <div className="p-2">
+                <div className="p-1">
                   <input
                     type="number"
                     value={row.quantity || ""}
@@ -608,12 +628,12 @@ export default function InputPage({
                         e.target.value
                       )
                     }
-                    className="w-full border rounded-xl px-3 py-3"
+                    className="w-full border rounded-xl px-2 py-2"
 
                   />
                 </div>
 
-                <div className="p-2">
+                <div className="p-1">
                   <input
                     type="number"
                     value={row.used}
@@ -624,11 +644,11 @@ export default function InputPage({
                         e.target.value
                       )
                     }
-                    className="w-full border rounded-xl px-3 py-3"
+                    className="w-full border rounded-xl px-2 py-2"
                   />
                 </div>
 
-                <div className="p-2">
+                <div className="p-1">
                   <input
                     type="text"
                     value={row.note}
@@ -639,7 +659,7 @@ export default function InputPage({
                         e.target.value
                       )
                     }
-                    className="w-full border rounded-xl px-3 py-3"
+                    className="w-full border rounded-xl px-2 py-2"
                   />
                 </div>
 
