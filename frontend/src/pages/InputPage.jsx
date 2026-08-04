@@ -2,6 +2,7 @@ import {
   useState
 } from "react";
 
+
 import { saveHistory } from "../services/historyService";
 
 export default function InputPage({
@@ -21,6 +22,8 @@ export default function InputPage({
 
 
 
+
+
   const EMPTY_ROW = {
     companyName: "",
     orderDate: "",
@@ -30,6 +33,7 @@ export default function InputPage({
     quantity: "",
     used: "",
     note: "",
+    isReturn: false,
   };
 
   const updateRow = (
@@ -176,7 +180,7 @@ export default function InputPage({
 
     <div className="bg-white rounded-3xl shadow-sm p-6">
 
-      <div className="flex flex-wrap items-end gap-4 mb-6">
+      <div className="flex items-end gap-4 mb-6">
 
         <div>
           <label className="block text-sm font-medium mb-2">
@@ -207,7 +211,7 @@ export default function InputPage({
                 e.target.value
               )
             }
-            className="w-[350px] border rounded-2xl px-4 py-3 bg-white"
+            className="w-[280px] border rounded-2xl px-4 py-3 bg-white"
           >
 
             <option value="">
@@ -253,56 +257,89 @@ export default function InputPage({
         </div>
 
         <button
-  onClick={() => {
-    const updatedRows = [...rows];
+          onClick={() => {
+            setRows([
+              ...rows,
+              {
+                ...EMPTY_ROW,
+                companyName,
+                orderDate,
+              },
+            ]);
+          }}
+          className="bg-slate-100 hover:bg-slate-200 px-4 py-3 min-w-[95px] whitespace-nowrap rounded-2xl font-semibold transition"
+        >
+          + 行追加
+        </button>
 
-    while (updatedRows.length < 30) {
-      updatedRows.push({
-        ...EMPTY_ROW,
-      });
-    }
+        <button
+          onClick={() => {
 
-    const emptyIndex = updatedRows.findIndex(
-      (row) =>
-        !row.materialName &&
-        !row.size &&
-        !row.price &&
-        !row.quantity &&
-        !row.used &&
-        !row.note
-    );
+            const updatedRows = [...rows];
 
-    if (emptyIndex !== -1) {
-      updatedRows[emptyIndex] = {
-        ...EMPTY_ROW,
-        companyName,
-        siteName,
-        orderDate,
-      };
-    }
+            let lastFilledIndex = -1;
 
-    setRows(updatedRows);
-  }}
-  className="bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-2xl font-semibold transition"
->
-  + 行追加
-</button>
+            for (let i = 0; i < updatedRows.length; i++) {
+              if (
+                updatedRows[i].materialName ||
+                updatedRows[i].size ||
+                updatedRows[i].price ||
+                updatedRows[i].quantity ||
+                updatedRows[i].used ||
+                updatedRows[i].note
+              ) {
+                lastFilledIndex = i;
+              }
+            }
 
+            const insertIndex = Math.min(lastFilledIndex + 1, 29);
 
+            updatedRows[insertIndex] = {
+              ...EMPTY_ROW,
+              companyName,
+              siteName,
+              orderDate,
+              isReturn: true,
+            };
+
+            setRows(updatedRows);
+
+          }}
+          className="bg-orange-100 hover:bg-orange-200 px-4 py-3 min-w-[95px] whitespace-nowrap rounded-2xl font-semibold transition"
+        >
+          + 返品
+        </button>
 
         <button
           onClick={async () => {
 
             const savedRows =
-              rows.filter(
-                (row) =>
-                  row.materialName?.trim()
-              );
+              rows
+                .filter((row) => row.materialName?.trim())
+                .map((row) => ({
+                  ...row,
+                  isReturn: row.isReturn,
+
+                  price:
+                    row.price === "" ? null : Number(row.price),
+
+                  quantity:
+                    row.quantity === ""
+                      ? null
+                      : row.isReturn
+                        ? -Math.abs(Number(row.quantity))
+                        : Number(row.quantity),
+
+                  used:
+                    row.used === ""
+                      ? null
+                      : row.isReturn
+                        ? -Math.abs(Number(row.used))
+                        : Number(row.used),
+                }));
 
             const insertedRows =
               await saveHistory(savedRows);
-
-            console.log("insertedRows =", insertedRows);
 
             setHistoryRows([
               ...historyRows,
@@ -313,24 +350,19 @@ export default function InputPage({
               Array.from(
                 { length: 30 },
                 () => ({
-                  ...EMPTY_ROW
+                  ...EMPTY_ROW,
                 })
               )
             );
 
             setCompanyName("");
-
             setSiteName("");
-
             setOrderDate("");
 
-
-
           }}
-          className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-2xl font-semibold transition"
+          className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-3 min-w-[95px] whitespace-nowrap rounded-2xl font-semibold transition"
         >
           入力完了
-
         </button>
 
       </div>
@@ -359,10 +391,9 @@ export default function InputPage({
 
         <div className="min-h-[1500px]">
 
-          {Array.from({ length: 30 }).map((_, index) => {
+          {inputRows.map((row, index) => {
 
-            const row =
-              inputRows[index] || EMPTY_ROW;
+
             const sizeSuggestions = [
 
               ...new Set(
@@ -398,10 +429,8 @@ export default function InputPage({
 
               <div
                 key={index}
-                className="grid grid-cols-[40px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t"
-
-
-
+                className={`grid grid-cols-[40px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t ${row.isReturn ? "bg-red-100" : ""
+                  }`}
               >
                 <div className="p-2 flex items-center justify-center">
                   <button
@@ -428,7 +457,14 @@ export default function InputPage({
                       )
                     }
                     className="w-full border rounded-xl px-3 py-3"
+
                   />
+
+                  {row.isReturn && (
+                    <div className="text-red-600 text-xs font-bold mt-1">
+                      【返品】
+                    </div>
+                  )}
 
                   {row.materialName?.length >= 2 && (
 

@@ -43,6 +43,9 @@ export default function HistoryPage({
   const [editedRows, setEditedRows] =
     useState(rows);
 
+  const [deletedIds, setDeletedIds] =
+    useState([]);
+
   useEffect(() => {
 
     setEditedRows(rows);
@@ -77,6 +80,58 @@ export default function HistoryPage({
     console.log("複製後", updated);
 
     setEditedRows(updated);
+  };
+
+  const addHistoryRow = (row) => {
+
+    const updated = [...editedRows];
+
+    const lastIndex = updated.reduce((last, r, index) => {
+
+      if (
+        r.orderDate === row.orderDate &&
+        r.companyName === row.companyName &&
+        r.siteName === row.siteName
+      ) {
+        return index;
+      }
+
+      return last;
+
+    }, -1);
+
+    const newRow = {
+      orderDate: row.orderDate,
+      companyName: row.companyName,
+      siteName: row.siteName,
+      materialName: "",
+      size: "",
+      price: "",
+      quantity: "",
+      used: "",
+      note: "",
+    };
+
+
+
+    updated.splice(lastIndex + 1, 0, newRow);
+
+    setEditedRows(updated);
+
+  };
+
+  const deleteEditedRow = (row) => {
+
+    // 保存済みなら削除IDを記録
+    if (row.id) {
+      setDeletedIds((prev) => [...prev, row.id]);
+    }
+
+    // 画面から消す
+    const updated = editedRows.filter((r) => r !== row);
+
+    setEditedRows(updated);
+
   };
 
   const siteList = [
@@ -442,11 +497,28 @@ export default function HistoryPage({
                         );
 
                         for (const row of targetRows) {
+
+                          if (!row.materialName?.trim()) {
+                            continue;
+                          }
+
                           if (row.id) {
                             await updateHistory(row);
                           } else {
-                            await saveHistory([row]);
+                            await saveHistory([
+                              {
+                                ...row,
+                                price: row.price === "" ? null : Number(row.price),
+                                quantity: row.quantity === "" ? null : Number(row.quantity),
+                                used: row.used === "" ? null : Number(row.used),
+                              },
+                            ]);
                           }
+                        }
+
+                        if (deletedIds.length > 0) {
+                          await deleteHistory(deletedIds);
+                          setDeletedIds([]);
                         }
 
                         await loadHistory();
@@ -532,7 +604,8 @@ export default function HistoryPage({
 
                       <div
                         key={row.id ?? `new-${i}`}
-                        className="grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm"
+                        className={`grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm ${row.isReturn ? "bg-red-100" : ""
+                          }`}
                       >
 
                         <div className="flex items-center justify-center">
@@ -544,33 +617,59 @@ export default function HistoryPage({
                           >
                             📋
                           </button>
+
+                          <button
+                            disabled={!isEditing}
+                            onClick={() => addHistoryRow(row)}
+                            className="hover:scale-110 disabled:opacity-40"
+                            title="空白行を追加"
+                          >
+                            ➕
+                          </button>
+                          <button
+                            disabled={!isEditing}
+                            onClick={() => deleteEditedRow(row)}
+                            className="hover:scale-110 disabled:opacity-40"
+                            title="この行を削除"
+                          >
+                            🗑️
+                          </button>
                         </div>
 
-                        <input
-                          value={row.materialName || ""}
-                          disabled={!isEditing}
-                          onChange={(e) => {
+                        <div className="flex flex-col">
 
-                            const updated = [...editedRows];
-                            
+                          <input
+                            value={row.materialName || ""}
+                            disabled={!isEditing}
+                            onChange={(e) => {
 
-                            const targetIndex =
-                              editedRows.indexOf(row);
+                              const updated = [...editedRows];
 
-                            updated[targetIndex] = {
+                              const targetIndex =
+                                editedRows.indexOf(row);
 
-                              ...updated[targetIndex],
+                              updated[targetIndex] = {
 
-                              materialName:
-                                e.target.value,
+                                ...updated[targetIndex],
 
-                            };
+                                materialName:
+                                  e.target.value,
 
-                            setEditedRows(updated);
+                              };
 
-                          }}
-                          className="border rounded px-2 py-1"
-                        />
+                              setEditedRows(updated);
+
+                            }}
+                            className="border rounded px-2 py-1"
+                          />
+
+                          {row.isReturn && (
+                            <div className="text-red-600 text-xs font-bold mt-1">
+                              【返品】
+                            </div>
+                          )}
+
+                        </div>
 
                         <input
                           value={row.size || ""}

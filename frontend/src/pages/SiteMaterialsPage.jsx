@@ -154,7 +154,9 @@ export default function SiteMaterialsPage({
               exportData.push({
 
                 日付: row.orderDate,
-                材料名: row.materialName,
+                材料名: row.isReturn
+                  ? `${row.materialName}【返品】`
+                  : row.materialName,
                 型番: row.size,
                 使用数: row.used,
 
@@ -461,7 +463,9 @@ export default function SiteMaterialsPage({
 
                   row.orderDate,
 
-                  row.materialName,
+                  row.isReturn
+                    ? `${row.materialName}【返品】`
+                    : row.materialName,
 
                   row.size,
 
@@ -1018,6 +1022,11 @@ export default function SiteMaterialsPage({
 
                             <div className="p-3">
                               {row.materialName}
+                              {row.isReturn && (
+                                <span className="text-red-600 font-bold ml-1">
+                                  【返品】
+                                </span>
+                              )}
                             </div>
 
                             <div className="p-3">
