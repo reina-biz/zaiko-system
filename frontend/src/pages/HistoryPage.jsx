@@ -160,6 +160,24 @@ export default function HistoryPage({
 
   ];
 
+  const materialSuggestions = [
+
+    ...new Set(
+
+      rows
+        .filter(
+          (row) =>
+            (!selectedCompany ||
+              row.companyName === selectedCompany) &&
+            row.materialName &&
+            !row.isReturn
+        )
+        .map((row) => row.materialName)
+
+    )
+
+  ];
+
 
   const filteredRows =
 
@@ -224,6 +242,7 @@ export default function HistoryPage({
 
     });
 
+
   const groupedRows = Object.values(
 
     filteredRows.reduce((acc, row) => {
@@ -255,6 +274,12 @@ export default function HistoryPage({
     }, {})
 
   );
+
+  groupedRows.sort((a, b) => {
+    const aTime = a.rows[0]?.created_at || "";
+    const bTime = b.rows[0]?.created_at || "";
+    return new Date(bTime) - new Date(aTime);
+  });
 
   console.log("rows", rows);
 
@@ -600,208 +625,276 @@ export default function HistoryPage({
 
                     </div>
 
-                    {group.rows.map((row, i) => (
+                    {[...group.rows]
+                      .sort((a, b) => {
+                        if (a.id && b.id) {
+                          return a.id - b.id;
+                        }
+                        return 0;
+                      })
+                      .map((row, i) => {
+                        const sizeSuggestions = [
 
-                      <div
-                        key={row.id ?? `new-${i}`}
-                        className={`grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm ${row.isReturn ? "bg-red-100" : ""
-                          }`}
-                      >
+                          ...new Set(
 
-                        <div className="flex items-center justify-center">
-                          <button
-                            disabled={!isEditing}
-                            onClick={() => duplicateHistoryRow(row)}
-                            className="hover:scale-110 disabled:opacity-40"
-                            title="この行を複製"
+                            rows
+                              .filter(
+                                (historyRow) =>
+
+                                  (!selectedCompany ||
+                                    historyRow.companyName === selectedCompany) &&
+
+                                  historyRow.materialName === row.materialName &&
+
+                                  historyRow.size &&
+
+                                  !historyRow.isReturn
+                              )
+
+                              .map((historyRow) => historyRow.size)
+
+                          )
+
+                        ];
+
+                        return (
+
+                          <div
+                            key={row.id ?? `new-${i}`}
+                            className={`grid grid-cols-[40px_2fr_1.5fr_100px_100px_100px_2fr] gap-3 border rounded-xl p-3 text-sm ${row.isReturn ? "bg-red-100" : ""
+                              }`}
                           >
-                            📋
-                          </button>
 
-                          <button
-                            disabled={!isEditing}
-                            onClick={() => addHistoryRow(row)}
-                            className="hover:scale-110 disabled:opacity-40"
-                            title="空白行を追加"
-                          >
-                            ➕
-                          </button>
-                          <button
-                            disabled={!isEditing}
-                            onClick={() => deleteEditedRow(row)}
-                            className="hover:scale-110 disabled:opacity-40"
-                            title="この行を削除"
-                          >
-                            🗑️
-                          </button>
-                        </div>
+                            <div className="flex items-center justify-center">
+                              <button
+                                disabled={!isEditing}
+                                onClick={() => duplicateHistoryRow(row)}
+                                className="hover:scale-110 disabled:opacity-40"
+                                title="この行を複製"
+                              >
+                                📋
+                              </button>
 
-                        <div className="flex flex-col">
-
-                          <input
-                            value={row.materialName || ""}
-                            disabled={!isEditing}
-                            onChange={(e) => {
-
-                              const updated = [...editedRows];
-
-                              const targetIndex =
-                                editedRows.indexOf(row);
-
-                              updated[targetIndex] = {
-
-                                ...updated[targetIndex],
-
-                                materialName:
-                                  e.target.value,
-
-                              };
-
-                              setEditedRows(updated);
-
-                            }}
-                            className="border rounded px-2 py-1"
-                          />
-
-                          {row.isReturn && (
-                            <div className="text-red-600 text-xs font-bold mt-1">
-                              【返品】
+                              <button
+                                disabled={!isEditing}
+                                onClick={() => addHistoryRow(row)}
+                                className="hover:scale-110 disabled:opacity-40"
+                                title="空白行を追加"
+                              >
+                                ➕
+                              </button>
+                              <button
+                                disabled={!isEditing}
+                                onClick={() => deleteEditedRow(row)}
+                                className="hover:scale-110 disabled:opacity-40"
+                                title="この行を削除"
+                              >
+                                🗑️
+                              </button>
                             </div>
-                          )}
 
-                        </div>
+                            <div className="flex flex-col">
 
-                        <input
-                          value={row.size || ""}
-                          disabled={!isEditing}
-                          onChange={(e) => {
+                              <input
+                                list={`history-material-list-${i}`}
+                                value={row.materialName || ""}
+                                disabled={!isEditing}
+                                onChange={(e) => {
 
-                            const updated = [...editedRows];
+                                  const updated = [...editedRows];
 
-                            const targetIndex =
-                              editedRows.indexOf(row);
+                                  const targetIndex =
+                                    editedRows.indexOf(row);
 
-                            updated[targetIndex] = {
+                                  updated[targetIndex] = {
 
-                              ...updated[targetIndex],
+                                    ...updated[targetIndex],
 
-                              size:
-                                e.target.value,
+                                    materialName:
+                                      e.target.value,
 
-                            };
+                                  };
 
-                            setEditedRows(updated);
+                                  setEditedRows(updated);
 
-                          }}
-                          className="border rounded px-2 py-1"
-                        />
+                                }}
+                                className="border rounded px-2 py-1"
+                              />
 
-                        <input
-                          type="number"
-                          value={row.price || ""}
-                          disabled={!isEditing}
-                          onChange={(e) => {
+                              {row.materialName?.length >= 2 && (
+                                <datalist id={`history-material-list-${i}`}>
+                                  {materialSuggestions
+                                    .filter((name) =>
+                                      name.includes(row.materialName)
+                                    )
+                                    .map((name) => (
+                                      <option
+                                        key={name}
+                                        value={name}
+                                      />
+                                    ))}
+                                </datalist>
+                              )}
 
-                            const updated = [...editedRows];
+                              {row.isReturn && (
+                                <div className="text-red-600 text-xs font-bold mt-1">
+                                  【返品】
+                                </div>
+                              )}
 
-                            const targetIndex =
-                              editedRows.indexOf(row);
+                            </div>
 
-                            updated[targetIndex] = {
+                            <input
+                              list={`history-size-list-${i}`}
+                              value={row.size || ""}
 
-                              ...updated[targetIndex],
 
-                              price:
-                                e.target.value,
+                              disabled={!isEditing}
+                              onChange={(e) => {
 
-                            };
+                                const updated = [...editedRows];
 
-                            setEditedRows(updated);
+                                const targetIndex =
+                                  editedRows.indexOf(row);
 
-                          }}
-                          className="border rounded px-2 py-1 text-right"
-                        />
+                                updated[targetIndex] = {
 
-                        <input
-                          type="number"
-                          value={row.quantity || ""}
-                          disabled={!isEditing}
-                          onChange={(e) => {
+                                  ...updated[targetIndex],
 
-                            const updated = [...editedRows];
+                                  size:
+                                    e.target.value,
 
-                            const targetIndex =
-                              editedRows.indexOf(row);
+                                };
 
-                            updated[targetIndex] = {
+                                setEditedRows(updated);
 
-                              ...updated[targetIndex],
+                              }}
+                              className="border rounded px-2 py-1"
+                            />
 
-                              quantity:
-                                e.target.value,
+                            {row.materialName && (
+                              <datalist id={`history-size-list-${i}`}>
+                                {sizeSuggestions
+                                  .filter((size) =>
+                                    size.includes(row.size || "")
+                                  )
+                                  .map((size) => (
+                                    <option
+                                      key={size}
+                                      value={size}
+                                    />
+                                  ))}
+                              </datalist>
+                            )}
 
-                            };
+                            <input
+                              type="number"
+                              value={row.price || ""}
+                              disabled={!isEditing}
+                              onChange={(e) => {
 
-                            setEditedRows(updated);
+                                const updated = [...editedRows];
 
-                          }}
-                          className="border rounded px-2 py-1 text-right"
-                        />
+                                const targetIndex =
+                                  editedRows.indexOf(row);
 
-                        <input
-                          type="number"
-                          value={row.used || ""}
-                          disabled={!isEditing}
-                          onChange={(e) => {
+                                updated[targetIndex] = {
 
-                            const updated = [...editedRows];
+                                  ...updated[targetIndex],
 
-                            const targetIndex =
-                              editedRows.indexOf(row);
+                                  price:
+                                    e.target.value,
 
-                            updated[targetIndex] = {
+                                };
 
-                              ...updated[targetIndex],
+                                setEditedRows(updated);
 
-                              used:
-                                e.target.value,
+                              }}
+                              className="border rounded px-2 py-1 text-right"
+                            />
 
-                            };
+                            <input
+                              type="number"
+                              value={row.quantity || ""}
+                              disabled={!isEditing}
+                              onChange={(e) => {
 
-                            setEditedRows(updated);
+                                const updated = [...editedRows];
 
-                          }}
-                          className="border rounded px-2 py-1 text-right"
-                        />
+                                const targetIndex =
+                                  editedRows.indexOf(row);
 
-                        <input
-                          value={row.note || ""}
-                          disabled={!isEditing}
-                          onChange={(e) => {
+                                updated[targetIndex] = {
 
-                            const updated = [...editedRows];
+                                  ...updated[targetIndex],
 
-                            const targetIndex =
-                              editedRows.indexOf(row);
+                                  quantity:
+                                    e.target.value,
 
-                            updated[targetIndex] = {
+                                };
 
-                              ...updated[targetIndex],
+                                setEditedRows(updated);
 
-                              note:
-                                e.target.value,
+                              }}
+                              className="border rounded px-2 py-1 text-right"
+                            />
 
-                            };
+                            <input
+                              type="number"
+                              value={row.used || ""}
+                              disabled={!isEditing}
+                              onChange={(e) => {
 
-                            setEditedRows(updated);
+                                const updated = [...editedRows];
 
-                          }}
-                          className="border rounded px-2 py-1"
-                        />
+                                const targetIndex =
+                                  editedRows.indexOf(row);
 
-                      </div>
+                                updated[targetIndex] = {
 
-                    ))}
+                                  ...updated[targetIndex],
+
+                                  used:
+                                    e.target.value,
+
+                                };
+
+                                setEditedRows(updated);
+
+                              }}
+                              className="border rounded px-2 py-1 text-right"
+                            />
+
+                            <input
+                              value={row.note || ""}
+                              disabled={!isEditing}
+                              onChange={(e) => {
+
+                                const updated = [...editedRows];
+
+                                const targetIndex =
+                                  editedRows.indexOf(row);
+
+                                updated[targetIndex] = {
+
+                                  ...updated[targetIndex],
+
+                                  note:
+                                    e.target.value,
+
+                                };
+
+                                setEditedRows(updated);
+
+                              }}
+                              className="border rounded px-2 py-1"
+                            />
+
+                          </div>
+
+                        );
+
+                      })}
 
                   </div>
 
