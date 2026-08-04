@@ -312,12 +312,16 @@ export default function InputPage({
 
         <button
           onClick={async () => {
+            const entryId = crypto.randomUUID();
 
             const savedRows =
               rows
                 .filter((row) => row.materialName?.trim())
                 .map((row) => ({
                   ...row,
+
+                  entryId,
+
                   isReturn: row.isReturn,
 
                   price:

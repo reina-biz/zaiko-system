@@ -229,7 +229,7 @@ export default function HistoryPage({
     filteredRows.reduce((acc, row) => {
 
       const key =
-
+        row.entryId ??
         `${row.orderDate}_${row.companyName}_${row.siteName}`;
 
       if (!acc[key]) {
