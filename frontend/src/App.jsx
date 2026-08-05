@@ -122,9 +122,9 @@ export default function App() {
     async function loadCompanies() {
       const data = await getCompanies();
 
-      if (data.length > 0) {
-        setCompanyList(data);
-      }
+      console.log("companyList取得", data);
+
+      setCompanyList(data);
     }
 
     loadCompanies();

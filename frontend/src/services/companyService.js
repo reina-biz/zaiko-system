@@ -7,6 +7,9 @@ export async function getCompanies() {
     .select("*")
     .order("companyName", { ascending: true });
 
+  console.log("company data =", data);
+  console.log("company error =", error);
+
   if (error) {
     console.error(error);
     return [];
