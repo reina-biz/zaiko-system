@@ -577,33 +577,17 @@ export default function InputPage({
                   <div className="w-full border rounded-xl px-2 py-2 bg-slate-50">
 
                     {
-
                       historyRows
-
-                        .slice()
-
-                        .reverse()
-
-                        .find(
-
-                          h =>
-
-                            h.companyName === companyName
-
-                            &&
-
-                            h.materialName === row.materialName
-
-                            &&
-
+                        .filter(
+                          (h) =>
+                            h.companyName === companyName &&
+                            h.materialName === row.materialName &&
                             h.size === row.size
-
-                        )?.price
-
-                      ||
-
-                      "-"
-
+                        )
+                        .sort(
+                          (a, b) =>
+                            new Date(b.orderDate) - new Date(a.orderDate)
+                        )[0]?.price || "-"
                     }
 
                   </div>
