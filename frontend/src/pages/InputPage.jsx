@@ -345,8 +345,13 @@ export default function InputPage({
             const insertedRows =
               await saveHistory(savedRows);
 
-            setHistoryRows([
-              ...historyRows,
+            if (!insertedRows || insertedRows.length !== savedRows.length) {
+              alert("保存に失敗しました。入力内容は残っています。");
+              return;
+            }
+
+            setHistoryRows((prev) => [
+              ...prev,
               ...insertedRows,
             ]);
 

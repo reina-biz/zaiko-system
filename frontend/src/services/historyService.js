@@ -24,12 +24,14 @@ export async function getHistory() {
 // 履歴保存
 export async function saveHistory(rows) {
   console.log("保存するデータ", rows);
+  console.log("保存予定件数", rows.length);
 
   const { data, error } = await supabase
     .from("history")
     .insert(rows)
     .select();
 
+  console.log("保存成功件数", data?.length);
   console.log("saveHistory data", data);
   console.log("saveHistory error", error);
   console.log("error message", error?.message);
