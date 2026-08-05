@@ -15,6 +15,14 @@ export default function StockPage({
   const [selectedItems, setSelectedItems] =
     useState([]);
 
+  const excludedMaterials = [
+    "値引き",
+    "送料",
+    "運搬費",
+    "諸経費",
+    "処分費",
+  ];
+
   const currentYear =
     new Date().getFullYear();
 
@@ -40,7 +48,10 @@ export default function StockPage({
 
     .filter((row) => {
 
-      if (!row.materialName) {
+      if (
+        !row.materialName ||
+        excludedMaterials.includes(row.materialName)
+      ) {
         return false;
       }
 

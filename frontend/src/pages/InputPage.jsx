@@ -150,12 +150,17 @@ export default function InputPage({
         .filter(
           (row) =>
 
-            row.companyName ===
-            companyName
+            row.companyName === companyName &&
 
-            &&
+            row.materialName &&
 
-            row.materialName
+            ![
+              "値引き",
+              "送料",
+              "運搬費",
+              "諸経費",
+              "処分費",
+            ].includes(row.materialName)
         )
 
         .map(
@@ -582,7 +587,14 @@ export default function InputPage({
                           (h) =>
                             h.companyName === companyName &&
                             h.materialName === row.materialName &&
-                            h.size === row.size
+                            h.size === row.size &&
+                            ![
+                              "値引き",
+                              "送料",
+                              "運搬費",
+                              "諸経費",
+                              "処分費",
+                            ].includes(h.materialName)
                         )
                         .sort(
                           (a, b) =>

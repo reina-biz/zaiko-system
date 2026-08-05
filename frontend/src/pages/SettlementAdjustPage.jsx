@@ -36,6 +36,14 @@ export default function SettlementAdjustPage({
   const [targetAmount, setTargetAmount] =
     useState("");
 
+  const excludedMaterials = [
+    "値引き",
+    "送料",
+    "運搬費",
+    "諸経費",
+    "処分費",
+  ];
+
   const [adjustedRows, setAdjustedRows] =
     useState(null);
 
@@ -50,10 +58,11 @@ export default function SettlementAdjustPage({
     .filter((row) => {
 
       // 材料名なし除外
-      if (!row.materialName) {
-
+      if (
+        !row.materialName ||
+        excludedMaterials.includes(row.materialName)
+      ) {
         return false;
-
       }
 
       // 会社絞り込み
@@ -146,10 +155,11 @@ export default function SettlementAdjustPage({
 
       .filter((row) => {
 
-        if (!row.materialName) {
-
+        if (
+          !row.materialName ||
+          excludedMaterials.includes(row.materialName)
+        ) {
           return false;
-
         }
 
         if (
@@ -258,10 +268,11 @@ export default function SettlementAdjustPage({
 
       .filter((row) => {
 
-        if (!row.materialName) {
-
+        if (
+          !row.materialName ||
+          excludedMaterials.includes(row.materialName)
+        ) {
           return false;
-
         }
 
         if (
