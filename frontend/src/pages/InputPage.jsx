@@ -322,7 +322,7 @@ export default function InputPage({
 
                   entryId,
 
-                  isReturn: row.isReturn,
+                  isReturn: row.isReturn ?? false,
 
                   price:
                     row.price === "" ? null : Number(row.price),

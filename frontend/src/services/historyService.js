@@ -23,7 +23,7 @@ export async function getHistory() {
 
 // 履歴保存
 export async function saveHistory(rows) {
-  console.log("保存するデータ", rows);
+  console.table(rows);
   console.log("保存予定件数", rows.length);
 
   const { data, error } = await supabase
