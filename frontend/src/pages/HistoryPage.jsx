@@ -101,15 +101,20 @@ export default function HistoryPage({
     }, -1);
 
     const newRow = {
+      entryId: row.entryId,
+
       orderDate: row.orderDate,
       companyName: row.companyName,
       siteName: row.siteName,
+
       materialName: "",
       size: "",
       price: "",
       quantity: "",
       used: "",
       note: "",
+
+      isReturn: false,
     };
 
 
