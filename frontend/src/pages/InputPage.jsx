@@ -183,7 +183,7 @@ export default function InputPage({
 
   return (
 
-    <div className="bg-white rounded-3xl shadow-sm p-6">
+    <div className="w-full bg-white rounded-3xl shadow-sm p-6">
 
       <div className="flex items-end gap-4 mb-6">
 
@@ -381,7 +381,7 @@ export default function InputPage({
 
       </div>
 
-      <div className="rounded-2xl border bg-white overflow-hidden">
+      <div className="w-full rounded-2xl border bg-white overflow-hidden">
 
         <div className="grid grid-cols-[50px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
 
@@ -440,6 +440,26 @@ export default function InputPage({
               )
 
             ];
+
+            const lastPriceRow =
+              historyRows
+                .filter(
+                  (h) =>
+                    h.companyName === companyName &&
+                    h.materialName === row.materialName &&
+                    h.size === row.size &&
+                    ![
+                      "値引き",
+                      "送料",
+                      "運搬費",
+                      "諸経費",
+                      "処分費",
+                    ].includes(h.materialName)
+                )
+                .sort(
+                  (a, b) =>
+                    new Date(b.orderDate) - new Date(a.orderDate)
+                )[0];
 
             return (
 
@@ -581,30 +601,21 @@ export default function InputPage({
 
                   <div className="w-full border rounded-xl px-2 py-2 bg-slate-50">
 
-                    {
-                      historyRows
-                        .filter(
-                          (h) =>
-                            h.companyName === companyName &&
-                            h.materialName === row.materialName &&
-                            h.size === row.size &&
-                            ![
-                              "値引き",
-                              "送料",
-                              "運搬費",
-                              "諸経費",
-                              "処分費",
-                            ].includes(h.materialName)
-                        )
-                        .sort(
-                          (a, b) =>
-                            new Date(b.orderDate) - new Date(a.orderDate)
-                        )[0]?.price || "-"
-                    }
+                    {lastPriceRow
+                      ? `${Number(lastPriceRow.price).toLocaleString()}円`
+                      : "-"}
 
                   </div>
 
+                  {lastPriceRow && (
+                    <div className="text-[10px] text-red-600 mt-0 leading-none text-center">
+                      {lastPriceRow.orderDate.replaceAll("-", "/")}
+                    </div>
+                  )}
+
                 </div>
+
+
 
 
                 <div className="p-1">

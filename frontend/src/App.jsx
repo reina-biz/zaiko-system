@@ -453,7 +453,7 @@ export default function App() {
 
   return (
 
-    <div className="min-h-screen bg-slate-100 p-3">
+    <div className="min-h-screen bg-slate-100 p-1">
 
       <div className="w-full space-y-3">
 
