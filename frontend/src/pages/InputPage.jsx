@@ -58,6 +58,18 @@ export default function InputPage({
       [field]: value,
     };
 
+    // 最後の行に入力したら30行追加
+    if (
+      index >= updatedRows.length - 1 &&
+      (value !== "" && value !== null)
+    ) {
+      for (let i = 0; i < 30; i++) {
+        updatedRows.push({
+          ...EMPTY_ROW,
+        });
+      }
+    }
+
     if (
       field === "materialName"
       ||
@@ -115,28 +127,11 @@ export default function InputPage({
   const duplicateRow = (index) => {
     const updatedRows = [...rows];
 
-    let lastFilledIndex = -1;
-
-    for (let i = 0; i < updatedRows.length; i++) {
-      if (
-        updatedRows[i].materialName ||
-        updatedRows[i].size ||
-        updatedRows[i].price ||
-        updatedRows[i].quantity ||
-        updatedRows[i].used ||
-        updatedRows[i].note
-      ) {
-        lastFilledIndex = i;
-      }
-    }
-
-    const insertIndex = Math.min(lastFilledIndex + 1, 29);
-
-    updatedRows[insertIndex] = {
+    updatedRows.splice(index + 1, 0, {
       ...updatedRows[index],
       quantity: "",
       used: "",
-    };
+    });
 
     setRows(updatedRows);
   };
@@ -297,15 +292,15 @@ export default function InputPage({
               }
             }
 
-            const insertIndex = Math.min(lastFilledIndex + 1, 29);
-
-            updatedRows[insertIndex] = {
+            updatedRows.splice(lastFilledIndex + 1, 0, {
               ...EMPTY_ROW,
               companyName,
               siteName,
               orderDate,
               isReturn: true,
-            };
+            });
+
+            setRows(updatedRows);
 
             setRows(updatedRows);
 
@@ -381,12 +376,14 @@ export default function InputPage({
 
       </div>
 
-      <div className="w-full rounded-2xl border bg-white overflow-hidden">
+      <div className="w-[calc(100%+3rem)] -mx-6 rounded-2xl border bg-white overflow-hidden">
 
-        <div className="grid grid-cols-[50px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
+        <div className="grid grid-cols-[70px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] bg-slate-100 text-sm font-semibold">
 
-          <div className="p-2 text-center">
-            📋 ❌
+          <div className="p-2 flex items-center justify-center gap-1 text-[10px] whitespace-nowrap">
+            <span>No.</span>
+            <span>📋</span>
+            <span>❌</span>
           </div>
 
           <div className="p-4">材料名</div>
@@ -465,14 +462,17 @@ export default function InputPage({
 
               <div
                 key={index}
-                className={`grid grid-cols-[50px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t ${row.isReturn ? "bg-red-100" : ""
+                className={`grid grid-cols-[70px_4fr_3fr_1fr_1fr_0.8fr_0.8fr_2fr] border-t ${row.isReturn ? "bg-red-100" : ""
                   }`}
               >
-                <div className="p-1 flex items-center justify-center gap-1">
+                <div className="p-1 flex items-center justify-center gap-1 text-xs">
+                  <span className="text-black w-5 text-center">
+                    {index + 1}
+                  </span>
 
                   <button
                     onClick={() => duplicateRow(index)}
-                    className="hover:scale-110"
+                    className="text-xs hover:scale-110"
                     title="この行を複製"
                   >
                     📋
@@ -482,13 +482,15 @@ export default function InputPage({
                     onClick={() => {
                       const updatedRows = [...rows];
 
-                      updatedRows[index] = {
+                      updatedRows.splice(index, 1);
+
+                      updatedRows.push({
                         ...EMPTY_ROW,
-                      };
+                      });
 
                       setRows(updatedRows);
                     }}
-                    className="text-red-600 hover:scale-110"
+                    className="text-red-600 text-xs hover:scale-110"
                     title="この行を削除"
                   >
                     ❌
