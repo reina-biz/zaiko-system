@@ -3,6 +3,7 @@ import {
   deleteHistory,
   saveHistory,
   updateHistory,
+  getHistory,
 } from "../services/historyService";
 
 export default function HistoryPage({
@@ -526,36 +527,68 @@ export default function HistoryPage({
                               r.siteName === group.siteName
                           );
 
+                          const savedNewRows = [];
+
                           for (const row of targetRows) {
 
+                            // 材料名が空の行は保存しない
                             if (!row.materialName?.trim()) {
                               continue;
                             }
 
+                            const saveData = {
+                              ...row,
+                              price:
+                                row.price === ""
+                                  ? null
+                                  : Number(row.price),
+                              quantity:
+                                row.quantity === ""
+                                  ? null
+                                  : Number(row.quantity),
+                              used:
+                                row.used === ""
+                                  ? null
+                                  : Number(row.used),
+                            };
+
                             if (row.id) {
-                              await updateHistory(row);
+
+                              // 既存行 → 更新
+                              await updateHistory(saveData);
+
                             } else {
-                              await saveHistory([
-                                {
-                                  ...row,
-                                  price: row.price === "" ? null : Number(row.price),
-                                  quantity: row.quantity === "" ? null : Number(row.quantity),
-                                  used: row.used === "" ? null : Number(row.used),
-                                },
+
+                              // 新しく追加した行 → 新規保存
+                              const inserted = await saveHistory([
+                                saveData,
                               ]);
+
+                              if (inserted?.length > 0) {
+                                savedNewRows.push(inserted[0]);
+                              }
+
                             }
                           }
 
+                          // 削除された行をDBから削除
                           if (deletedIds.length > 0) {
                             await deleteHistory(deletedIds);
                             setDeletedIds([]);
                           }
 
-                          await loadHistory();
+                          // DBから最新の履歴を取得
+                          const latestRows = await getHistory();
+
+                          // 画面の履歴も最新状態にする
+                          setHistoryRows(latestRows);
+                          setEditedRows(latestRows);
 
                           setEditingGroup(null);
 
-                        } else {
+                        }
+
+                        else {
 
                           setEditingGroup(index);
 
