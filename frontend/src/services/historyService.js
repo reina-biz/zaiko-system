@@ -1,24 +1,60 @@
 import { supabase } from "../lib/supabase";
 
 // 履歴取得
+// 履歴取得
 export async function getHistory() {
-  const { data, error } = await supabase
-    .from("history")
-    .select("*")
-    .order("created_at", { ascending: true });
 
-  console.log("getHistory data", data);
-  console.log("1件目", data?.[0]);
-  console.log("1件目のid", data?.[0]?.id);
-  console.log("getHistory error", error);
+  const allData = [];
+  const pageSize = 1000;
+  let from = 0;
 
-  if (error) {
-    console.error(error);
-    return [];
+  while (true) {
+
+    const { data, error } = await supabase
+      .from("history")
+      .select("*")
+      .order("created_at", { ascending: true })
+      .range(from, from + pageSize - 1);
+
+    if (error) {
+
+      console.error(error);
+
+      return [];
+
+    }
+
+    if (!data || data.length === 0) {
+      break;
+    }
+
+    allData.push(...data);
+
+    console.log(
+      `履歴取得: ${from} ～ ${from + data.length - 1}件`
+    );
+
+    if (data.length < pageSize) {
+      break;
+    }
+
+    from += pageSize;
+
   }
 
+  console.log("getHistory 全件数", allData.length);
 
-  return data;
+  console.log("1件目", allData?.[0]);
+
+  console.log("1件目のid", allData?.[0]?.id);
+
+  console.log(
+    "最後のid",
+    allData?.[allData.length - 1]?.id
+  );
+
+  return allData;
+
 }
 
 // 履歴保存
