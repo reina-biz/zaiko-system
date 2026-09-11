@@ -520,11 +520,10 @@ export default function HistoryPage({
 
                         if (isEditing) {
 
+                          const targetEntryId = group.rows[0]?.entryId;
+
                           const targetRows = editedRows.filter(
-                            (r) =>
-                              r.orderDate === group.orderDate &&
-                              r.companyName === group.companyName &&
-                              r.siteName === group.siteName
+                            (r) => r.entryId === targetEntryId
                           );
 
                           const savedNewRows = [];
