@@ -56,6 +56,12 @@ export default function HistoryPage({
   const [deletedIds, setDeletedIds] =
     useState([]);
 
+  const createTempId = () =>
+    `temp-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  const getRowKey = (row) =>
+    row.id ? `id-${row.id}` : row.__tempId;
+
   useEffect(() => {
 
     const newGroupIds = {};
@@ -83,6 +89,7 @@ export default function HistoryPage({
       return {
         ...row,
         __groupId: groupId,
+        __tempId: row.__tempId ?? createTempId(),
       };
 
     });
@@ -109,6 +116,7 @@ export default function HistoryPage({
     const newRow = {
       ...row,
       __groupId: row.__groupId,
+      __tempId: createTempId(),
     };
 
     delete newRow.id;
@@ -148,8 +156,10 @@ export default function HistoryPage({
     const newRow = {
       entryId: row.entryId,
       __groupId: row.__groupId,
+      __tempId: createTempId(),
 
       orderDate: row.orderDate,
+
       companyName: row.companyName,
       siteName: row.siteName,
 
@@ -169,6 +179,10 @@ export default function HistoryPage({
 
     setEditedRows(updated);
 
+    setEditingGroupRows((prev) => [
+      ...prev,
+      newRow.__tempId,
+    ]);
   };
 
   const deleteEditedRow = (row) => {
@@ -182,9 +196,10 @@ export default function HistoryPage({
     const updated = editedRows.filter((r) => r !== row);
 
     setEditedRows(updated);
+    const rowKey = getRowKey(row);
 
     setEditingGroupRows((prev) =>
-      prev.filter((r) => r !== row)
+      prev.filter((key) => key !== rowKey)
     );
 
   };
@@ -300,19 +315,13 @@ export default function HistoryPage({
         `${row.orderDate}_${row.companyName}_${row.siteName}`;
 
       if (!acc[key]) {
-
         acc[key] = {
-
+          __groupId: key,
           orderDate: row.orderDate,
-
           companyName: row.companyName,
-
           siteName: row.siteName,
-
           rows: [],
-
         };
-
       }
 
       acc[key].rows.push(row);
@@ -427,8 +436,7 @@ export default function HistoryPage({
               openIndex === index;
 
             const isEditing =
-
-              editingGroup === index;
+              editingGroup === group.__groupId;
 
             return (
 
@@ -453,8 +461,10 @@ export default function HistoryPage({
                           onChange={(e) => {
                             const updated = [...editedRows];
 
-                            editingGroupRows.forEach((r) => {
-                              const idx = updated.indexOf(r);
+                            editingGroupRows.forEach((rowKey) => {
+                              const idx = updated.findIndex(
+                                (r) => getRowKey(r) === rowKey
+                              );
 
                               if (idx !== -1) {
                                 updated[idx] = {
@@ -475,12 +485,17 @@ export default function HistoryPage({
                           onChange={(e) => {
                             const updated = [...editedRows];
 
-                            editingGroupRows.forEach((r) => {
-                              const idx = updated.indexOf(r);
-                              updated[idx] = {
-                                ...updated[idx],
-                                companyName: e.target.value,
-                              };
+                            editingGroupRows.forEach((rowKey) => {
+                              const idx = updated.findIndex(
+                                (r) => getRowKey(r) === rowKey
+                              );
+
+                              if (idx !== -1) {
+                                updated[idx] = {
+                                  ...updated[idx],
+                                  companyName: e.target.value,
+                                };
+                              }
                             });
 
                             setEditedRows(updated);
@@ -494,12 +509,17 @@ export default function HistoryPage({
                           onChange={(e) => {
                             const updated = [...editedRows];
 
-                            editingGroupRows.forEach((r) => {
-                              const idx = updated.indexOf(r);
-                              updated[idx] = {
-                                ...updated[idx],
-                                siteName: e.target.value,
-                              };
+                            editingGroupRows.forEach((rowKey) => {
+                              const idx = updated.findIndex(
+                                (r) => getRowKey(r) === rowKey
+                              );
+
+                              if (idx !== -1) {
+                                updated[idx] = {
+                                  ...updated[idx],
+                                  siteName: e.target.value,
+                                };
+                              }
                             });
 
                             setEditedRows(updated);
@@ -574,23 +594,9 @@ export default function HistoryPage({
                         if (isEditing) {
 
                           const targetRows = editedRows.filter((row) => {
+                            const rowKey = getRowKey(row);
 
-                            // 編集開始時に存在していた行
-                            if (row.id) {
-                              return editingRows.some(
-                                (original) => original.id === row.id
-                              );
-                            }
-
-                            // 編集中に追加した新規行
-                            if (row.entryId) {
-                              return editingGroupRows.some(
-                                (original) => original.entryId === row.entryId
-                              );
-                            }
-
-                            return false;
-
+                            return editingGroupRows.includes(rowKey);
                           });
 
                           const savedNewRows = [];
@@ -602,7 +608,7 @@ export default function HistoryPage({
                               continue;
                             }
 
-                            const { __groupId, ...rowData } = row;
+                            const { __groupId, __tempId, ...rowData } = row;
 
                             const saveData = {
                               ...rowData,
@@ -660,9 +666,9 @@ export default function HistoryPage({
 
                         else {
 
-                          setEditingGroup(index);
-                          setEditingRows([...group.rows]);
-                          setEditingGroupRows([...group.rows]);
+                          setEditingGroup(group.__groupId);
+                          setEditingRows(group.rows.map(getRowKey));
+                          setEditingGroupRows(group.rows.map(getRowKey));
 
                         }
 
