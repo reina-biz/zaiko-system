@@ -442,7 +442,7 @@ export default function HistoryPage({
 
               <div
 
-                key={index}
+                key={group.__groupId}
 
                 className="bg-white rounded-3xl shadow-sm p-6"
 
