@@ -262,6 +262,10 @@ export default function HistoryPage({
       return false;
     }
 
+    if (editingGroup && row.__groupId === editingGroup) {
+      return true;
+    }
+
     if (
       selectedCompany &&
       selectedCompany !== "全て" &&
