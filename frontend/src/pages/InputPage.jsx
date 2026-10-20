@@ -209,14 +209,7 @@ export default function InputPage({
     <div className="w-full bg-white rounded-3xl shadow-sm p-6">
 
 
-      <div className="mb-4 flex justify-end items-center gap-3 rounded-2xl bg-slate-100 px-5 py-4">
-        <span className="text-sm font-semibold text-slate-600">
-          合計金額（単価 × 注文数）
-        </span>
-        <span className="text-2xl font-bold text-sky-700">
-          {totalAmount.toLocaleString("ja-JP")}円
-        </span>
-      </div>
+
 
 
       <div className="flex items-end gap-4 mb-6">
@@ -412,6 +405,12 @@ export default function InputPage({
         >
           入力完了
         </button>
+
+        <div className="ml-auto flex items-center justify-center rounded-2xl bg-slate-100 px-6 py-3 min-w-[300px]">
+          <span className="text-2xl font-bold text-sky-700 whitespace-nowrap">
+            合計金額：{totalAmount.toLocaleString("ja-JP")}円
+          </span>
+        </div>
 
       </div>
 
