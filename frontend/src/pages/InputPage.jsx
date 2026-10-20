@@ -36,6 +36,26 @@ export default function InputPage({
     isReturn: false,
   };
 
+
+  const parseNumber = (value) => {
+    const number = Number(String(value ?? "").replace(/,/g, ""));
+    return Number.isFinite(number) ? number : 0;
+  };
+
+  const formatNumber = (value) => {
+    if (value === "" || value === null || value === undefined) {
+      return "";
+    }
+    return parseNumber(value).toLocaleString("en-US");
+  };
+
+  const totalAmount = rows.reduce((total, row) => {
+    if (!row.materialName?.trim()) return total;
+
+    return total + parseNumber(row.price) * parseNumber(row.quantity);
+  }, 0);
+
+
   const updateRow = (
     index,
     field,
@@ -124,36 +144,36 @@ export default function InputPage({
 
   };
 
-  
-const duplicateRow = (index) => {
-  const updatedRows = [...rows];
 
-  // 一番下の空白行を探す
-  const emptyIndex = updatedRows.findIndex(
-    (row) =>
-      !row.materialName &&
-      !row.size &&
-      !row.price &&
-      !row.quantity &&
-      !row.used &&
-      !row.note
-  );
+  const duplicateRow = (index) => {
+    const updatedRows = [...rows];
 
-  // 空白行がなければ何もしない
-  if (emptyIndex === -1) {
-    alert("空白行がありません。");
-    return;
-  }
+    // 一番下の空白行を探す
+    const emptyIndex = updatedRows.findIndex(
+      (row) =>
+        !row.materialName &&
+        !row.size &&
+        !row.price &&
+        !row.quantity &&
+        !row.used &&
+        !row.note
+    );
 
-  // コピー元の内容を一番下の空白行に入れる
-  updatedRows[emptyIndex] = {
-    ...updatedRows[index],
-    quantity: "",
-    used: "",
+    // 空白行がなければ何もしない
+    if (emptyIndex === -1) {
+      alert("空白行がありません。");
+      return;
+    }
+
+    // コピー元の内容を一番下の空白行に入れる
+    updatedRows[emptyIndex] = {
+      ...updatedRows[index],
+      quantity: "",
+      used: "",
+    };
+
+    setRows(updatedRows);
   };
-
-  setRows(updatedRows);
-};
 
 
 
@@ -187,6 +207,17 @@ const duplicateRow = (index) => {
   return (
 
     <div className="w-full bg-white rounded-3xl shadow-sm p-6">
+
+
+      <div className="mb-4 flex justify-end items-center gap-3 rounded-2xl bg-slate-100 px-5 py-4">
+        <span className="text-sm font-semibold text-slate-600">
+          合計金額（単価 × 注文数）
+        </span>
+        <span className="text-2xl font-bold text-sky-700">
+          {totalAmount.toLocaleString("ja-JP")}円
+        </span>
+      </div>
+
 
       <div className="flex items-end gap-4 mb-6">
 
@@ -333,21 +364,21 @@ const duplicateRow = (index) => {
                   isReturn: row.isReturn ?? false,
 
                   price:
-                    row.price === "" ? null : Number(row.price),
+                    row.price === "" ? null : Number(String(row.price).replace(/,/g, "")),
 
                   quantity:
                     row.quantity === ""
                       ? null
                       : row.isReturn
-                        ? -Math.abs(Number(row.quantity))
-                        : Number(row.quantity),
+                        ? -Math.abs(parseNumber(row.quantity))
+                        : parseNumber(row.quantity),
 
                   used:
                     row.used === ""
                       ? null
                       : row.isReturn
-                        ? -Math.abs(Number(row.used))
-                        : Number(row.used),
+                        ? -Math.abs(parseNumber(row.used))
+                        : parseNumber(row.used),
                 }));
 
             const insertedRows =
@@ -631,12 +662,12 @@ const duplicateRow = (index) => {
                 <div className="p-1">
                   <input
                     type="text"
-                    value={row.price || ""}
+                    value={formatNumber(row.price)}
                     onChange={(e) =>
                       updateRow(
                         index,
                         "price",
-                        e.target.value
+                        e.target.value.replace(/,/g, "")
                       )
                     }
                     className="w-full border rounded-xl px-2 py-2"
@@ -645,13 +676,14 @@ const duplicateRow = (index) => {
 
                 <div className="p-1">
                   <input
-                    type="number"
-                    value={row.quantity || ""}
+                    type="text"
+                    inputMode="numeric"
+                    value={formatNumber(row.quantity)}
                     onChange={(e) =>
                       updateRow(
                         index,
                         "quantity",
-                        e.target.value
+                        e.target.value.replace(/,/g, "")
                       )
                     }
                     className="w-full border rounded-xl px-2 py-2"
@@ -661,13 +693,14 @@ const duplicateRow = (index) => {
 
                 <div className="p-1">
                   <input
-                    type="number"
-                    value={row.used}
+                    type="text"
+                    inputMode="numeric"
+                    value={formatNumber(row.used)}
                     onChange={(e) =>
                       updateRow(
                         index,
                         "used",
-                        e.target.value
+                        e.target.value.replace(/,/g, "")
                       )
                     }
                     className="w-full border rounded-xl px-2 py-2"
