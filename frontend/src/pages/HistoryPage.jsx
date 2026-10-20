@@ -337,9 +337,11 @@ export default function HistoryPage({
   );
 
   groupedRows.sort((a, b) => {
-    const aTime = a.rows[0]?.created_at || "";
-    const bTime = b.rows[0]?.created_at || "";
-    return new Date(bTime) - new Date(aTime);
+    const aDate = a.orderDate || "";
+    const bDate = b.orderDate || "";
+
+    // 注文日が新しいものを上に表示
+    return bDate.localeCompare(aDate);
   });
 
   console.log("rows", rows);
