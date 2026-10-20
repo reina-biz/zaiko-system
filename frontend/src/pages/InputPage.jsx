@@ -124,48 +124,37 @@ export default function InputPage({
 
   };
 
-  const duplicateRow = (index) => {
-    const updatedRows = [...rows];
+  
+const duplicateRow = (index) => {
+  const updatedRows = [...rows];
 
-    updatedRows.splice(index + 1, 0, {
-      ...updatedRows[index],
-      quantity: "",
-      used: "",
-    });
+  // 一番下の空白行を探す
+  const emptyIndex = updatedRows.findIndex(
+    (row) =>
+      !row.materialName &&
+      !row.size &&
+      !row.price &&
+      !row.quantity &&
+      !row.used &&
+      !row.note
+  );
 
-    setRows(updatedRows);
+  // 空白行がなければ何もしない
+  if (emptyIndex === -1) {
+    alert("空白行がありません。");
+    return;
+  }
+
+  // コピー元の内容を一番下の空白行に入れる
+  updatedRows[emptyIndex] = {
+    ...updatedRows[index],
+    quantity: "",
+    used: "",
   };
 
-  const materialSuggestions = [
+  setRows(updatedRows);
+};
 
-    ...new Set(
-
-      historyRows
-
-        .filter(
-          (row) =>
-
-            row.companyName === companyName &&
-
-            row.materialName &&
-
-            ![
-              "値引き",
-              "送料",
-              "運搬費",
-              "諸経費",
-              "処分費",
-            ].includes(row.materialName)
-        )
-
-        .map(
-          (row) =>
-            row.materialName
-        )
-
-    )
-
-  ];
 
 
   const inputRows = [...rows];
