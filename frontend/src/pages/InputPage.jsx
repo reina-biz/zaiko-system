@@ -157,6 +157,25 @@ const duplicateRow = (index) => {
 
 
 
+  const materialSuggestions = [
+    ...new Set(
+      historyRows
+        .filter(
+          (row) =>
+            row.companyName === companyName &&
+            row.materialName &&
+            ![
+              "値引き",
+              "送料",
+              "運搬費",
+              "諸経費",
+              "処分費",
+            ].includes(row.materialName)
+        )
+        .map((row) => row.materialName)
+    ),
+  ];
+
   const inputRows = [...rows];
 
   while (inputRows.length < 30) {
